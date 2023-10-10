@@ -5,15 +5,33 @@ import Container from "@mui/material/Container";
 import InputLogin from "./components/InputLogin";
 import ButtonLogin from "./components/ButtonLogin";
 import LinkLogin from "./components/LinkLogin";
+import { useState } from "react";
 
 const LoginContainer = () => {
-	const handleSubmit = (event) => {
+	const [empty, setEmpty] = useState({
+		error: "",
+		message: "",
+	});
+
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		console.log({
-			email: data.get("email"),
-			password: data.get("password"),
-		});
+		try {
+			if (!data.get("email").trim()) {
+				throw { message: "Email is required", name: "email" };
+			}
+
+			if (!data.get("password").trim()) {
+				throw { message: "Password is required", name: "password" };
+			}
+
+			console.log({
+				email: data.get("email"),
+				password: data.get("password"),
+			});
+		} catch (error) {
+			setEmpty({ error: error.name, message: error.message });
+		}
 	};
 
 	return (
@@ -36,6 +54,13 @@ const LoginContainer = () => {
 						name={"email"}
 						autoComplete={"email"}
 						autoFocus={true}
+						hasError={empty.error === "email"}
+						errorMessage={empty.error === "email" ? empty.message : ""}
+						setError={(value) => {
+							if (value === false) {
+								setEmpty({ error: "", message: "" });
+							}
+						}}
 					/>
 					<InputLogin
 						id={"password"}
@@ -44,6 +69,13 @@ const LoginContainer = () => {
 						name={"password"}
 						autoComplete={"current-password"}
 						autoFocus={false}
+						hasError={empty.error === "password"}
+						errorMessage={empty.error === "password" ? empty.message : ""}
+						setError={(value) => {
+							if (value === false) {
+								setEmpty({ error: "", message: "" });
+							}
+						}}
 					/>
 
 					<ButtonLogin />

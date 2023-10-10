@@ -10,7 +10,7 @@ const theme = createTheme({
 	},
 });
 
-const InputLogin = ({ id, label, name, autoComplete, type, autoFocus }) => {
+const InputLogin = ({ id, label, name, autoComplete, type, autoFocus, hasError, errorMessage, setError }) => {
 	InputLogin.propTypes = {
 		id: PropTypes.string.isRequired,
 		label: PropTypes.string.isRequired,
@@ -18,6 +18,13 @@ const InputLogin = ({ id, label, name, autoComplete, type, autoFocus }) => {
 		autoComplete: PropTypes.string.isRequired,
 		type: PropTypes.string.isRequired,
 		autoFocus: PropTypes.bool.isRequired,
+		hasError: PropTypes.bool.isRequired,
+		errorMessage: PropTypes.string,
+		setError: PropTypes.func.isRequired,
+	};
+
+	const handleInputChange = () => {
+		setError(false);
 	};
 
 	return (
@@ -32,6 +39,9 @@ const InputLogin = ({ id, label, name, autoComplete, type, autoFocus }) => {
 				name={name}
 				autoComplete={autoComplete}
 				autoFocus={autoFocus}
+				error={hasError}
+				helperText={errorMessage}
+				onChange={handleInputChange}
 			/>
 		</ThemeProvider>
 	);
