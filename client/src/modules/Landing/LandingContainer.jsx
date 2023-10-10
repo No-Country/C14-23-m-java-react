@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Container,
   ThemeProvider,
   createTheme,
@@ -8,6 +7,7 @@ import {
 } from '@mui/material';
 import TextLanding from './components/TextLanding';
 import ImageLanding from './components/ImageLanding';
+import ButtonLanding from './components/ButtonLanding';
 
 const LandingContainer = () => {
   let theme = createTheme();
@@ -38,17 +38,21 @@ const LandingContainer = () => {
 '
             />
 
-            <Button
+            <ButtonLanding
+              to='/login'
               variant='contained'
               size='large'
-              sx={{
-                bgcolor: '#00796B',
-                '&:hover': { bgcolor: '#006B5B' },
-                mt: 2,
-              }}
-            >
-              Comenzar
-            </Button>
+              text='ACCEDER'
+              sx={{ mt: 2, mr: 2 }}
+            />
+
+            <ButtonLanding
+              to='/register'
+              variant='contained'
+              size='large'
+              text='REGISTRARSE'
+              sx={{ mt: 2 }}
+            />
           </Box>
           <Box sx={{ flex: 1 }}>
             <ImageLanding />
