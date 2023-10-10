@@ -5,21 +5,53 @@ import UserPage from "../pages/UserPage";
 import HistoryPage from "../pages/HistoryPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import Layout from "../modules/Layout";
+import LandingPage from "../pages/LandingPage";
 
 function AppRouter() {
 	return (
 		<BrowserRouter>
-			<Layout>
-				<Routes>
-					<Route exact path="/" element={<HomePage />} />
-					<Route exact path="/statistics" element={<StatisticsPage />} />
-					<Route exact path="/user" element={<UserPage />} />
-					<Route exact path="/financialHistory" element={<HistoryPage />} />
-					{/* <Route exact path='/logOut' element = {<LogoutPage/>} /> */}
+			<Routes>
+				<Route exact path="/" element={<LandingPage />} />
+				<Route
+					exact
+					path="/home"
+					element={
+						<Layout>
+							<HomePage />
+						</Layout>
+					}
+				/>
+				<Route
+					exact
+					path="/statistics"
+					element={
+						<Layout>
+							<StatisticsPage />
+						</Layout>
+					}
+				/>
+				<Route
+					exact
+					path="/user"
+					element={
+						<Layout>
+							<UserPage />
+						</Layout>
+					}
+				/>
+				<Route
+					exact
+					path="/financialHistory"
+					element={
+						<Layout>
+							<HistoryPage />
+						</Layout>
+					}
+				/>
+				{/* <Route exact path='/logOut' element = {<LogoutPage/>} /> */}
 
-					<Route path="*" element={<NotFoundPage />} />
-				</Routes>
-			</Layout>
+				<Route path="*" element={<NotFoundPage />} />
+			</Routes>
 		</BrowserRouter>
 	);
 }
