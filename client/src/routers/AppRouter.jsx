@@ -7,6 +7,7 @@ import NotFoundPage from '../pages/NotFoundPage';
 import Layout from '../modules/Layout';
 import LandingPage from '../pages/LandingPage';
 import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
 
 function AppRouter() {
   return (
@@ -14,7 +15,7 @@ function AppRouter() {
       <Routes>
         <Route exact path='/' element={<LandingPage />} />
         <Route exact path='/login' element={<LoginPage />} />
-        <Route exact path='/register' element={<h2>Register</h2>} />
+        <Route exact path='/register' element={<RegisterPage />} />
         <Route
           exact
           path='/home'
