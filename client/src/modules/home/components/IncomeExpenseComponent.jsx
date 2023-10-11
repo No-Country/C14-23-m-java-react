@@ -48,7 +48,7 @@ const IncomeExpenseComponent = () => {
   }, [saldo, gastos]);
 
   return (
-    <Paper sx={{ mt: 2, width: '250px', p: 2 }}>
+    <Paper sx={{ my: 2, width: '300px', p: 2 }}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Button

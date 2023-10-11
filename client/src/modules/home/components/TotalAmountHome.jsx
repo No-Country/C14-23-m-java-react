@@ -9,14 +9,15 @@ const TotalAmountHome = ({ text, total, color }) => {
   };
   return (
     <Paper
-      elevation={4}
+      elevation={2}
       sx={{
-        p: 2,
+        py: 1,
         textAlign: 'center',
+        borderRadius: '0',
       }}
     >
-      <Typography>{text}:</Typography>
-      <Typography variant='h4' sx={{ color: color }}>
+      <Typography variant='h6'>{text}:</Typography>
+      <Typography variant='h5' sx={{ color: color }}>
         ${total}
       </Typography>
     </Paper>
