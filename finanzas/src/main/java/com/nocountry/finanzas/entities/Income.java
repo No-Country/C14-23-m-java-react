@@ -11,9 +11,8 @@ import java.time.LocalDate;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Data
 @Setter
-@ToString
 @Builder
 @Table(name = "income")
 public class Income {
