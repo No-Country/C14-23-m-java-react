@@ -46,6 +46,36 @@ public class EgressServiceImpl implements EgressService {
     @Override
     public Egress updateEgress(Egress egress) {
 
+        if (egress.getId() != null) {
+
+            System.out.println("Ingresa al if id != null en el update???");
+
+            Egress updateEgress = getEgressById(egress.getId());
+
+            if (egress.getAmount() != null) {
+                updateEgress.setAmount(egress.getAmount());
+            }
+
+            if (egress.getDate() != null) {
+                updateEgress.setDate(egress.getDate());
+            }
+
+            if (egress.getEgressCategory() != null) {
+                EgressCategory updateCategory = egressCategoryService
+                        .updateEgressCategory(egress.getEgressCategory().getId(),
+                                egress.getEgressCategory().getName().name(),
+                                egress.getEgressCategory().getDescription());
+                updateEgress.setEgressCategory(updateCategory);
+            }
+
+            if (egress.getDescription() != null) {
+                updateEgress.setDescription(egress.getDescription());
+            }
+
+            return egressRepository.save(updateEgress);
+        }
+
+        // ver como controllar si lo q quiero actualizar es nulo
         return null;
     }
 

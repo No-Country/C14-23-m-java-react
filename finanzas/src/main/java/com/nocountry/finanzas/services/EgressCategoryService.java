@@ -10,7 +10,10 @@ public interface EgressCategoryService {
 
     public EgressCategory getEgressCategoryById(Long id);
 
-    public List<EgressCategory> getAllEgressCategorys();
+    public List<EgressCategory> getAllEgressCategories();
 
     public void deleteEgressCategoryById(Long id);
+
+    public EgressCategory updateEgressCategory(Long id, String name, String description);
+
 }

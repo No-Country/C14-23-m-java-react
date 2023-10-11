@@ -29,9 +29,6 @@ public class EgressCategoryImpl implements EgressCategoryService {
         repository.save(newEgressCategory);
         listEgressCategories.add(newEgressCategory);
 
-        System.out.println(" Creando egress category! ");
-        System.out.println(" El id del nuevo egress category es: " + newEgressCategory.getId());
-
         return newEgressCategory;
     }
 
@@ -46,7 +43,6 @@ public class EgressCategoryImpl implements EgressCategoryService {
         return null;
     }
 
-
     @Override
     public EgressCategory getEgressCategoryById(Long id) {
         for (EgressCategory egressCategory: listEgressCategories) {
@@ -58,7 +54,7 @@ public class EgressCategoryImpl implements EgressCategoryService {
     }
 
     @Override
-    public List<EgressCategory> getAllEgressCategorys() {
+    public List<EgressCategory> getAllEgressCategories() {
 
         return listEgressCategories;
     }
@@ -67,6 +63,22 @@ public class EgressCategoryImpl implements EgressCategoryService {
     public void deleteEgressCategoryById(Long id) {
         repository.deleteById(id);
         listEgressCategories.removeIf(egress -> egress.getId().equals(id));
+    }
+
+    @Override
+    public EgressCategory updateEgressCategory(Long id, String name, String description) {
+
+        EgressCategory egressCategory = getEgressCategoryById(id);
+
+        if (name != null) {
+            egressCategory.setName(searchCategory(name));
+        }
+        if (description != null) {
+            egressCategory.setDescription(description);
+        }
+
+        // algun cambio en la lista de categorias?
+        return repository.save(egressCategory);
     }
 
 

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "egress_category")
+@Table(name = "tbl_egress_category")
 public class EgressCategory {
 
     @Id
