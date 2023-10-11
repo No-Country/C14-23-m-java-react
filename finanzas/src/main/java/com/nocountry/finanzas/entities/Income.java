@@ -23,6 +23,7 @@ public class Income {
     private Long id;
 
     @Column(name="amount", nullable = false)
+    @Size(min = 0, max = 10, message = "La descripción no debe superar los 255 caracteres.")
     private Double amount;
 
     @Column(name="date", nullable = false)
@@ -32,6 +33,5 @@ public class Income {
     @Column(name="description", nullable = false)
     @Size(min = 0, max = 255, message = "La descripción no debe superar los 255 caracteres.")
     private String description;
-
 
 }
