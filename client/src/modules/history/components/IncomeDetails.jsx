@@ -13,7 +13,6 @@ const ingresos = [
   { monto: 700, fecha: '2023/4/20', descripcion: 'Venta de artesanías' },
   { monto: 1200, fecha: '2023/5/2', descripcion: 'Ingreso adicional por bono de desempeño' },
   { monto: 600, fecha: '2023/5/18', descripcion: 'Venta de antigüedades' },
-  // Agrega el sueldo de cada mes
   { monto: 250000, fecha: '2023/6/5', descripcion: 'Sueldo de febrero' },
   { monto: 250000, fecha: '2023/7/12', descripcion: 'Sueldo de marzo' },
   { monto: 250000, fecha: '2023/8/1', descripcion: 'Sueldo de abril' },
