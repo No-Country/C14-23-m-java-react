@@ -21,7 +21,7 @@ function RecentActivity(props) {
   return (
     <Box
       width='25%'
-    
+      height='100%'
       bgcolor='#BDBDBD'
       display='flex'
       flexDirection='column'

@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.14.12",
     "@mui/lab": "^5.0.0-alpha.147",
     "@mui/material": "^5.14.12",
+    "lottie-react": "^2.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.47.0",

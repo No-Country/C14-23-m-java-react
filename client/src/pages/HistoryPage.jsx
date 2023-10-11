@@ -1,9 +1,10 @@
 import React from 'react';
+import HistoryContainer from '../modules/history/HistoryContainer';
 
 function HistoryPage() {
     return (
         <div>
-            <h1>History page</h1>
+           <HistoryContainer />
         </div>
     );
 }
