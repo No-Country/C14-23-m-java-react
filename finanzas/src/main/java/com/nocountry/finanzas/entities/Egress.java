@@ -45,4 +45,5 @@ public class Egress {
         this.date = date;
         this.egressCategory = egressCategory;
     }
+
 }

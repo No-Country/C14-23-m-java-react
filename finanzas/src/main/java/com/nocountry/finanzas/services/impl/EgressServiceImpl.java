@@ -102,4 +102,5 @@ public class EgressServiceImpl implements EgressService {
         egressRepository.deleteById(id);
         listEgress.removeIf(egress -> egress.getId().equals(id));
     }
+
 }
