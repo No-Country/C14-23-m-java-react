@@ -6,7 +6,6 @@ const TotalAmountHome = ({ text, total, color }) => {
     text: PropTypes.string.isRequired,
     total: PropTypes.number.isRequired,
     color: PropTypes.string.isRequired,
-    sx: PropTypes.object,
   };
   return (
     <Paper

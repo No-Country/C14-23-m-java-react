@@ -6,7 +6,7 @@ import TotalAmountHome from './TotalAmountHome';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const IncomeExpenseComponent = () => {
+const ExpenseByCategory = () => {
   const [saldo, setSaldo] = useState(10000);
   const [gastos, setGastos] = useState(7000);
 
@@ -84,4 +84,4 @@ const IncomeExpenseComponent = () => {
   );
 };
 
-export default IncomeExpenseComponent;
+export default ExpenseByCategory;
