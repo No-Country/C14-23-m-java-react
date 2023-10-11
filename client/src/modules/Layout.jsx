@@ -1,16 +1,17 @@
-import React from 'react';
-import NavBar from './navbar/NavBar';
+import NavBar from "./navbar/NavBar";
+import { PropTypes } from "prop-types";
 
+function Layout({ children }) {
+	Layout.propTypes = {
+		children: PropTypes.node.isRequired,
+	};
 
-function Layout({children}) {
-    return (
-       <>
-        <NavBar />
-        {children}
-       </>
-
-       
-    );
+	return (
+		<>
+			<NavBar />
+			{children}
+		</>
+	);
 }
 
 export default Layout;

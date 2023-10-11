@@ -1,5 +1,6 @@
 package com.nocountry.finanzas.models.response;
 
+
 import lombok.Data;
 
 import java.time.LocalDate;

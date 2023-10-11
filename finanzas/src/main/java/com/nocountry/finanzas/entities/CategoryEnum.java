@@ -14,5 +14,4 @@ public enum CategoryEnum {
     REGALO_CARIDAD,
     VIAJE_VACACIONES,
     OTROS
-
 }

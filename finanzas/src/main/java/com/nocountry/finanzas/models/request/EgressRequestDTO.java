@@ -14,5 +14,4 @@ public class EgressRequestDTO {
 
     private String categoryName;
     private String categoryDescription;
-
 }

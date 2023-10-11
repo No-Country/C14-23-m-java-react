@@ -16,5 +16,4 @@ public interface EgressService {
 
     public void deleteEgressById(Long id);
 
-
 }
