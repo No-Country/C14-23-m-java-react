@@ -5,10 +5,12 @@ import com.nocountry.finanzas.entities.Egress;
 import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.models.request.EgressRequestDTO;
 import com.nocountry.finanzas.models.response.EgressResponseDTO;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class EgressMapper {
 
     public Egress convertRequestDTOToEgress(EgressRequestDTO requestDTO) {

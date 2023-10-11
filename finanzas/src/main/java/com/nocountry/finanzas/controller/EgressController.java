@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
+@RequestMapping("/user")
 public class EgressController {
 
     @Autowired
