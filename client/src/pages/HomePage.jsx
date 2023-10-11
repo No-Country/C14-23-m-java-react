@@ -1,9 +1,11 @@
 import React from 'react';
+import HomeContainer from '../modules/home/HomeContainer';
+
 
 function HomePage(props) {
     return (
         <div>
-            <h1>Home Page</h1>
+            <HomeContainer />
         </div>
     );
 }
