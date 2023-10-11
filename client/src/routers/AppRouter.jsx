@@ -12,50 +12,20 @@ import RegisterPage from "../pages/RegisterPage";
 function AppRouter() {
 	return (
 		<BrowserRouter>
-			<Routes>
-				<Route exact path="/" element={<LandingPage />} />
-				<Route exact path="/login" element={<LoginPage />} />
-				<Route exact path="/register" element={<RegisterPage />} />
-				<Route
-					exact
-					path="/home"
-					element={
-						<Layout>
-							<HomePage />
-						</Layout>
-					}
-				/>
-				<Route
-					exact
-					path="/statistics"
-					element={
-						<Layout>
-							<StatisticsPage />
-						</Layout>
-					}
-				/>
-				<Route
-					exact
-					path="/user"
-					element={
-						<Layout>
-							<UserPage />
-						</Layout>
-					}
-				/>
-				<Route
-					exact
-					path="/financialHistory"
-					element={
-						<Layout>
-							<HistoryPage />
-						</Layout>
-					}
-				/>
-				{/* <Route exact path='/logOut' element = {<LogoutPage/>} /> */}
+			<Layout>
+				<Routes>
+					<Route exact path="/" element={<LandingPage />} />
+					<Route exact path="/login" element={<LoginPage />} />
+					<Route exact path="/register" element={<RegisterPage />} />
+					<Route exact path="/home" element={<HomePage />} />
+					<Route exact path="/statistics" element={<StatisticsPage />} />
+					<Route exact path="/user" element={<UserPage />} />
+					<Route exact path="/financialHistory" element={<HistoryPage />} />
+					{/* <Route exact path='/logOut' element = {<LogoutPage/>} /> */}
 
-				<Route path="*" element={<NotFoundPage />} />
-			</Routes>
+					<Route path="*" element={<NotFoundPage />} />
+				</Routes>
+			</Layout>
 		</BrowserRouter>
 	);
 }

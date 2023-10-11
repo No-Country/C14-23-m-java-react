@@ -8,10 +8,13 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 
 const navLinks = [
+	{ title: "Landing", path: "/" },
 	{ title: "Inicio", path: "/home", icon: <HomeIcon /> },
-	{ title: "Estadisticas", path: "/statistics", icon: <BarChartIcon /> },
+	{ title: "Estadísticas", path: "/statistics", icon: <BarChartIcon /> },
 	{ title: "Usuario", path: "/user", icon: <AccountCircleIcon /> },
 	{ title: "Historial", path: "/financialHistory", icon: <ShowChartIcon /> },
+	{ title: "iniciar sesión", path: "/login" },
+	{ title: "registrarse", path: "/register" },
 ];
 
 function NavBar() {
