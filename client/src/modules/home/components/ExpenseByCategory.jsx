@@ -73,9 +73,9 @@ const ExpenseByCategory = () => {
           </Grid>
           <Grid item xs={12}>
             <TotalAmountHome
-              text={'Total Ingresos'}
+              text={'Total gastos'}
               total={saldo}
-              color={'green'}
+              color={'red'}
             />
           </Grid>
         </Grid>
