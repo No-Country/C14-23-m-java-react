@@ -17,6 +17,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
+    private Mapper mapper;
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -26,13 +28,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserResponseDTO saveUser(UserRequestDTO userRequestDTO) {
-        User user = User.builder()
-                .name(userRequestDTO.getName())
-                .last_name(userRequestDTO.getLast_name())
-                .email(userRequestDTO.getEmail())
-                .password(userRequestDTO.getPassword())
-                .birthday_date(userRequestDTO.getBirthday_date())
-                .build();
+        User user = Mapper.userRequestDTOToUser(userRequestDTO);
 
         userRepository.save(user);
 
@@ -62,5 +58,10 @@ public class UserServiceImpl implements UserService {
         userToEdit.setBirthday_date(userRequestDTO.getBirthday_date());
 
         return Mapper.userToUserResponseDto(userToEdit);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }

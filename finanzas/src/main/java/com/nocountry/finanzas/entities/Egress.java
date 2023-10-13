@@ -1,7 +1,47 @@
 package com.nocountry.finanzas.entities;
 
-import jakarta.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
 
+import java.time.LocalDate;
+
+@Data
 @Entity
+@Table(name = "egress")
 public class Egress {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    protected Long id;
+
+    @Column(name = "amount", nullable = false)
+    protected Double amount;
+
+    @Column(name = "date", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    protected LocalDate date;
+
+    @Column(name = "description")
+    @Size(min = 0, max = 255, message = "La descripción no debe superar los 255 caracteres.")
+    protected String description;
+
+    @ManyToOne
+    protected EgressCategory egressCategory;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    public Egress(){
+    }
+
+    public Egress(Double amount, LocalDate date, EgressCategory egressCategory) {
+        this.amount = amount;
+        this.date = date;
+        this.egressCategory = egressCategory;
+    }
+
 }
