@@ -5,6 +5,15 @@ import TotalAmountHome from './components/TotalAmountHome';
 import RecentActivity from './components/RecentActivity';
 
 const HomeContainer = () => {
+  const [modal, setModal] = useState(false);
+  const [type, setType] = useState('');
+
+  const handleOpen = (formType) => {
+    setType(formType);
+    setModal(true);
+  };
+  const handleClose = () => setModal(false);
+
   return (
     <Box
       component='main'
@@ -26,6 +35,14 @@ const HomeContainer = () => {
               justifyContent: 'center',
             }}
           >
+            <ModalHome open={modal} handleClose={handleClose} formType={type} />
+            <button onClick={() => handleOpen('gasto')}>
+              abrir modal gasto
+            </button>
+            <button onClick={() => handleOpen('ingreso')}>
+              abrir modal ingreso
+            </button>
+
             <IncomeExpenseComponent />
           </Grid>
           <Grid
