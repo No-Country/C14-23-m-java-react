@@ -63,4 +63,19 @@ public class EgressCategoryTest {
         assertNull(egressCategory.getDescription());
     }
 
+    @Test
+    public void validationTypes() {
+        EgressCategory egressCategory1 = new EgressCategory(CategoryEnum.ALIMENTACION);
+
+        assertNull(egressCategory1.getId());
+        assertNull(egressCategory1.getDescription());
+
+        egressCategory1.setId(1L);
+        egressCategory1.setDescription("");
+
+        assertTrue(egressCategory1.getId() instanceof Long);
+        assertTrue(egressCategory1.getName() instanceof CategoryEnum);
+        assertTrue(egressCategory1.getDescription() instanceof  String);
+    }
+
 }

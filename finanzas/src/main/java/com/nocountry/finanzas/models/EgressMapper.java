@@ -5,6 +5,7 @@ import com.nocountry.finanzas.entities.Egress;
 import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.models.request.EgressRequestDTO;
 import com.nocountry.finanzas.models.response.EgressResponseDTO;
+import com.nocountry.finanzas.validators.NullListException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class EgressMapper {
         Egress egress = new Egress();
         EgressCategory egressCategory = searchCategory(requestDTO.getCategoryName(), requestDTO.getCategoryDescription());
 
+        egress.setId(requestDTO.getId());
         egress.setAmount(requestDTO.getAmount());
         egress.setDate(requestDTO.getDate());
         egress.setDescription(requestDTO.getDescription());
@@ -43,15 +45,23 @@ public class EgressMapper {
         ArrayList<EgressResponseDTO> listResponse = new ArrayList<>();
         EgressResponseDTO responseDTO;
 
-        for (Egress egress: listEgress) {
-            responseDTO = convertEgressToResponseDTO(egress);
-            listResponse.add(responseDTO);
+        try {
+            if (listEgress == null) {
+                throw new NullListException("La lista de Egress es nula.");
+            }
+
+            for (Egress egress: listEgress) {
+                responseDTO = convertEgressToResponseDTO(egress);
+                listResponse.add(responseDTO);
+            }
+        } catch(NullListException e) {
+            System.out.println("Error: La lista de Egress es nula. Por favor, proporcione una lista válida.");
         }
 
         return listResponse;
     }
 
-    private EgressCategory searchCategory(String name, String description) {
+    public EgressCategory searchCategory(String name, String description) {
         EgressCategory egressCategory = new EgressCategory();
 
         egressCategory.setDescription(description);
@@ -61,8 +71,6 @@ public class EgressMapper {
                 egressCategory.setName(element);
             }
         }
-
-        // verificar q se haya encontrado y creado correctamente
 
         return egressCategory;
     }

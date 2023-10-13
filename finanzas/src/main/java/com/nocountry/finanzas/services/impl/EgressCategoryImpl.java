@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class EgressCategoryImpl implements EgressCategoryService {
@@ -39,24 +40,21 @@ public class EgressCategoryImpl implements EgressCategoryService {
                 return element;
             }
         }
+        System.out.println(" Es null?? :O ");
         // controlar q pasa si no existe el enum indicado
         return null;
     }
 
     @Override
     public EgressCategory getEgressCategoryById(Long id) {
-        for (EgressCategory egressCategory: listEgressCategories) {
-            if (egressCategory.getId().equals(id)) {
-                return egressCategory;
-            }
-        }
-        return null;
+
+        return repository.findById(id).orElse(null);
     }
 
     @Override
     public List<EgressCategory> getAllEgressCategories() {
 
-        return listEgressCategories;
+        return repository.findAll();
     }
 
     @Override
@@ -66,19 +64,23 @@ public class EgressCategoryImpl implements EgressCategoryService {
     }
 
     @Override
-    public EgressCategory updateEgressCategory(Long id, String name, String description) {
+    public EgressCategory updateEgressCategory(Long id, EgressCategory egressCategory) {
 
-        EgressCategory egressCategory = getEgressCategoryById(id);
+        for (EgressCategory element: listEgressCategories) {
 
-        if (name != null) {
-            egressCategory.setName(searchCategory(name));
+            if (Objects.equals(id, element.getId())){
+                if (egressCategory.getName() != null) {
+                    element.setName(searchCategory(egressCategory.getName().name()));
+                }
+                if (egressCategory.getDescription() != null) {
+                    element.setDescription(egressCategory.getDescription());
+                }
+
+                return repository.save(element);
+            }
         }
-        if (description != null) {
-            egressCategory.setDescription(description);
-        }
 
-        // algun cambio en la lista de categorias?
-        return repository.save(egressCategory);
+        return null;
     }
 
 

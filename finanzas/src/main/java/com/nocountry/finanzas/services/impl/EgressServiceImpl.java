@@ -46,60 +46,51 @@ public class EgressServiceImpl implements EgressService {
     @Override
     public Egress updateEgress(Egress egress) {
 
-        if (egress.getId() != null) {
+        for (Egress element : listEgress) {
+            if (egress.getId().equals(element.getId())) {
 
-            System.out.println("Ingresa al if id != null en el update???");
+                if (egress.getAmount() != null) {
+                    element.setAmount(egress.getAmount());
+                }
 
-            Egress updateEgress = getEgressById(egress.getId());
+                if (egress.getDate() != null) {
+                    element.setDate(egress.getDate());
+                }
 
-            if (egress.getAmount() != null) {
-                updateEgress.setAmount(egress.getAmount());
+                if (egress.getEgressCategory() != null) {
+                    Long idElement = element.getEgressCategory().getId();
+                    EgressCategory updateCategory = egressCategoryService.updateEgressCategory(idElement, egress.getEgressCategory());
+                    element.setEgressCategory(updateCategory);
+                }
+
+                if (egress.getDescription() != null) {
+                    element.setDescription(egress.getDescription());
+                }
+
+                return egressRepository.save(element);
             }
-
-            if (egress.getDate() != null) {
-                updateEgress.setDate(egress.getDate());
-            }
-
-            if (egress.getEgressCategory() != null) {
-                EgressCategory updateCategory = egressCategoryService
-                        .updateEgressCategory(egress.getEgressCategory().getId(),
-                                egress.getEgressCategory().getName().name(),
-                                egress.getEgressCategory().getDescription());
-                updateEgress.setEgressCategory(updateCategory);
-            }
-
-            if (egress.getDescription() != null) {
-                updateEgress.setDescription(egress.getDescription());
-            }
-
-            return egressRepository.save(updateEgress);
         }
 
-        // ver como controllar si lo q quiero actualizar es nulo
         return null;
     }
 
     @Override
     public List<Egress> getAllEgress() {
-        return listEgress;
+
+        return egressRepository.findAll();
     }
 
     @Override
     public Egress getEgressById(Long id) {
 
-        for (Egress egress: listEgress) {
-            if (egress.getId().equals(id)) {
-                return egress;
-            }
-        }
-
-        //ver como controlar si el id no existe
-        return null;
+        return egressRepository.findById(id).orElse(null);
     }
 
     @Override
     public void deleteEgressById(Long id) {
+
         egressRepository.deleteById(id);
+        egressCategoryService.deleteEgressCategoryById(id);
         listEgress.removeIf(egress -> egress.getId().equals(id));
     }
 

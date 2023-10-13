@@ -28,9 +28,13 @@ public class EgressController {
     public ResponseEntity<EgressResponseDTO> getEgressById(@PathVariable Long id) {
         try {
             Egress getEgressById = egressService.getEgressById(id);
-            EgressResponseDTO responseDTO = egressMapper.convertEgressToResponseDTO(getEgressById);
 
-            return ResponseEntity.ok(responseDTO);
+            if (getEgressById != null) {
+                EgressResponseDTO responseDTO = egressMapper.convertEgressToResponseDTO(getEgressById);
+                return ResponseEntity.ok(responseDTO);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
@@ -55,7 +59,8 @@ public class EgressController {
             Egress createdEgress = egressService.createdEgress(egress);
             EgressResponseDTO responseDTO = egressMapper.convertEgressToResponseDTO(createdEgress);
 
-            return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+            //return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+            return ResponseEntity.ok(responseDTO);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
@@ -68,7 +73,7 @@ public class EgressController {
             Egress updatedEgress = egressService.updateEgress(egress);
             EgressResponseDTO responseDTO = egressMapper.convertEgressToResponseDTO(updatedEgress);
 
-            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+            return ResponseEntity.ok(responseDTO);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
