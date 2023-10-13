@@ -1,9 +1,6 @@
 package com.nocountry.finanzas.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 @Builder
+@Table(name = "tbl_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
