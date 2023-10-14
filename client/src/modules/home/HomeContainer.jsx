@@ -3,6 +3,8 @@ import IncomeExpenseComponent from './components/IncomeExpenseComponent';
 import ExpenseByCategory from './components/ExpenseByCategory';
 import TotalAmountHome from './components/TotalAmountHome';
 import RecentActivity from './components/RecentActivity';
+import ModalHome from './components/ModalHome';
+import { useState } from 'react';
 
 const HomeContainer = () => {
   const [modal, setModal] = useState(false);
