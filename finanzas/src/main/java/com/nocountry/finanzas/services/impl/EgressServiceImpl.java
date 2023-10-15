@@ -7,6 +7,7 @@ import com.nocountry.finanzas.services.EgressCategoryService;
 import com.nocountry.finanzas.services.EgressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,78 +21,45 @@ public class EgressServiceImpl implements EgressService {
     @Autowired
     private EgressCategoryService egressCategoryService;
 
-    private final List<Egress> listEgress = new ArrayList<>();
-
+    @Transactional
     @Override
     public Egress createdEgress(Egress egress) {
-        Egress newEgress = new Egress();
-        EgressCategory egressCategory;
+        EgressCategory egressCategory = egressCategoryService.createEgressCategory(egress.getEgressCategory());
+        egress.setEgressCategory(egressCategory);
 
-        egressCategory = egressCategoryService.createEgressCategory(egress.getEgressCategory());
+        //Hacer verificaciones de campos nulos? correctos? ver requerimientos
 
-        newEgress.setAmount(egress.getAmount());
-        newEgress.setDate(egress.getDate());
-        newEgress.setEgressCategory(egressCategory);
-
-        if (egress.getDescription() != null) {
-            newEgress.setDescription(egress.getDescription());
-        }
-
-        egressRepository.save(newEgress);
-        listEgress.add(newEgress);
-
-        return newEgress;
+        return egressRepository.save(egress);
     }
 
+    @Transactional
     @Override
     public Egress updateEgress(Egress egress) {
+        //Hacer verificaciones de campos nulos? correctos? ver requerimientos
 
-        for (Egress element : listEgress) {
-            if (egress.getId().equals(element.getId())) {
-
-                if (egress.getAmount() != null) {
-                    element.setAmount(egress.getAmount());
-                }
-
-                if (egress.getDate() != null) {
-                    element.setDate(egress.getDate());
-                }
-
-                if (egress.getEgressCategory() != null) {
-                    Long idElement = element.getEgressCategory().getId();
-                    EgressCategory updateCategory = egressCategoryService.updateEgressCategory(idElement, egress.getEgressCategory());
-                    element.setEgressCategory(updateCategory);
-                }
-
-                if (egress.getDescription() != null) {
-                    element.setDescription(egress.getDescription());
-                }
-
-                return egressRepository.save(element);
-            }
-        }
-
-        return null;
+        egressCategoryService.updateEgressCategory(egress.getEgressCategory());
+        return egressRepository.save(egress);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Egress> getAllEgress() {
 
         return egressRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Egress getEgressById(Long id) {
 
         return egressRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     @Override
     public void deleteEgressById(Long id) {
-
         egressRepository.deleteById(id);
         egressCategoryService.deleteEgressCategoryById(id);
-        listEgress.removeIf(egress -> egress.getId().equals(id));
     }
 
 }

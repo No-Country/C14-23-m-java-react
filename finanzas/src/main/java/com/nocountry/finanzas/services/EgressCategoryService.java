@@ -14,6 +14,6 @@ public interface EgressCategoryService {
 
     public void deleteEgressCategoryById(Long id);
 
-    public EgressCategory updateEgressCategory(Long id, EgressCategory egressCategory);
+    public EgressCategory updateEgressCategory(EgressCategory egressCategory);
 
 }
