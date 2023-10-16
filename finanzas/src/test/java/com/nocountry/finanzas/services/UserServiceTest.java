@@ -1,6 +1,7 @@
 package com.nocountry.finanzas.services;
 
 import com.nocountry.finanzas.entities.User;
+import com.nocountry.finanzas.exceptions.NotFoundException;
 import com.nocountry.finanzas.models.request.UserRequestDTO;
 import com.nocountry.finanzas.models.response.UserResponseDTO;
 import com.nocountry.finanzas.repositories.UserRepository;
@@ -43,7 +44,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Prueba de obtencion de un usuario, enviando un id correcto")
-    public void findById(){
+    public void findById() throws NotFoundException {
         Long id = 1L;
         User user = userService.getUserById(id);
         assertEquals(id,user.getId());

@@ -1,6 +1,7 @@
 package com.nocountry.finanzas.services.impl;
 
 import com.nocountry.finanzas.entities.User;
+import com.nocountry.finanzas.exceptions.NotFoundException;
 import com.nocountry.finanzas.models.Mapper;
 import com.nocountry.finanzas.models.request.UserRequestDTO;
 import com.nocountry.finanzas.models.response.UserResponseDTO;
@@ -18,7 +19,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private Mapper mapper;
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -36,9 +36,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(Long id) {
+    public User getUserById(Long id) throws NotFoundException {
         Optional<User> userOptional = userRepository.findById(id);
-        return userOptional.orElse(null);
+        if (userOptional.isEmpty()){
+            throw new NotFoundException("Could not found user");
+        }
+        return userOptional.get();
     }
 
     @Override
@@ -48,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDTO) {
+    public UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDTO) throws NotFoundException {
         User userToEdit = getUserById(id);
 
         userToEdit.setName(userRequestDTO.getName());
@@ -60,6 +63,7 @@ public class UserServiceImpl implements UserService {
         return Mapper.userToUserResponseDto(userToEdit);
     }
 
+    @Transactional
     @Override
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
