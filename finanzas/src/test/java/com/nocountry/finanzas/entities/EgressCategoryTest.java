@@ -53,8 +53,8 @@ public class EgressCategoryTest {
         egressCategory.setName(CategoryEnum.ENTRETENIMIENTO);
         assertEquals(CategoryEnum.ENTRETENIMIENTO, egressCategory.getName());
 
-        egressCategory.setName(CategoryEnum.GASTO_FIJO);
-        assertEquals(CategoryEnum.GASTO_FIJO, egressCategory.getName());
+        egressCategory.setName(CategoryEnum.SERVICIOS);
+        assertEquals(CategoryEnum.SERVICIOS, egressCategory.getName());
 
         egressCategory.setName(CategoryEnum.OTROS);
         assertEquals(CategoryEnum.OTROS, egressCategory.getName());

@@ -19,7 +19,6 @@ public class EgressCategory {
     protected CategoryEnum name;
 
     @Column(name = "description")
-    @Size(min = 0, max = 255, message = "La descripción no debe superar los 255 caracteres.")
     protected String description;
 
     public EgressCategory() {

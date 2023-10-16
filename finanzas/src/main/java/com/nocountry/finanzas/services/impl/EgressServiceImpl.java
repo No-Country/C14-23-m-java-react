@@ -2,6 +2,9 @@ package com.nocountry.finanzas.services.impl;
 
 import com.nocountry.finanzas.entities.Egress;
 import com.nocountry.finanzas.entities.EgressCategory;
+import com.nocountry.finanzas.models.EgressMapper;
+import com.nocountry.finanzas.models.request.egress.EgressRequestDTO;
+import com.nocountry.finanzas.models.response.egress.EgressResponseDTO;
 import com.nocountry.finanzas.repositories.EgressRepository;
 import com.nocountry.finanzas.services.EgressCategoryService;
 import com.nocountry.finanzas.services.EgressService;
@@ -15,44 +18,56 @@ import java.util.List;
 @Service
 public class EgressServiceImpl implements EgressService {
 
-    @Autowired
-    private EgressRepository egressRepository;
+    private final EgressRepository egressRepository;
+
+    private final EgressCategoryService egressCategoryService;
+
+    private final EgressMapper egressMapper;
 
     @Autowired
-    private EgressCategoryService egressCategoryService;
+    public EgressServiceImpl(EgressRepository egressRepository, EgressCategoryService egressCategoryService, EgressMapper egressMapper) {
+        this.egressRepository = egressRepository;
+        this.egressCategoryService = egressCategoryService;
+        this.egressMapper = egressMapper;
+    }
 
     @Transactional
     @Override
-    public Egress createdEgress(Egress egress) {
+    public EgressResponseDTO createdEgress(EgressRequestDTO egressRequestDTO) {
+        Egress egress = egressMapper.convertRequestDTOToEgress(egressRequestDTO);
+
         EgressCategory egressCategory = egressCategoryService.createEgressCategory(egress.getEgressCategory());
         egress.setEgressCategory(egressCategory);
+        egressRepository.save(egress);
 
         //Hacer verificaciones de campos nulos? correctos? ver requerimientos
 
-        return egressRepository.save(egress);
+        return egressMapper.convertEgressToResponseDTO(egress);
     }
 
     @Transactional
     @Override
-    public Egress updateEgress(Egress egress) {
+    public EgressResponseDTO updateEgress(EgressRequestDTO egressRequestDTO) {
         //Hacer verificaciones de campos nulos? correctos? ver requerimientos
+        Egress egress = egressMapper.convertRequestDTOToEgress(egressRequestDTO);
 
         egressCategoryService.updateEgressCategory(egress.getEgressCategory());
-        return egressRepository.save(egress);
+        egressRepository.save(egress);
+        return egressMapper.convertEgressToResponseDTO(egress);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Egress> getAllEgress() {
+    public List<EgressResponseDTO> getAllEgress() {
 
-        return egressRepository.findAll();
+        return egressMapper.convertEgressToListResponseDTO(egressRepository.findAll());
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Egress getEgressById(Long id) {
+    public EgressResponseDTO getEgressById(Long id) {
 
-        return egressRepository.findById(id).orElse(null);
+        return egressMapper.convertEgressToResponseDTO(egressRepository.findById(id).orElse(null));
     }
 
     @Transactional

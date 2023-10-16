@@ -25,11 +25,14 @@ public class Egress {
     protected LocalDate date;
 
     @Column(name = "description")
-    @Size(min = 0, max = 255, message = "La descripción no debe superar los 255 caracteres.")
     protected String description;
 
     @ManyToOne
     protected EgressCategory egressCategory;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     public Egress(){
     }

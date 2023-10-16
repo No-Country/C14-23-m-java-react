@@ -3,8 +3,8 @@ package com.nocountry.finanzas.models;
 import com.nocountry.finanzas.entities.CategoryEnum;
 import com.nocountry.finanzas.entities.Egress;
 import com.nocountry.finanzas.entities.EgressCategory;
-import com.nocountry.finanzas.models.request.EgressRequestDTO;
-import com.nocountry.finanzas.models.response.EgressResponseDTO;
+import com.nocountry.finanzas.models.request.egress.EgressRequestDTO;
+import com.nocountry.finanzas.models.response.egress.EgressResponseDTO;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -84,7 +84,7 @@ public class MapperEgressTest {
         egress1.setEgressCategory(egressCategory1);
 
         Egress egress2 = new Egress();
-        EgressCategory egressCategory2 = new EgressCategory(CategoryEnum.REGALO_CARIDAD);
+        EgressCategory egressCategory2 = new EgressCategory(CategoryEnum.SALUD_CUIDADO_PERSONAL);
 
         egress2.setId(2L);
         egress2.setAmount(5200.0);
@@ -152,12 +152,12 @@ public class MapperEgressTest {
         assertEquals(CategoryEnum.EDUCACION, egressCategory3.getName());
         assertEquals("Cursito de java", egressCategory3.getDescription());
 
-        EgressCategory egressCategory4 = egressMapper.searchCategory(CategoryEnum.CUIDADO_PERSONAL.name(), "Gym");
-        assertEquals(CategoryEnum.CUIDADO_PERSONAL, egressCategory4.getName());
+        EgressCategory egressCategory4 = egressMapper.searchCategory(CategoryEnum.SALUD_CUIDADO_PERSONAL.name(), "Gym");
+        assertEquals(CategoryEnum.SALUD_CUIDADO_PERSONAL, egressCategory4.getName());
         assertEquals("Gym", egressCategory4.getDescription());
 
-        EgressCategory egressCategory5 = egressMapper.searchCategory(CategoryEnum.GASTO_FIJO.name(), "Internet");
-        assertEquals(CategoryEnum.GASTO_FIJO, egressCategory5.getName());
+        EgressCategory egressCategory5 = egressMapper.searchCategory(CategoryEnum.SERVICIOS.name(), "Internet");
+        assertEquals(CategoryEnum.SERVICIOS, egressCategory5.getName());
         assertEquals("Internet", egressCategory5.getDescription());
         }
 

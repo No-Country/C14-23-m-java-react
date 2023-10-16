@@ -3,8 +3,8 @@ package com.nocountry.finanzas.models;
 import com.nocountry.finanzas.entities.CategoryEnum;
 import com.nocountry.finanzas.entities.Egress;
 import com.nocountry.finanzas.entities.EgressCategory;
-import com.nocountry.finanzas.models.request.EgressRequestDTO;
-import com.nocountry.finanzas.models.response.EgressResponseDTO;
+import com.nocountry.finanzas.models.request.egress.EgressRequestDTO;
+import com.nocountry.finanzas.models.response.egress.EgressResponseDTO;
 import com.nocountry.finanzas.validators.NullListException;
 import org.springframework.stereotype.Component;
 
