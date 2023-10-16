@@ -33,4 +33,8 @@ public class Income {
     @Size(min = 0, max = 255, message = "La descripción no debe superar los 255 caracteres.")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
 }
