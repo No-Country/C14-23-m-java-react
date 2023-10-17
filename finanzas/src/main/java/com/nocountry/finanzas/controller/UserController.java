@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @PutMapping(path = "/user/update/{id}")
-    public ResponseEntity<?> updateUser (@PathVariable Long id, @RequestBody @Valid UserRequestDTO userRequestDTO) throws BadRequestException, NotFoundException {
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody @Valid UserRequestDTO userRequestDTO) throws BadRequestException, NotFoundException {
         try {
             UserResponseDTO userResponseDTO = userService.updateUser(id,userRequestDTO);
             return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
@@ -56,10 +57,10 @@ public class UserController {
     }
 
     @DeleteMapping(path = "/user/delete/{id}")
-    public ResponseEntity<?> deleteUser (@PathVariable Long id) throws BadRequestException {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) throws BadRequestException {
         try {
             userService.deleteUser(id);
-            return new ResponseEntity<>("El usuario se elimino correctamente",HttpStatus.OK);
+            return new ResponseEntity<>("El usuario se elimino correctamente", HttpStatus.OK);
         }catch (DataAccessException e){
             throw new BadRequestException(e.getMessage());
         }

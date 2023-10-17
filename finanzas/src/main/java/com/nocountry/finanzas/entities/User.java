@@ -16,26 +16,32 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-@Table(name = "user")
+@Table(name = "tbl_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
+
     @Column(name="name", nullable = false)
     private String name;
+
     @Column(name="last_name", nullable = false)
     private String last_name;
+
     @Column(name="email", nullable = false)
     private String email;
+
     @Column(name="password", nullable = false)
     private String password;
+
     @Column(name="date", nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate birthday_date;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Egress> egresses =new ArrayList<>();
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Income> incomes = new ArrayList<>();
 

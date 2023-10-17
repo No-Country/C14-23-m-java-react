@@ -77,4 +77,23 @@ public class EgressTest {
         assertEquals("Descripción válida", egress.getDescription());
     }
 
+    @Test
+    public void validationTypes() {
+        LocalDate date2 = LocalDate.of(2023, 10, 13);
+        EgressCategory category2 = new EgressCategory(CategoryEnum.ALIMENTACION);
+        category2.setId(2L);
+
+        Egress egress2 = new Egress(1200.0 , date2, category2);
+        egress2.setId(1L);
+        egress2.setDescription("Description egress test");
+
+        assertTrue(egress2.getId() instanceof Long);
+        assertTrue(egress2.getAmount() instanceof Double);
+        assertTrue(egress2.getDate() instanceof LocalDate);
+        assertTrue(egress2.getDescription() instanceof String);
+        assertTrue(egress2.getEgressCategory() instanceof EgressCategory);
+        assertTrue(egress2.getEgressCategory().getId() instanceof  Long);
+        assertTrue(egress2.getEgressCategory().getName() instanceof CategoryEnum);
+    }
+
 }

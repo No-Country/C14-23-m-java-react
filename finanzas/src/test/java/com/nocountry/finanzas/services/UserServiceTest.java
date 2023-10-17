@@ -53,7 +53,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Prueba de modificación de un usuario")
-    public void modifyUser() {
+    public void modifyUser() throws NotFoundException{
         // Paso 1: Crear un UserRequestDTO con los datos de actualización
         UserRequestDTO userRequestDTO = new UserRequestDTO();
         userRequestDTO.setName("NuevoNombre");

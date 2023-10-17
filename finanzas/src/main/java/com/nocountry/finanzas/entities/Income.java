@@ -2,6 +2,9 @@ package com.nocountry.finanzas.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
@@ -14,7 +17,7 @@ import java.time.LocalDate;
 @Data
 @Setter
 @Builder
-@Table(name = "income")
+@Table(name = "tbl_income")
 public class Income {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +25,6 @@ public class Income {
     private Long id;
 
     @Column(name="amount", nullable = false)
-    @Size(min = 0, max = 10, message = "La descripción no debe superar los 255 caracteres.")
     private Double amount;
 
     @Column(name="date", nullable = false)

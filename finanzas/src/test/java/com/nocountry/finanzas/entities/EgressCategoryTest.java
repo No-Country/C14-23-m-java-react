@@ -28,21 +28,17 @@ public class EgressCategoryTest {
 
         assertNull(egressCategoryDefault.getId());
         assertNull(egressCategoryDefault.getName());
-        assertNull(egressCategoryDefault.getDescription());
     }
 
     @Test
     public void getterTest() {
         assertEquals(CategoryEnum.ALIMENTACION, egressCategory.getName());
-
         assertNull(egressCategory.getId());
-        assertNull(egressCategory.getDescription());
     }
 
     @Test
     public void setterTest() {
         assertNull(egressCategory.getId());
-        assertNull(egressCategory.getDescription());
 
         egressCategory.setName(CategoryEnum.AHORRO_INVERSION);
         assertEquals(CategoryEnum.AHORRO_INVERSION, egressCategory.getName());
@@ -53,14 +49,25 @@ public class EgressCategoryTest {
         egressCategory.setName(CategoryEnum.ENTRETENIMIENTO);
         assertEquals(CategoryEnum.ENTRETENIMIENTO, egressCategory.getName());
 
-        egressCategory.setName(CategoryEnum.GASTO_FIJO);
-        assertEquals(CategoryEnum.GASTO_FIJO, egressCategory.getName());
+        egressCategory.setName(CategoryEnum.SERVICIOS);
+        assertEquals(CategoryEnum.SERVICIOS, egressCategory.getName());
 
         egressCategory.setName(CategoryEnum.OTROS);
         assertEquals(CategoryEnum.OTROS, egressCategory.getName());
 
         assertNull(egressCategory.getId());
-        assertNull(egressCategory.getDescription());
+    }
+
+    @Test
+    public void validationTypes() {
+        EgressCategory egressCategory1 = new EgressCategory(CategoryEnum.ALIMENTACION);
+
+        assertNull(egressCategory1.getId());
+
+        egressCategory1.setId(1L);
+
+        assertTrue(egressCategory1.getId() instanceof Long);
+        assertTrue(egressCategory1.getName() instanceof CategoryEnum);
     }
 
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "egress_category")
+@Table(name = "tbl_egress_category")
 public class EgressCategory {
 
     @Id
@@ -17,10 +17,6 @@ public class EgressCategory {
     @Enumerated(EnumType.STRING)
     @Column(name = "name")
     protected CategoryEnum name;
-
-    @Column(name = "description")
-    @Size(min = 0, max = 255, message = "La descripción no debe superar los 255 caracteres.")
-    protected String description;
 
     public EgressCategory() {
     }

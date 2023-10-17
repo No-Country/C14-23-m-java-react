@@ -2,14 +2,14 @@ package com.nocountry.finanzas.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
 @Entity
-@Table(name = "egress")
+@Table(name = "tbl_egress")
 public class Egress {
 
     @Id
@@ -25,7 +25,6 @@ public class Egress {
     protected LocalDate date;
 
     @Column(name = "description")
-    @Size(min = 0, max = 255, message = "La descripción no debe superar los 255 caracteres.")
     protected String description;
 
     @ManyToOne

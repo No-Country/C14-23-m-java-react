@@ -49,7 +49,7 @@
         <dependency>
             <groupId>jakarta.transaction</groupId>
             <artifactId>jakarta.transaction-api</artifactId>
-		</dependency>
+        </dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
