@@ -82,7 +82,6 @@ public class EgressTest {
         LocalDate date2 = LocalDate.of(2023, 10, 13);
         EgressCategory category2 = new EgressCategory(CategoryEnum.ALIMENTACION);
         category2.setId(2L);
-        category2.setDescription("Description category test");
 
         Egress egress2 = new Egress(1200.0 , date2, category2);
         egress2.setId(1L);
@@ -95,7 +94,6 @@ public class EgressTest {
         assertTrue(egress2.getEgressCategory() instanceof EgressCategory);
         assertTrue(egress2.getEgressCategory().getId() instanceof  Long);
         assertTrue(egress2.getEgressCategory().getName() instanceof CategoryEnum);
-        assertTrue(egress2.getEgressCategory().getDescription() instanceof  String);
     }
 
 }

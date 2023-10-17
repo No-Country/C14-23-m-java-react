@@ -1,9 +1,8 @@
 package com.nocountry.finanzas.controller;
 
 import com.nocountry.finanzas.entities.Egress;
-import com.nocountry.finanzas.models.EgressMapper;
-import com.nocountry.finanzas.models.request.egress.EgressRequestDTO;
-import com.nocountry.finanzas.models.response.egress.EgressResponseDTO;
+import com.nocountry.finanzas.models.egress.CreateEgressDTO;
+import com.nocountry.finanzas.models.egress.EgressDTO;
 import com.nocountry.finanzas.services.EgressService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,9 @@ public class EgressController {
     }
 
     @GetMapping(path = "/egress/{id}")
-    public ResponseEntity<EgressResponseDTO> getEgressById(@PathVariable Long id) {
+    public ResponseEntity<EgressDTO> getEgressById(@PathVariable Long id) {
         try {
-            EgressResponseDTO responseDTO = egressService.getEgressById(id);
+            EgressDTO responseDTO = egressService.getEgressById(id);
             return ResponseEntity.ok(responseDTO);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
@@ -36,9 +35,9 @@ public class EgressController {
     }
 
     @GetMapping(path = "/egress")
-    public ResponseEntity<List<EgressResponseDTO>> getAllEgress() {
+    public ResponseEntity<List<EgressDTO>> getAllEgress() {
         try {
-            List<EgressResponseDTO> responseDTO = egressService.getAllEgress();
+            List<EgressDTO> responseDTO = egressService.getAllEgress();
             return ResponseEntity.ok(responseDTO);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
@@ -46,9 +45,9 @@ public class EgressController {
     }
 
     @PostMapping(path = "/egress", consumes = "application/json")
-    public ResponseEntity<EgressResponseDTO> createEgress(@RequestBody @Valid EgressRequestDTO requestDTO) {
+    public ResponseEntity<EgressDTO> createEgress(@RequestBody @Valid CreateEgressDTO egressDTO) {
         try {
-            EgressResponseDTO responseDTO = egressService.createdEgress(requestDTO);
+            EgressDTO responseDTO = egressService.createdEgress(egressDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
@@ -56,9 +55,9 @@ public class EgressController {
     }
 
     @PutMapping(path = "/egress", consumes = "application/json")
-    public ResponseEntity<EgressResponseDTO> updateEgress(@RequestBody @Valid EgressRequestDTO requestDTO){
+    public ResponseEntity<EgressDTO> updateEgress(@RequestBody @Valid EgressDTO egressDTO){
         try {
-            EgressResponseDTO responseDTO = egressService.updateEgress(requestDTO);
+            EgressDTO responseDTO = egressService.updateEgress(egressDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();

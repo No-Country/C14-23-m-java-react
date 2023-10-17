@@ -28,21 +28,17 @@ public class EgressCategoryTest {
 
         assertNull(egressCategoryDefault.getId());
         assertNull(egressCategoryDefault.getName());
-        assertNull(egressCategoryDefault.getDescription());
     }
 
     @Test
     public void getterTest() {
         assertEquals(CategoryEnum.ALIMENTACION, egressCategory.getName());
-
         assertNull(egressCategory.getId());
-        assertNull(egressCategory.getDescription());
     }
 
     @Test
     public void setterTest() {
         assertNull(egressCategory.getId());
-        assertNull(egressCategory.getDescription());
 
         egressCategory.setName(CategoryEnum.AHORRO_INVERSION);
         assertEquals(CategoryEnum.AHORRO_INVERSION, egressCategory.getName());
@@ -60,7 +56,6 @@ public class EgressCategoryTest {
         assertEquals(CategoryEnum.OTROS, egressCategory.getName());
 
         assertNull(egressCategory.getId());
-        assertNull(egressCategory.getDescription());
     }
 
     @Test
@@ -68,14 +63,11 @@ public class EgressCategoryTest {
         EgressCategory egressCategory1 = new EgressCategory(CategoryEnum.ALIMENTACION);
 
         assertNull(egressCategory1.getId());
-        assertNull(egressCategory1.getDescription());
 
         egressCategory1.setId(1L);
-        egressCategory1.setDescription("");
 
         assertTrue(egressCategory1.getId() instanceof Long);
         assertTrue(egressCategory1.getName() instanceof CategoryEnum);
-        assertTrue(egressCategory1.getDescription() instanceof  String);
     }
 
 }

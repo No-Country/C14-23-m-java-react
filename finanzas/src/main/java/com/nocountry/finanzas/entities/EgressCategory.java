@@ -18,9 +18,6 @@ public class EgressCategory {
     @Column(name = "name")
     protected CategoryEnum name;
 
-    @Column(name = "description")
-    protected String description;
-
     public EgressCategory() {
     }
 

@@ -1,19 +1,19 @@
 package com.nocountry.finanzas.services;
 
-import com.nocountry.finanzas.models.request.egress.EgressRequestDTO;
-import com.nocountry.finanzas.models.response.egress.EgressResponseDTO;
+import com.nocountry.finanzas.models.egress.CreateEgressDTO;
+import com.nocountry.finanzas.models.egress.EgressDTO;
 
 import java.util.List;
 
 public interface EgressService {
 
-    public EgressResponseDTO createdEgress(EgressRequestDTO egressRequestDTO);
+    public EgressDTO createdEgress(CreateEgressDTO egressDTO);
 
-    public EgressResponseDTO updateEgress(EgressRequestDTO egressRequestDTO);
+    public EgressDTO updateEgress(EgressDTO egressDTO);
 
-    public List<EgressResponseDTO> getAllEgress();
+    public List<EgressDTO> getAllEgress();
 
-    public EgressResponseDTO getEgressById(Long id);
+    public EgressDTO getEgressById(Long id);
 
     public void deleteEgressById(Long id);
 

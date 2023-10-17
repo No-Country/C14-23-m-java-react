@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-@Table(name = "user")
+@Table(name = "tbl_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
