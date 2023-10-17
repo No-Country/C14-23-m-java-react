@@ -52,12 +52,22 @@ const LoginContainer = () => {
                 id={'email'}
                 label={'Email'}
                 name={'Email'}
+                required={true}
                 autoComplete={'email'}
                 {...register('email', {
-                  required: 'Email is required',
+                  required: 'Email es requerido',
                   pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Email is not valid',
+                    value:
+                      /^[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                    message: 'El email no es valido',
+                  },
+                  minLength: {
+                    value: 18,
+                    message: 'Debe ser mayor a 18 caracteres',
+                  },
+                  maxLength: {
+                    value: 255,
+                    message: 'Debe ser menor a 255 caracteres',
                   },
                 })}
                 error={errors.email ? true : false}
@@ -73,14 +83,14 @@ const LoginContainer = () => {
                 name={'password'}
                 autoComplete={'current-password'}
                 {...register('password', {
-                  required: 'Password is required',
+                  required: 'Contraseña es requerida',
                   minLength: {
                     value: 8,
-                    message: 'Password must be at least 8 characters long',
+                    message: 'Debe ser mayor a 8 caracteres',
                   },
                   maxLength: {
-                    value: 20,
-                    message: 'Password must be at most 20 characters long',
+                    value: 45,
+                    message: 'Debe ser menor a 45 caracteres',
                   },
                 })}
                 error={errors.password ? true : false}
