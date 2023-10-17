@@ -3,6 +3,7 @@ package com.nocountry.finanzas.models;
 import com.nocountry.finanzas.entities.CategoryEnum;
 import com.nocountry.finanzas.entities.Egress;
 import com.nocountry.finanzas.entities.EgressCategory;
+import com.nocountry.finanzas.entities.User;
 import com.nocountry.finanzas.models.request.egress.EgressRequestDTO;
 import com.nocountry.finanzas.models.response.egress.EgressResponseDTO;
 import com.nocountry.finanzas.validators.NullListException;
@@ -17,11 +18,14 @@ public class EgressMapper {
     public Egress convertRequestDTOToEgress(EgressRequestDTO requestDTO) {
         Egress egress = new Egress();
         EgressCategory egressCategory = searchCategory(requestDTO.getCategoryName(), requestDTO.getCategoryDescription());
+        User user = new User();
+        user.setId(requestDTO.getUserId());
 
         egress.setId(requestDTO.getId());
         egress.setAmount(requestDTO.getAmount());
         egress.setDate(requestDTO.getDate());
         egress.setDescription(requestDTO.getDescription());
+        egress.setUser(user);
         egress.setEgressCategory(egressCategory);
 
         return egress;
@@ -34,6 +38,8 @@ public class EgressMapper {
         responseDTO.setAmount(egress.getAmount());
         responseDTO.setDate(egress.getDate());
         responseDTO.setDescription(egress.getDescription());
+
+        responseDTO.setUserId(egress.getUser().getId());
 
         responseDTO.setCategoryName(egress.getEgressCategory().getName().name());
         responseDTO.setCategoryDescription(egress.getEgressCategory().getDescription());

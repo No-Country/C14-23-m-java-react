@@ -1,7 +1,9 @@
 package com.nocountry.finanzas.models.response.egress;
 
 
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -10,12 +12,16 @@ import java.time.LocalDate;
 @Data
 public class EgressResponseDTO {
 
+    @NotNull(message = "El ID del usuario no puede estar vacio.")
+    private Long userId;
+
     private Long id;
 
-    @NotBlank(message = "El monto ingresado del gasto no debe estar vacio")
+    @NotNull(message = "El monto ingresado del gasto no debe estar vacio")
+    @Digits(integer = 8, fraction = 2, message = "El número debe tener un máximo de 8 dígitos antes de la coma y 2 decimales después de la coma.")
     private Double amount;
 
-    @NotBlank(message = "La fecha en la que se realiza el gasto no puede estar vacio")
+    @NotNull(message = "La fecha en la que se realiza el gasto no puede estar vacio")
     private LocalDate date;
 
     @Size(min = 0, max = 255, message = "La descripción no debe superar los 255 caracteres.")
