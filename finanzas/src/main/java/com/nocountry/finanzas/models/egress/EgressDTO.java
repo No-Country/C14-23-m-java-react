@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Data
 public class EgressDTO {
 
-    private Long id;
+    private Long idEgress;
 
     @NotNull(message = "El monto ingresado del gasto no debe ser nulo")
     @Digits(integer = 8, fraction = 2, message = "El número debe tener un máximo de 8 dígitos antes de la coma y 2 decimales después de la coma.")
