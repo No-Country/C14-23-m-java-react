@@ -3,6 +3,7 @@ package com.nocountry.finanzas.models;
 import com.nocountry.finanzas.entities.User;
 import com.nocountry.finanzas.models.request.UserLoggingDTO;
 import com.nocountry.finanzas.models.request.UserRequestDTO;
+import com.nocountry.finanzas.models.response.UserLoggingResponse;
 import com.nocountry.finanzas.models.response.UserResponseDTO;
 
 import java.util.ArrayList;
@@ -44,6 +45,16 @@ public class Mapper {
         return userResponseDTOList;
     }
 
+    public static UserLoggingResponse userToUserLoggingResponseDto(User user) {
+        UserLoggingResponse userLoggingResponse = new UserLoggingResponse();
 
+        userLoggingResponse.setIdUser(user.getId());
+        userLoggingResponse.setName(user.getName());
+        userLoggingResponse.setLast_name(user.getLast_name());
+        userLoggingResponse.setEmail(user.getEmail());
+        userLoggingResponse.setBirthday_date(user.getBirthday_date());
+
+        return userLoggingResponse;
+    }
 
 }
