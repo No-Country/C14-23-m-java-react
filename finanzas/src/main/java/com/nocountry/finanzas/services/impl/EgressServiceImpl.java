@@ -48,7 +48,8 @@ public class EgressServiceImpl implements EgressService {
         egressRepository.save(egress);
 
         user.getEgresses().add(egress); // guardo el egreso nuevo en la lista de egresos del usuario
-        //Hacer verificaciones de campos nulos? correctos? ver requerimientos
+
+        user.setTotalIncome(user.getTotalIncome() - egress.getAmount());
 
         return egressMapper.toDTO(egress);
     }

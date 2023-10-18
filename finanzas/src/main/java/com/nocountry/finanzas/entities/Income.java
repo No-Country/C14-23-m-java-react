@@ -11,10 +11,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Setter
 @Builder
 @Table(name = "tbl_income")
 public class Income {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -28,8 +28,10 @@ public class Income {
     private LocalDate date;
 
     @Column(name="description", nullable = false)
-    @Size(min = 0, max = 255, message = "La descripción no debe superar los 255 caracteres.")
     private String description;
+
+    @ManyToOne
+    private CategoryIncomeEnum categoryIncome;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")

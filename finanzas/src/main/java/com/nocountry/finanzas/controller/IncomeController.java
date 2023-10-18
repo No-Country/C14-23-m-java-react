@@ -4,6 +4,7 @@ import com.nocountry.finanzas.entities.Income;
 import com.nocountry.finanzas.models.IncomeMapper;
 import com.nocountry.finanzas.models.response.IncomeResponseDTO;
 import com.nocountry.finanzas.services.IncomeService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +50,7 @@ public class IncomeController {
 
     //Guardar Income
     @PostMapping(path = "/income", consumes = "application/json")
-    public ResponseEntity<IncomeResponseDTO> createIncome(@RequestBody IncomeResponseDTO requestDTO) {
+    public ResponseEntity<IncomeResponseDTO> createIncome(@RequestBody @Valid IncomeResponseDTO requestDTO) {
         try {
             Income income = incomeMapper.convertRequestDTOToIncome(requestDTO);
             Income createdIncome = incomeService.save(income);
