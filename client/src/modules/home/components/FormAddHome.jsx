@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { PropTypes } from 'prop-types';
+import { useEgress } from '../../../context/EgressContext';
 
 const FormAddHome = ({
   formType,
@@ -44,6 +45,8 @@ const FormAddHome = ({
     defaultValues: { category: '', type: formType },
   });
 
+  const { addNewGasto } = useEgress();
+
   const onSubmit = handleSubmit((data) => {
     let amount = parseFloat(data.amount);
     amount =
@@ -52,11 +55,15 @@ const FormAddHome = ({
         : amount.toFixed();
 
     const newData = {
-      ...data,
+      idUser: 1,
       amount: amount,
+      date: new Date().toISOString(),
+      description: data.description,
+      categoryName: data.category,
     };
 
-    console.log(newData);
+    addNewGasto(newData);
+
     handleClose();
     handleOpenAlert();
   });
