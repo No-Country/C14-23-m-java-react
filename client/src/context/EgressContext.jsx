@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
-import { getExpenses } from '../API/egress';
+import { addExpenses, getExpenses } from '../API/egress';
 
 const EgressContext = createContext();
 
@@ -28,7 +28,11 @@ export function EgressProvider({ children }) {
 
   const addNewGasto = async (expenses) => {
     try {
-      console.log(expenses);
+      const res = await addExpenses(expenses);
+
+      console.log(res);
+
+      // console.log(expenses);
     } catch (error) {
       console.log(error);
     }

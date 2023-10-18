@@ -42,7 +42,7 @@ const FormAddHome = ({
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: { category: '', type: formType },
+    defaultValues: { categoryName: '' },
   });
 
   const { addNewGasto } = useEgress();
@@ -55,14 +55,18 @@ const FormAddHome = ({
         : amount.toFixed();
 
     const newData = {
+      ...data,
       idUser: 1,
       amount: amount,
-      date: new Date().toISOString(),
-      description: data.description,
-      categoryName: data.category,
+      date: new Date().toISOString().split('T')[0],
     };
 
-    addNewGasto(newData);
+    if (formType === 'GASTO') {
+      addNewGasto(newData);
+    } else {
+      //addNewIncome
+      console.log('añadir ingreso');
+    }
 
     handleClose();
     handleOpenAlert();
@@ -100,16 +104,16 @@ const FormAddHome = ({
 
           <FormControl
             fullWidth
-            error={errors.category ? true : false}
+            error={errors.categoryName ? true : false}
             sx={{ mb: 2 }}
           >
-            <InputLabel id='category'>Categoría</InputLabel>
+            <InputLabel id='categoryName'>Categoría</InputLabel>
             <Controller
-              name='category'
+              name='categoryName'
               control={control}
               rules={{ required: 'La categoría es requerida' }}
               render={({ field }) => (
-                <Select labelId='category' label='Categoría' {...field}>
+                <Select labelId='categoryName' label='Categoría' {...field}>
                   {categories.map((category) => (
                     <MenuItem key={category.value} value={category.value}>
                       {category.option}
@@ -119,7 +123,7 @@ const FormAddHome = ({
               )}
             />
             <FormHelperText>
-              {errors.category ? errors.category.message : ''}
+              {errors.categoryName ? errors.categoryName.message : ''}
             </FormHelperText>
           </FormControl>
 
