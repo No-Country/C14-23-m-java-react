@@ -47,6 +47,7 @@ public class EgressServiceImpl implements EgressService {
         egress.setUser(user);
         egressRepository.save(egress);
 
+        user.getEgresses().add(egress); // guardo el egreso nuevo en la lista de egresos del usuario
         //Hacer verificaciones de campos nulos? correctos? ver requerimientos
 
         return egressMapper.toDTO(egress);
@@ -80,16 +81,20 @@ public class EgressServiceImpl implements EgressService {
     @Transactional
     @Override
     public void deleteEgressById(Long id) {
+        Egress egress = egressRepository.findById(id).get();
+        User user = userRepository.findById(egress.getUser().getId()).get();
+        user.getEgresses().remove(egress);
+
         egressRepository.deleteById(id);
         egressCategoryService.deleteEgressCategoryById(id);
     }
 
     @Transactional
     @Override
-    public List<EgressDTO> getEgressByUser(Long id) {
+    public List<EgressDTO> getEgressByUser(Long idUser) {
+        User user = userRepository.findById(idUser).get();
 
-
-        return  null;
+        return  egressMapper.egressDTOList(user.getEgresses());
     }
 
 }

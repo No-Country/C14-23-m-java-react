@@ -40,7 +40,7 @@ public class User {
     private LocalDate birthday_date;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Egress> egresses =new ArrayList<>();
+    private List<Egress> egresses = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Income> incomes = new ArrayList<>();

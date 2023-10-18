@@ -45,9 +45,9 @@ public class EgressController {
     }
 
     @GetMapping(path = "{id}/list/egress/")
-    public ResponseEntity<List<EgressDTO>> getEgressByUser(@PathVariable Long id) {
+    public ResponseEntity<List<EgressDTO>> getEgressByUser(@PathVariable Long idUser) {
         try {
-            List<EgressDTO> egressDTO = egressService.getEgressByUser(id);
+            List<EgressDTO> egressDTO = egressService.getEgressByUser(idUser);
             return ResponseEntity.ok(egressDTO);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
