@@ -4,16 +4,21 @@ import com.nocountry.finanzas.entities.Income;
 import com.nocountry.finanzas.repositories.IncomeRepository;
 import com.nocountry.finanzas.services.IncomeService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
-@AllArgsConstructor
 @Service
 public class IncomeServiceImpl implements IncomeService {
 
     private final IncomeRepository repository;
+
+    @Autowired
+    public IncomeServiceImpl(IncomeRepository repository) {
+        this.repository = repository;
+    }
 
     @Transactional(readOnly = true)
     @Override
@@ -40,4 +45,7 @@ public class IncomeServiceImpl implements IncomeService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+
+
 }

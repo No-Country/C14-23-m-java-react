@@ -30,8 +30,8 @@ public class Income {
     @Column(name="description", nullable = false)
     private String description;
 
-    @ManyToOne
-    private CategoryIncomeEnum categoryIncome;
+    //@ManyToOne
+    //private IncomeCategory categoryIncome;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
