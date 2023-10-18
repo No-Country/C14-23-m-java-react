@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useUser } from '../../context/UserContext';
 
 const theme = createTheme({
   palette: {
@@ -37,8 +38,10 @@ const RegisterContainer = () => {
     formState: { errors },
   } = useForm({});
 
+  const { userRegister } = useUser();
+
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    userRegister(data);
   });
 
   return (

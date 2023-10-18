@@ -5,7 +5,8 @@ import ExpenseByCategory from './components/ExpenseByCategory';
 import TotalAmountHome from './components/TotalAmountHome';
 import RecentActivity from './components/RecentActivity';
 import ModalHome from './components/ModalHome';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useEgress } from '../../context/EgressContext';
 
 const HomeContainer = () => {
   const [modal, setModal] = useState(false);
@@ -20,6 +21,12 @@ const HomeContainer = () => {
     setModal(true);
   };
   const handleClose = () => setModal(false);
+
+  const { allExpenses } = useEgress();
+
+  useEffect(() => {
+    allExpenses();
+  }, [allExpenses]);
 
   return (
     <Box
