@@ -50,7 +50,7 @@ public class EgressCategoryImpl implements EgressCategoryService {
     @Override
     public EgressCategory updateEgressCategory(EgressCategory egressCategory) {
         //Hacer verificaciones de campos nulos? correctos? ver requerimientos
-        System.out.println(" El id del category ");
+
         return repository.save(egressCategory);
     }
 
