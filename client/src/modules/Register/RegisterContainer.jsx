@@ -1,12 +1,16 @@
 import {
+  Alert,
   Box,
   Button,
   Container,
   FormControl,
+  FormHelperText,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
+  Snackbar,
   TextField,
   ThemeProvider,
   Typography,
@@ -15,6 +19,8 @@ import {
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUser } from '../../context/UserContext';
+import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -26,6 +32,7 @@ const theme = createTheme({
 
 const RegisterContainer = () => {
   const [selectedCountry, setSelectedCountry] = useState('select');
+  const navigate = useNavigate();
 
   const handleCountryChange = (event) => {
     const selectedValue = event.target.value;
@@ -36,16 +43,55 @@ const RegisterContainer = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm({});
 
   const { userRegister } = useUser();
 
-  const onSubmit = handleSubmit((data) => {
-    userRegister(data);
+  const [alert, setAlert] = useState(false);
+  const handleCloseAlert = () => setAlert(false);
+  const handleOpenAlert = () => setAlert(true);
+
+  const onSubmit = handleSubmit(async (data) => {
+    if (data.country === 'select') {
+      setError('country', {
+        message: 'Por favor, seleccione un país.',
+      });
+      return;
+    }
+    const res = await userRegister(data);
+
+    if (res.status === 201) {
+      handleOpenAlert();
+      setTimeout(() => navigate('/login'), 3000);
+    }
   });
 
   return (
     <ThemeProvider theme={theme}>
+      <Snackbar
+        open={alert}
+        onClose={handleCloseAlert}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          variant='filled'
+          color={'success'}
+          action={
+            <IconButton
+              aria-label='close'
+              color='inherit'
+              size='small'
+              onClick={handleCloseAlert}
+            >
+              <CloseIcon fontSize='inherit' />
+            </IconButton>
+          }
+        >
+          Usuario creado correctamente
+        </Alert>
+      </Snackbar>
       <Container component='main' maxWidth='xs'>
         <Box
           sx={{
@@ -99,11 +145,11 @@ const RegisterContainer = () => {
               <TextField
                 fullWidth
                 type='text'
-                id={'lastName'}
+                id={'last_name'}
                 label={'Apellido'}
-                name={'lastName'}
+                name={'last_name'}
                 required={true}
-                {...register('lastName', {
+                {...register('last_name', {
                   required: 'Apellido es requerido',
                   pattern: {
                     value: /^[A-Za-z\s]+$/,
@@ -125,8 +171,8 @@ const RegisterContainer = () => {
                     return true;
                   },
                 })}
-                error={errors.lastName ? true : false}
-                helperText={errors.lastName?.message}
+                error={errors.last_name ? true : false}
+                helperText={errors.last_name?.message}
               />
             </Grid>
             <Grid item xs={12}>
@@ -195,12 +241,12 @@ const RegisterContainer = () => {
                 <TextField
                   fullWidth
                   type='date'
-                  id='date'
+                  id='birthday_date'
                   label='Fecha de nacimiento'
-                  name='date'
+                  name='birthday_date'
                   InputLabelProps={{ shrink: true }}
                   required={true}
-                  {...register('date', {
+                  {...register('birthday_date', {
                     required: 'Fecha de nacimiento es requerida',
                     validate: (value) => {
                       const birthDate = new Date(value);
@@ -214,8 +260,8 @@ const RegisterContainer = () => {
                         : true;
                     },
                   })}
-                  error={errors.date ? true : false}
-                  helperText={errors.date?.message}
+                  error={errors.birthday_date ? true : false}
+                  helperText={errors.birthday_date?.message}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -226,19 +272,25 @@ const RegisterContainer = () => {
                   <Select
                     labelId='country'
                     id='country'
-                    label='Country'
+                    label='País de residencia'
                     sx={{ width: '100%' }}
                     {...register('country', {
                       required: 'País de residencia es requerido',
                     })}
                     value={selectedCountry}
                     onChange={handleCountryChange}
+                    error={errors.country ? true : false}
                   >
                     <MenuItem value={'select'} disabled>
                       Seleccionar
                     </MenuItem>
                     <MenuItem value='AR'>Argentina</MenuItem>
                   </Select>
+                  {errors.country && (
+                    <FormHelperText error>
+                      {errors.country.message}
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
             </Grid>

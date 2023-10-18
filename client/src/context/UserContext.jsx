@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
-//import { registerRequest } from '../API/user';
+import { registerRequest } from '../API/user';
 
 const UserContext = createContext();
 
@@ -19,7 +19,8 @@ export function UserProvider({ children }) {
 
   const userRegister = async (user) => {
     try {
-      console.log(user);
+      const res = await registerRequest(user);
+      return res;
     } catch (error) {
       console.log(error);
     }
