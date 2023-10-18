@@ -6,22 +6,27 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-} from "@mui/material";
+} from '@mui/material';
 
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import React from "react";
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 function NavbarListDrawer({ navLinks }) {
+  NavbarListDrawer.propTypes = {
+    navLinks: PropTypes.array.isRequired,
+  };
+
   return (
-    <Box sx={{ width: 250, bgcolor: "#8c8c8c" }}>
+    <Box sx={{ width: 250, bgcolor: '#8c8c8c' }}>
       <nav>
         <List>
           {navLinks.map((item) => (
             <ListItem disablePadding key={item.title}>
-              <ListItemButton component="a" href= {item.path} >
+              <ListItemButton component={NavLink} to={item.path}>
                 <ListItemIcon>
                   {item.icon}
-                  <ListItemText primary= {item.title} />
+                  <ListItemText primary={item.title} />
                 </ListItemIcon>
               </ListItemButton>
             </ListItem>
@@ -33,10 +38,10 @@ function NavbarListDrawer({ navLinks }) {
       <nav>
         <List>
           <ListItem disablePadding>
-            <ListItemButton component="a" href="#cerrarSesiond">
+            <ListItemButton component='a' href='#cerrarSesiond'>
               <ListItemIcon>
                 <ExitToAppIcon />
-                <ListItemText primary="Cerrar sesion" />
+                <ListItemText primary='Cerrar sesion' />
               </ListItemIcon>
             </ListItemButton>
           </ListItem>

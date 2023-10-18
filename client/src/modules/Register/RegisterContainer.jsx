@@ -5,7 +5,6 @@ import {
   FormControl,
   Grid,
   InputLabel,
-  Menu,
   MenuItem,
   Select,
   TextField,
@@ -13,6 +12,7 @@ import {
   Typography,
   createTheme,
 } from '@mui/material';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const theme = createTheme({
@@ -24,6 +24,13 @@ const theme = createTheme({
 });
 
 const RegisterContainer = () => {
+  const [selectedCountry, setSelectedCountry] = useState('select');
+
+  const handleCountryChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedCountry(selectedValue);
+  };
+
   const {
     register,
     handleSubmit,
@@ -68,7 +75,7 @@ const RegisterContainer = () => {
                   },
                   minLength: {
                     value: 2,
-                    message: 'Debe ser mayor a 3 caracteres',
+                    message: 'Debe ser mayor a 2 caracteres',
                   },
                   maxLength: {
                     value: 45,
@@ -127,15 +134,17 @@ const RegisterContainer = () => {
                 label={'Email'}
                 name={'Email'}
                 required={true}
+                autoComplete={'email'}
                 {...register('email', {
                   required: 'Email es requerido',
                   pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    value:
+                      /^[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
                     message: 'El email no es valido',
                   },
                   minLength: {
-                    value: 11,
-                    message: 'Debe ser mayor a 11 caracteres',
+                    value: 18,
+                    message: 'Debe ser mayor a 18 caracteres',
                   },
                   maxLength: {
                     value: 255,
@@ -151,16 +160,19 @@ const RegisterContainer = () => {
                 fullWidth
                 type='password'
                 id={'password'}
-                label={'Contraseña (Mínimo 8 caracteres y un símbolo)'}
+                label={
+                  'Contraseña: 8+ caracteres, letras y/o números y 1 símbolo'
+                }
                 name={'password'}
                 required={true}
+                autoComplete={'current-password'}
                 {...register('password', {
                   required: 'Contraseña es requerida',
                   pattern: {
                     value:
                       /^(?=.*[A-Za-z0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]+$/,
                     message:
-                      'La contraseña debe contener caracteres alfanuméricos y símbolos, y no debe incluir espacios',
+                      "La contraseña debe contener letras, símbolos y no debe incluir los siguientes símbolos: /= ¡ ' ? ¿ ´ [ { ] } , ; . : -",
                   },
                   minLength: {
                     value: 8,
@@ -186,16 +198,16 @@ const RegisterContainer = () => {
                   InputLabelProps={{ shrink: true }}
                   required={true}
                   {...register('date', {
-                    required: 'Date is required',
+                    required: 'Fecha de nacimiento es requerida',
                     validate: (value) => {
                       const birthDate = new Date(value);
                       const currentDate = new Date();
                       const age =
                         currentDate.getFullYear() - birthDate.getFullYear();
                       return age < 18
-                        ? 'You must be over 18 years old.'
+                        ? 'Debes ser mayor de edad para registrarte'
                         : age > 100
-                        ? 'The date is invalid.'
+                        ? 'La fecha ingresada no es valida'
                         : true;
                     },
                   })}
@@ -206,7 +218,7 @@ const RegisterContainer = () => {
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor='country' required={true}>
-                    País
+                    País de residencia
                   </InputLabel>
                   <Select
                     labelId='country'
@@ -214,10 +226,15 @@ const RegisterContainer = () => {
                     label='Country'
                     sx={{ width: '100%' }}
                     {...register('country', {
-                      required: 'Country is required',
+                      required: 'País de residencia es requerido',
                     })}
+                    value={selectedCountry}
+                    onChange={handleCountryChange}
                   >
-                    <MenuItem value={'AR'}>Argentina</MenuItem>
+                    <MenuItem value={'select'} disabled>
+                      Seleccionar
+                    </MenuItem>
+                    <MenuItem value='AR'>Argentina</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
