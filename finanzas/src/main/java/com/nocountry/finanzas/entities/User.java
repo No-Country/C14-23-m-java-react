@@ -45,6 +45,8 @@ public class User {
     @Column(name = "total_income")
     private Double totalIncome;
 
+    private Integer countLogging;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Egress> egresses = new ArrayList<>();
 

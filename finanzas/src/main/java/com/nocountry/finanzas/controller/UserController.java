@@ -1,6 +1,8 @@
 package com.nocountry.finanzas.controller;
 
 import com.nocountry.finanzas.exceptions.BadRequestException;
+import com.nocountry.finanzas.exceptions.EmailAlreadyExistsException;
+import com.nocountry.finanzas.exceptions.InvalidEmailType;
 import com.nocountry.finanzas.exceptions.NotFoundException;
 import com.nocountry.finanzas.models.Mapper;
 import com.nocountry.finanzas.models.request.UserLoggingDTO;
@@ -27,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/register")
-    public ResponseEntity<?> saveUser(@RequestBody @Valid UserRequestDTO userRequestDTO) throws BadRequestException {
+    public ResponseEntity<?> saveUser(@RequestBody @Valid UserRequestDTO userRequestDTO) throws BadRequestException, InvalidEmailType, EmailAlreadyExistsException {
         try {
             UserResponseDTO userResponseDTO = userService.saveUser(userRequestDTO);
             return new ResponseEntity<>(userResponseDTO,HttpStatus.CREATED);
