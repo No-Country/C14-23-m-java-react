@@ -40,7 +40,7 @@ public class EgressServiceImpl implements EgressService {
     @Override
     public EgressDTO createdEgress(CreateEgressDTO egressDTO) {
         Egress egress = egressMapper.toEgress(egressDTO);
-        User user = userRepository.findById(egress.getUser().getIdUser()).get();
+        User user = userRepository.findById(egress.getUser().getId()).get();
 
         EgressCategory egressCategory = egressCategoryService.createEgressCategory(egress.getEgressCategory());
         egress.setEgressCategory(egressCategory);

@@ -14,7 +14,7 @@ public class Egress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    protected Long idEgress;
+    protected Long id;
 
     @Column(name = "amount", nullable = false)
     protected Double amount;

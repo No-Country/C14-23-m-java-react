@@ -17,7 +17,7 @@ public class MapperEgress {
         Egress egress = new Egress();
 
         if (egressDTO.getIdEgress() != null) {
-            egress.setIdEgress(egressDTO.getIdEgress());
+            egress.setId(egressDTO.getIdEgress());
         }
 
         egress.setAmount(egressDTO.getAmount());
@@ -27,7 +27,7 @@ public class MapperEgress {
 
         if (egressDTO instanceof CreateEgressDTO) {
             User user = new User();
-            user.setIdUser(((CreateEgressDTO) egressDTO).getUserId());
+            user.setId(((CreateEgressDTO) egressDTO).getUserId());
 
             egress.setUser(user);
         }
@@ -38,7 +38,7 @@ public class MapperEgress {
     public EgressDTO toDTO(Egress egress) {
         EgressDTO egressDTO = new EgressDTO();
 
-        egressDTO.setIdEgress(egress.getIdEgress());
+        egressDTO.setIdEgress(egress.getId());
         egressDTO.setAmount(egress.getAmount());
         egressDTO.setDate(egress.getDate());
         egressDTO.setDescription(egress.getDescription());

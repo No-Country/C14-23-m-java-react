@@ -26,7 +26,7 @@ public class Mapper {
 
         UserResponseDTO userResponseDTO = new UserResponseDTO();
 
-        userResponseDTO.setIdUser(user.getIdUser());
+        userResponseDTO.setIdUser(user.getId());
         userResponseDTO.setName(user.getName());
         userResponseDTO.setLast_name(user.getLast_name());
         userResponseDTO.setEmail(user.getEmail());
