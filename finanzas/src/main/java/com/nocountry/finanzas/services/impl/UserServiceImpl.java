@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
         boolean isEmailCorrect = userOptional.get().getEmail().equalsIgnoreCase(userLoggingDTO.getEmail());
         boolean isPasswordCorrect = userOptional.get().getPassword().equals(userLoggingDTO.getPassword());
 
-        UserLoggingResponse response = (UserLoggingResponse) Mapper.userToUserResponseDto(userOptional.get());
+        UserLoggingResponse response = Mapper.userToUserLoggingResponseDto(userOptional.get());
 
         if (isEmailCorrect && isPasswordCorrect) {
             response.setErrorMessage(null);
