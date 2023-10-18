@@ -61,7 +61,7 @@ function EgressDetails() {
                 <ListItem key={index} >
                   <ListItemText
                     primary={egreso.description}
-                    secondary={`Monto: ${egreso.amount}, Fecha: ${egreso.date}`}
+                    secondary={`Monto: ${egreso.amount}, Fecha: ${egreso.date} Categoria : ${egreso.categoryName}` }
                   />
                    <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="delete" onClick={(item) => delExpense(egreso.idEgress)} >
