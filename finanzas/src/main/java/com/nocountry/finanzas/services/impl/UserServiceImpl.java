@@ -1,9 +1,12 @@
 package com.nocountry.finanzas.services.impl;
 
 import com.nocountry.finanzas.entities.User;
+import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.NotFoundException;
 import com.nocountry.finanzas.models.Mapper;
+import com.nocountry.finanzas.models.request.UserLoggingDTO;
 import com.nocountry.finanzas.models.request.UserRequestDTO;
+import com.nocountry.finanzas.models.response.UserLoggingResponse;
 import com.nocountry.finanzas.models.response.UserResponseDTO;
 import com.nocountry.finanzas.repositories.UserRepository;
 import com.nocountry.finanzas.services.UserService;
@@ -67,6 +70,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Transactional
+    @Override
+    public UserLoggingResponse loggingUser(UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException {
+        Optional<User> userOptional = userRepository.findById(userLoggingDTO.getIdUser());
+
+        if (userOptional.isEmpty()){
+            throw new NotFoundException("Could not found user");
+        }
+
+        boolean isEmailCorrect = userOptional.get().getEmail().equalsIgnoreCase(userLoggingDTO.getEmail());
+        boolean isPasswordCorrect = userOptional.get().getPassword().equals(userLoggingDTO.getPassword());
+
+        UserLoggingResponse response = (UserLoggingResponse) Mapper.userToUserResponseDto(userOptional.get());
+
+        if (isEmailCorrect && isPasswordCorrect) {
+            response.setErrorMessage(null);
+        } else {
+            response.setErrorMessage("Credenciales incorrectas. Verifica tu correo electrónico y contraseña.");
+        }
+
+        return response;
     }
 
 }

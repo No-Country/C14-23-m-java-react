@@ -15,6 +15,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:5173")
 public class EgressController {
 
     private final EgressService egressService;
@@ -39,6 +40,16 @@ public class EgressController {
         try {
             List<EgressDTO> responseDTO = egressService.getAllEgress();
             return ResponseEntity.ok(responseDTO);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping(path = "{id}/list/egress/")
+    public ResponseEntity<List<EgressDTO>> getEgressByUser(@PathVariable Long id) {
+        try {
+            List<EgressDTO> egressDTO = egressService.getEgressByUser(id);
+            return ResponseEntity.ok(egressDTO);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }

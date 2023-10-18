@@ -84,4 +84,12 @@ public class EgressServiceImpl implements EgressService {
         egressCategoryService.deleteEgressCategoryById(id);
     }
 
+    @Transactional
+    @Override
+    public List<EgressDTO> getEgressByUser(Long id) {
+
+
+        return  null;
+    }
+
 }
