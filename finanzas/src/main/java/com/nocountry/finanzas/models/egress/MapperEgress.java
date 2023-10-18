@@ -43,6 +43,7 @@ public class MapperEgress {
         egressDTO.setDate(egress.getDate());
         egressDTO.setDescription(egress.getDescription());
 
+
         egressDTO.setCategoryName(egress.getEgressCategory().getName().name());
 
         return egressDTO;

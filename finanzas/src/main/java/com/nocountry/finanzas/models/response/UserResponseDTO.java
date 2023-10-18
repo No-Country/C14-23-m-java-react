@@ -12,4 +12,5 @@ public class UserResponseDTO {
     private String last_name;
     private String email;
     private LocalDate birthday_date;
+    private Double totalIncome;
 }

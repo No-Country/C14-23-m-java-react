@@ -39,6 +39,12 @@ public class User {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate birthday_date;
 
+    @Column(name="country", nullable = false)
+    private Countries country;
+
+    @Column(name = "total_income")
+    private Double totalIncome;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Egress> egresses = new ArrayList<>();
 

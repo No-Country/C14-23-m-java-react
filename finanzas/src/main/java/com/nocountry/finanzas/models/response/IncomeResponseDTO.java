@@ -11,5 +11,6 @@ public class IncomeResponseDTO {
     private Double amount;
     private LocalDate date;
     private String description;
+    private String categoryIncome;
 
 }

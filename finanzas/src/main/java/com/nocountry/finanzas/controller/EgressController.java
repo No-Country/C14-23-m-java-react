@@ -44,7 +44,7 @@ public class EgressController {
         }
     }
 
-    @GetMapping(path = "{id}/list/egress/")
+    @GetMapping(path = "{idUser}/list/egress/")
     public ResponseEntity<List<EgressDTO>> getEgressByUser(@PathVariable Long idUser) {
         try {
             List<EgressDTO> egressDTO = egressService.getEgressByUser(idUser);

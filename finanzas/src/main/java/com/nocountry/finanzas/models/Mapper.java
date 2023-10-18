@@ -1,5 +1,6 @@
 package com.nocountry.finanzas.models;
 
+import com.nocountry.finanzas.entities.Countries;
 import com.nocountry.finanzas.entities.User;
 import com.nocountry.finanzas.models.request.UserLoggingDTO;
 import com.nocountry.finanzas.models.request.UserRequestDTO;
@@ -20,6 +21,8 @@ public class Mapper {
         user.setEmail(userRequestDTO.getEmail());
         user.setPassword(userRequestDTO.getPassword());
         user.setBirthday_date(userRequestDTO.getBirthday_date());
+        user.setCountry(searchCountry(userRequestDTO.getCountry()));
+        user.setTotalIncome(0.0);
 
         return user;
     }
@@ -33,6 +36,7 @@ public class Mapper {
         userResponseDTO.setLast_name(user.getLast_name());
         userResponseDTO.setEmail(user.getEmail());
         userResponseDTO.setBirthday_date(user.getBirthday_date());
+        userResponseDTO.setTotalIncome(user.getTotalIncome());
 
         return userResponseDTO;
     }
@@ -55,6 +59,17 @@ public class Mapper {
         userLoggingResponse.setBirthday_date(user.getBirthday_date());
 
         return userLoggingResponse;
+    }
+
+    public static Countries searchCountry(String country) {
+
+        for (Countries element : Countries.values()) {
+            if (element.name().equalsIgnoreCase(country)) {
+                return element;
+            }
+        }
+
+        return Countries.ARGENTINA;
     }
 
 }

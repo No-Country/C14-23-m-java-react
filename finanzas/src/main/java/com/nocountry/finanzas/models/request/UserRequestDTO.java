@@ -18,7 +18,12 @@ public class UserRequestDTO {
     @Email(message = "El mail ingresado no es valido")
     private String email;
 
+    @NotBlank(message = "Este campo es obligatorio")
     private String password;
 
+    @NotNull(message = "Este campo es obligatorio")
     private LocalDate birthday_date;
+
+    @NotBlank(message = "Este campo es obligatorio")
+    private String country;
 }
