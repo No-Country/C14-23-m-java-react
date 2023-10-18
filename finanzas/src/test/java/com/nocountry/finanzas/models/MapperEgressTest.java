@@ -69,7 +69,7 @@ public class MapperEgressTest {
         Egress egress1 = new Egress();
         EgressCategory egressCategory1 = new EgressCategory(CategoryEnum.EDUCACION);
 
-        egress1.setId(1L);
+        egress1.setIdEgress(1L);
         egress1.setAmount(1800.0);
         egress1.setDate(date.plusDays(1));
         egress1.setDescription("Description 1");
@@ -78,7 +78,7 @@ public class MapperEgressTest {
         Egress egress2 = new Egress();
         EgressCategory egressCategory2 = new EgressCategory(CategoryEnum.SALUD_CUIDADO_PERSONAL);
 
-        egress2.setId(2L);
+        egress2.setIdEgress(2L);
         egress2.setAmount(5200.0);
         egress2.setDate(date.plusDays(2));
         egress2.setDescription("Description 2");
