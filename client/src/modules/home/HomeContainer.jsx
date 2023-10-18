@@ -1,4 +1,5 @@
-import { Box, Grid } from '@mui/material';
+import { Alert, Box, Grid, IconButton, Snackbar } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import IncomeExpenseComponent from './components/IncomeExpenseComponent';
 import ExpenseByCategory from './components/ExpenseByCategory';
 import TotalAmountHome from './components/TotalAmountHome';
@@ -9,6 +10,10 @@ import { useState } from 'react';
 const HomeContainer = () => {
   const [modal, setModal] = useState(false);
   const [type, setType] = useState('');
+  const [alert, setAlert] = useState(false);
+
+  const handleCloseAlert = () => setAlert(false);
+  const handleOpenAlert = () => setAlert(true);
 
   const handleOpen = (formType) => {
     setType(formType);
@@ -27,6 +32,39 @@ const HomeContainer = () => {
         color={'green'}
       />
       <Grid container spacing={2} sx={{ height: '100%' }}>
+        <ModalHome
+          open={modal}
+          handleClose={handleClose}
+          handleOpenAlert={handleOpenAlert}
+          formType={type}
+        />
+
+        <Snackbar
+          open={alert}
+          onClose={handleCloseAlert}
+          autoHideDuration={3000}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+          <Alert
+            variant='filled'
+            color={type === 'GASTO' ? 'error' : 'success'}
+            action={
+              <IconButton
+                aria-label='close'
+                color='inherit'
+                size='small'
+                onClick={handleCloseAlert}
+              >
+                <CloseIcon fontSize='inherit' />
+              </IconButton>
+            }
+          >
+            {type === 'GASTO'
+              ? 'Tu gasto se registró con éxito!'
+              : 'Tu ingreso se registró con éxito!'}
+          </Alert>
+        </Snackbar>
+
         <Grid item container xs={8} alignItems='center'>
           <Grid
             item
@@ -37,15 +75,7 @@ const HomeContainer = () => {
               justifyContent: 'center',
             }}
           >
-            <ModalHome open={modal} handleClose={handleClose} formType={type} />
-            <button onClick={() => handleOpen('gasto')}>
-              abrir modal gasto
-            </button>
-            <button onClick={() => handleOpen('ingreso')}>
-              abrir modal ingreso
-            </button>
-
-            <IncomeExpenseComponent />
+            <IncomeExpenseComponent handleOpen={handleOpen} />
           </Grid>
           <Grid
             item
@@ -56,7 +86,7 @@ const HomeContainer = () => {
               justifyContent: 'center',
             }}
           >
-            <ExpenseByCategory />
+            <ExpenseByCategory handleOpen={handleOpen} />
           </Grid>
         </Grid>
         <Grid item container xs={4}>

@@ -14,10 +14,17 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { PropTypes } from 'prop-types';
 
-const FormAddHome = ({ formType, handleClose }) => {
+const FormAddHome = ({
+  formType,
+  handleClose,
+  categories,
+  handleOpenAlert,
+}) => {
   FormAddHome.propTypes = {
     formType: PropTypes.string.isRequired,
     handleClose: PropTypes.func.isRequired,
+    handleOpenAlert: PropTypes.func.isRequired,
+    categories: PropTypes.array.isRequired,
   };
 
   const theme = createTheme({
@@ -28,30 +35,37 @@ const FormAddHome = ({ formType, handleClose }) => {
     },
   });
 
-  const defaultValues =
-    formType === 'gasto'
-      ? { category: '', type: formType }
-      : { type: formType };
-
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues,
+    defaultValues: { category: '', type: formType },
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    let amount = parseFloat(data.amount);
+    amount =
+      amount % 1 !== 0
+        ? (Math.round(amount * 100) / 100).toFixed(2)
+        : amount.toFixed();
+
+    const newData = {
+      ...data,
+      amount: amount,
+    };
+
+    console.log(newData);
     handleClose();
+    handleOpenAlert();
   });
 
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ p: 5 }}>
         <Typography variant='h5' align='center'>
-          {formType === 'gasto' ? 'Añadir Gasto' : 'Añadir Ingreso'}
+          {formType === 'GASTO' ? 'Añadir Gasto' : 'Añadir Ingreso'}
         </Typography>
         <Box component='form' sx={{ mt: 2 }} onSubmit={onSubmit}>
           <TextField
@@ -66,32 +80,41 @@ const FormAddHome = ({ formType, handleClose }) => {
             })}
             error={errors.amount ? true : false}
             helperText={errors.amount?.message}
+            onBlur={(e) => {
+              const value = parseFloat(e.target.value);
+              if (!isNaN(value)) {
+                e.target.value = Math.round(value * 100) / 100;
+              }
+            }}
+            inputProps={{
+              step: 0.01,
+            }}
           />
 
-          {formType === 'gasto' && (
-            <FormControl
-              fullWidth
-              error={errors.category ? true : false}
-              sx={{ mb: 2 }}
-            >
-              <InputLabel id='category'>Categoría</InputLabel>
-              <Controller
-                name='category'
-                control={control}
-                rules={{ required: 'La categoría es requerida' }}
-                render={({ field }) => (
-                  <Select labelId='category' label='Categoría' {...field}>
-                    <MenuItem value='salud'>Salud</MenuItem>
-                    <MenuItem value='entretenimiento'>Entretenimiento</MenuItem>
-                    <MenuItem value='alimentacion'>Alimentación</MenuItem>
-                  </Select>
-                )}
-              />
-              <FormHelperText>
-                {errors.category ? errors.category.message : ''}
-              </FormHelperText>
-            </FormControl>
-          )}
+          <FormControl
+            fullWidth
+            error={errors.category ? true : false}
+            sx={{ mb: 2 }}
+          >
+            <InputLabel id='category'>Categoría</InputLabel>
+            <Controller
+              name='category'
+              control={control}
+              rules={{ required: 'La categoría es requerida' }}
+              render={({ field }) => (
+                <Select labelId='category' label='Categoría' {...field}>
+                  {categories.map((category) => (
+                    <MenuItem key={category.value} value={category.value}>
+                      {category.option}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+            />
+            <FormHelperText>
+              {errors.category ? errors.category.message : ''}
+            </FormHelperText>
+          </FormControl>
 
           <TextField
             sx={{ mb: 2 }}
@@ -101,7 +124,10 @@ const FormAddHome = ({ formType, handleClose }) => {
             label={'Descripción'}
             name={'description'}
             {...register('description', {
-              required: 'La descripción es requerida',
+              maxLength: {
+                value: 100,
+                message: 'Máximo 100 caracteres permitidos para este campo',
+              },
             })}
             error={errors.description ? true : false}
             helperText={errors.description?.message}

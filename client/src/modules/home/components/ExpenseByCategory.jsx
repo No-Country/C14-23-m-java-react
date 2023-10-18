@@ -3,10 +3,15 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import TotalAmountHome from './TotalAmountHome';
+import { PropTypes } from 'prop-types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const ExpenseByCategory = () => {
+const ExpenseByCategory = ({ handleOpen }) => {
+  ExpenseByCategory.propTypes = {
+    handleOpen: PropTypes.func.isRequired,
+  };
+
   const [saldo, setSaldo] = useState(10000);
   const [gastos, setGastos] = useState(7000);
 
@@ -52,6 +57,7 @@ const ExpenseByCategory = () => {
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Button
+            onClick={() => handleOpen('GASTO')}
             type='button'
             fullWidth
             variant='contained'

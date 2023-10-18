@@ -27,7 +27,7 @@ const LandingContainer = () => {
             <TextLanding
               variant='h2'
               component='h1'
-              text='Sistema de gestión de de finanzas personales'
+              text='Sistema de gestión de finanzas personales'
             />
             <TextLanding
               variant='h6'

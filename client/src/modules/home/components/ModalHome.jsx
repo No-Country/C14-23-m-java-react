@@ -3,12 +3,38 @@ import FormAddHome from './FormAddHome';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { PropTypes } from 'prop-types';
 
-const ModalHome = ({ open, handleClose, formType }) => {
+const ModalHome = ({ open, handleClose, handleOpenAlert, formType }) => {
   ModalHome.propTypes = {
     open: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
+    handleOpenAlert: PropTypes.func.isRequired,
     formType: PropTypes.string.isRequired,
   };
+
+  const expenseCategories = [
+    { option: 'Alimentación', value: 'ALIMENTACION' },
+    { option: 'Vivienda', value: 'VIVIENDA' },
+    { option: 'Transporte', value: 'TRANSPORTE' },
+    { option: 'Entretenimiento', value: 'ENTRETENIMIENTO' },
+    { option: 'Salud - Cuidado Personal', value: 'SALUD_CUIDADO PERSONAL' },
+    { option: 'Educación', value: 'EDUCACION' },
+    { option: 'Vestimenta', value: 'VESTIMENTA' },
+    { option: 'Servicios', value: 'SERVICIOS' },
+    { option: 'Ahorro - Inversión', value: 'AHORRO_INVERSION' },
+    { option: 'Viaje - Vacaciones', value: 'VIAJE_VACACIONES' },
+    { option: 'Otros', value: 'OTROS' },
+  ];
+
+  const incomeCategories = [
+    { option: 'Sueldo Mensual', value: 'SUELDO_MENSUAL' },
+    { option: 'Préstamo', value: 'PRESTAMO' },
+    { option: 'Clientes Regalo', value: 'CLIENTES_REGALO' },
+    { option: 'Bono Extra', value: 'BONO_EXTRA' },
+    { option: 'Otros', value: 'OTROS' },
+  ];
+
+  const categories =
+    formType === 'GASTO' ? expenseCategories : incomeCategories;
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -32,7 +58,12 @@ const ModalHome = ({ open, handleClose, formType }) => {
         >
           <CloseOutlinedIcon />
         </IconButton>
-        <FormAddHome formType={formType} handleClose={handleClose} />
+        <FormAddHome
+          handleOpenAlert={handleOpenAlert}
+          formType={formType}
+          handleClose={handleClose}
+          categories={categories}
+        />
       </Box>
     </Modal>
   );
