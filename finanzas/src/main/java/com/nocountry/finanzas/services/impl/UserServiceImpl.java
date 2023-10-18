@@ -24,11 +24,12 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private EmailValidator emailValidator;
+    private final EmailValidator emailValidator;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, EmailValidator emailValidator) {
         this.userRepository = userRepository;
+        this.emailValidator = emailValidator;
     }
 
 
@@ -102,6 +103,8 @@ public class UserServiceImpl implements UserService {
 
         if (isEmailCorrect && isPasswordCorrect) {
             userOptional.get().setCountLogging(userOptional.get().getCountLogging() + 1);
+            userRepository.save(userOptional.get());
+
             response.setErrorMessage(null);
         } else {
             response.setErrorMessage("Credenciales incorrectas. Verifica tu correo electrónico y contraseña.");
