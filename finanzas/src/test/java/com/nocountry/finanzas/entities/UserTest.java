@@ -1,14 +1,11 @@
 package com.nocountry.finanzas.entities;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -52,7 +49,7 @@ public class UserTest {
 
         assertNotNull(userDefault);
 
-        assertNull(userDefault.getId());
+        assertNull(userDefault.getIdUser());
         assertNull(userDefault.getName());
         assertNull(userDefault.getLast_name());
         assertNull(userDefault.getEmail());
@@ -63,7 +60,7 @@ public class UserTest {
     @Test
     public void getterTest() {
         assertNotNull(user);
-        assertNull(user.getId());
+        assertNull(user.getIdUser());
 
         assertEquals("name", user.getName());
         assertEquals("last name", user.getLast_name());

@@ -32,7 +32,7 @@ class UserServiceTest {
         Mockito.when(userRepository.save(Mockito.any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         User user = User.builder()
-                .id(1L)
+                .idUser(1L)
                 .name("Name")
                 .last_name("Last Name")
                 .email("email@prueba.com")
@@ -47,7 +47,7 @@ class UserServiceTest {
     public void findById() throws NotFoundException {
         Long id = 1L;
         User user = userService.getUserById(id);
-        assertEquals(id,user.getId());
+        assertEquals(id,user.getIdUser());
         System.out.println(user.toString());
     }
 

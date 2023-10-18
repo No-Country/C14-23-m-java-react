@@ -2,12 +2,8 @@ package com.nocountry.finanzas.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.time.LocalDate;
 
@@ -22,7 +18,7 @@ public class Income {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private Long id;
+    private Long idIncome;
 
     @Column(name="amount", nullable = false)
     private Double amount;

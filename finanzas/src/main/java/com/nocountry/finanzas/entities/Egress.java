@@ -2,7 +2,6 @@ package com.nocountry.finanzas.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -15,7 +14,7 @@ public class Egress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    protected Long id;
+    protected Long idEgress;
 
     @Column(name = "amount", nullable = false)
     protected Double amount;
