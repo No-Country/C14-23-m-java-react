@@ -30,7 +30,7 @@ public class EgressTest {
 
         assertNotNull(egressDefault);
 
-        assertNull(egressDefault.getIdEgress());
+        assertNull(egressDefault.getId());
         assertNull(egressDefault.getAmount());
         assertNull(egressDefault.getDate());
         assertNull(egressDefault.getDescription());
@@ -40,7 +40,7 @@ public class EgressTest {
     @Test
     public void getterTest() {
         assertNotNull(egress);
-        assertNull(egress.getIdEgress());
+        assertNull(egress.getId());
         assertNull(egress.getDescription());
 
         assertEquals(1000.0, (double) egress.getAmount(), 0.000001);
@@ -84,10 +84,10 @@ public class EgressTest {
         category2.setId(2L);
 
         Egress egress2 = new Egress(1200.0 , date2, category2);
-        egress2.setIdEgress(1L);
+        egress2.setId(1L);
         egress2.setDescription("Description egress test");
 
-        assertTrue(egress2.getIdEgress() instanceof Long);
+        assertTrue(egress2.getId() instanceof Long);
         assertTrue(egress2.getAmount() instanceof Double);
         assertTrue(egress2.getDate() instanceof LocalDate);
         assertTrue(egress2.getDescription() instanceof String);

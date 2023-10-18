@@ -49,7 +49,7 @@ public class UserTest {
 
         assertNotNull(userDefault);
 
-        assertNull(userDefault.getIdUser());
+        assertNull(userDefault.getId());
         assertNull(userDefault.getName());
         assertNull(userDefault.getLast_name());
         assertNull(userDefault.getEmail());
@@ -60,7 +60,7 @@ public class UserTest {
     @Test
     public void getterTest() {
         assertNotNull(user);
-        assertNull(user.getIdUser());
+        assertNull(user.getId());
 
         assertEquals("name", user.getName());
         assertEquals("last name", user.getLast_name());
