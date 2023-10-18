@@ -15,7 +15,6 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "http://localhost:5173")
 public class EgressController {
 
     private final EgressService egressService;
