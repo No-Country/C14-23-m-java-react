@@ -1,8 +1,10 @@
 package com.nocountry.finanzas.validators;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component
 public class EmailValidator {
 
     public boolean isEmailValid(String email) {
