@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
-import { getExpenses } from '../API/egress';
+import { getExpenses, deleteExpenses } from '../API/egress';
+import { json } from 'react-router-dom';
 
 const EgressContext = createContext();
 
@@ -20,7 +21,7 @@ export function EgressProvider({ children }) {
   const allExpenses = async () => {
     try {
       const res = await getExpenses();
-      console.log(res);
+      return res.data;
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +37,8 @@ export function EgressProvider({ children }) {
 
   const delExpense = async (id) => {
     try {
-      console.log(id);
+     const res = await deleteExpenses(id)
+     console.log(res)
     } catch (error) {
       console.log(error);
     }

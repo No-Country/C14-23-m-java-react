@@ -5,7 +5,9 @@ import { Box, Typography } from '@mui/material';
 import Lottie from 'lottie-react';
 import womenPayment from '../../assets/LottiesAnimations/womenPayment.json';
 
+
 function HistoryContainer(props) {
+
   const containerStyle = {
     display: 'flex',
     flexDirection: 'row',
@@ -35,6 +37,7 @@ function HistoryContainer(props) {
 
   return (
     <>
+     
       <Box display={'flex'}>
         <Box display={'flex'} flex={1} justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
           <Typography variant='h5' margin={'1rem'} >Historial de transacciones</Typography>

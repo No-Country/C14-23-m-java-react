@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Paper, Typography, Button, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useEgress } from '../../../context/EgressContext';
 
 const egresos = [
   { categoria: 'alimentacion', monto: -5000, descripcion: 'Comida rápida', fecha: '2023/1/10' },
@@ -40,7 +41,25 @@ const egresos = [
 function EgressDetails() {
   const [isHovered, setIsHovered] = useState(false);
   const [deletedItems, setDeletedItems] = useState([]);
+  const [expensesData, setExpensesData] = useState(null);
 
+  const {allExpenses, delExpense} = useEgress() // uso el contexto
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await allExpenses();
+        setExpensesData(res); // Almacena res en el estado
+       
+      } catch (error) {
+        console.log('error');
+      }
+    }
+    fetchData();
+  }, [expensesData]);
+
+
+  
   const styles = {
     paper: {
       margin: '1rem',
@@ -64,9 +83,32 @@ function EgressDetails() {
       onMouseOut={() => setIsHovered(false)}
       sx={{ ...styles.paper, ...(isHovered && styles.paperHover) }}
     >
+    
+
       <Box>
         <Typography variant='h5'display={'flex'} justifyContent={'center'} >Tus gastos</Typography>
+
         <List>
+          {
+            expensesData?.map((egreso, index) =>{
+              return (
+                <ListItem key={index} >
+                  <ListItemText
+                    primary={egreso.description}
+                    secondary={`Monto: ${egreso.amount}, Fecha: ${egreso.date}`}
+                  />
+                   <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete" onClick={(item) => delExpense(egreso.idEgress)} >
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              )
+            })
+          }
+        </List>
+
+        {/* <List>
           {egresos.map((egreso, index) => {
             if (!deletedItems.includes(index)) {
               return (
@@ -85,7 +127,7 @@ function EgressDetails() {
             }
             return null;
           })}
-        </List>
+        </List> */}
       </Box>
     </Paper>
   );
