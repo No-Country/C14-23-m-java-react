@@ -27,7 +27,7 @@ public class MapperEgress {
 
         if (egressDTO instanceof CreateEgressDTO) {
             User user = new User();
-            user.setId(((CreateEgressDTO) egressDTO).getUserId());
+            user.setId(((CreateEgressDTO) egressDTO).getIdUser());
 
             egress.setUser(user);
         }

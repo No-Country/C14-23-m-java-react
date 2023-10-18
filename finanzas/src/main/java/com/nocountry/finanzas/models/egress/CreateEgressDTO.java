@@ -7,6 +7,6 @@ import lombok.Data;
 public class CreateEgressDTO extends EgressDTO {
 
     @NotNull(message = "El ID del usuario no puede estar vacio.")
-    private Long userId;
+    private Long idUser;
 
 }
