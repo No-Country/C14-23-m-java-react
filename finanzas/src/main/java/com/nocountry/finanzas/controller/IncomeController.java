@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/user")
-@AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class IncomeController {
 
     private IncomeService incomeService;

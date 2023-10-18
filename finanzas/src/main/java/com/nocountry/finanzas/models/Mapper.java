@@ -1,6 +1,7 @@
 package com.nocountry.finanzas.models;
 
 import com.nocountry.finanzas.entities.User;
+import com.nocountry.finanzas.models.request.UserLoggingDTO;
 import com.nocountry.finanzas.models.request.UserRequestDTO;
 import com.nocountry.finanzas.models.response.UserResponseDTO;
 
@@ -42,5 +43,7 @@ public class Mapper {
         }
         return userResponseDTOList;
     }
+
+
 
 }

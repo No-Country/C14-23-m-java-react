@@ -17,4 +17,6 @@ public interface EgressService {
 
     public void deleteEgressById(Long id);
 
+    public List<EgressDTO> getEgressByUser(Long id);
+
 }

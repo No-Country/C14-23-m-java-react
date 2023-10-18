@@ -3,7 +3,9 @@ package com.nocountry.finanzas.controller;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.NotFoundException;
 import com.nocountry.finanzas.models.Mapper;
+import com.nocountry.finanzas.models.request.UserLoggingDTO;
 import com.nocountry.finanzas.models.request.UserRequestDTO;
+import com.nocountry.finanzas.models.response.UserLoggingResponse;
 import com.nocountry.finanzas.models.response.UserResponseDTO;
 import com.nocountry.finanzas.services.UserService;
 import jakarta.validation.Valid;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
     private final UserService userService;
@@ -66,6 +69,21 @@ public class UserController {
         }
     }
 
+    @PostMapping(path = "/user/login")
+    public ResponseEntity<?> loggingUser(@RequestBody @Valid UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException {
+        try {
+            UserLoggingResponse userResponseDTO = userService.loggingUser(userLoggingDTO);
 
+            if (userResponseDTO.getErrorMessage() != null) {
+                return new ResponseEntity<>(userResponseDTO, HttpStatus.BAD_REQUEST);
+            }
+
+            return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
+        } catch (DataAccessException e){
+            throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e){
+            throw new NotFoundException(e.getMessage());
+        }
+    }
 
 }
