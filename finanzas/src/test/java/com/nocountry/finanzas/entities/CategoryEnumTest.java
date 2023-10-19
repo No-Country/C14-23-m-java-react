@@ -1,5 +1,6 @@
 package com.nocountry.finanzas.entities;
 
+import com.nocountry.finanzas.entities.enums.CategoryEnum;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

@@ -1,6 +1,7 @@
 package com.nocountry.finanzas.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nocountry.finanzas.entities.enums.Countries;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
