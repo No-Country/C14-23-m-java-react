@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
+import { getIncomes, deleteIncome } from '../API/income'; 
 
 const IncomeContext = createContext();
 
@@ -16,5 +17,23 @@ export function IncomeProvider({ children }) {
     children: PropTypes.node.isRequired,
   };
 
-  return <IncomeContext.Provider value={{}}>{children}</IncomeContext.Provider>;
+const allIncomes = async () => {
+  try {
+    const res = await getIncomes();
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const delIncome = async (id) => {
+  try {
+    const res = await deleteIncome(id)
+    console.log(res)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+  return <IncomeContext.Provider value={{allIncomes, delIncome}}>{children}</IncomeContext.Provider>;
 }
