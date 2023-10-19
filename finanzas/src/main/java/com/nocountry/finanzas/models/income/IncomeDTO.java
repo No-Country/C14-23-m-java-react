@@ -1,5 +1,4 @@
-package com.nocountry.finanzas.models.request;
-
+package com.nocountry.finanzas.models.income;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +9,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class IncomeRequestDTO {
+public class IncomeDTO {
 
     private Long idIncome;
 
@@ -26,5 +25,4 @@ public class IncomeRequestDTO {
 
     @NotBlank(message = "El nombre de la categoria del gasto no debe estar vacio")
     private String categoryName;
-
 }

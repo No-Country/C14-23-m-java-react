@@ -1,7 +1,7 @@
 package com.nocountry.finanzas.entities;
 
+import com.nocountry.finanzas.entities.enums.CategoryEnum;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data

@@ -1,5 +1,6 @@
 package com.nocountry.finanzas.entities;
 
+import com.nocountry.finanzas.entities.enums.CategoryIncomeEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 

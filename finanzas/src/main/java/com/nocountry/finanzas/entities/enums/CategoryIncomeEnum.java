@@ -1,4 +1,4 @@
-package com.nocountry.finanzas.entities;
+package com.nocountry.finanzas.entities.enums;
 
 public enum CategoryIncomeEnum {
     SUELDO_MENSUAL,

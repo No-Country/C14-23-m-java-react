@@ -1,11 +1,8 @@
 package com.nocountry.finanzas.controller;
 
-import com.nocountry.finanzas.entities.Income;
-import com.nocountry.finanzas.models.IncomeMapper;
-import com.nocountry.finanzas.models.response.IncomeResponseDTO;
+import com.nocountry.finanzas.models.income.IncomeDTO;
 import com.nocountry.finanzas.services.IncomeService;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +16,13 @@ public class IncomeController {
 
     private IncomeService incomeService;
 
-    private IncomeMapper incomeMapper;
-
     //Listar
     @GetMapping("/income")
-    public ResponseEntity<List<IncomeResponseDTO>> getAllIncome(){
+    public ResponseEntity<List<IncomeDTO>> getAllIncome(){
         try{
-            List<Income> getAllIncome = incomeService.listIncome();
-            List<IncomeResponseDTO> responseDTO = incomeMapper.convertIncomeToListResponseDTO(getAllIncome);
-            return ResponseEntity.ok(responseDTO);
+            List<IncomeDTO> getAllIncome = incomeService.listIncome();
+
+            return ResponseEntity.ok(getAllIncome);
         }
         catch (NoSuchElementException e){
             return ResponseEntity.notFound().build();
@@ -37,12 +32,11 @@ public class IncomeController {
 
     //Busqueda por Id
     @GetMapping(path = "/income/{id}")
-    public ResponseEntity<IncomeResponseDTO> getIncomeById(@PathVariable Long id) {
+    public ResponseEntity<IncomeDTO> getIncomeById(@PathVariable Long id) {
         try {
-            Income getIncomeById = incomeService.findById(id);
-            IncomeResponseDTO responseDTO = incomeMapper.convertIncomeToResponseDTO(getIncomeById);
+            IncomeDTO getIncomeById = incomeService.findById(id);
 
-            return ResponseEntity.ok(responseDTO);
+            return ResponseEntity.ok(getIncomeById);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
@@ -50,11 +44,9 @@ public class IncomeController {
 
     //Guardar Income
     @PostMapping(path = "/income", consumes = "application/json")
-    public ResponseEntity<IncomeResponseDTO> createIncome(@RequestBody @Valid IncomeResponseDTO requestDTO) {
+    public ResponseEntity<IncomeDTO> createIncome(@RequestBody @Valid IncomeDTO requestDTO) {
         try {
-            Income income = incomeMapper.convertRequestDTOToIncome(requestDTO);
-            Income createdIncome = incomeService.save(income);
-            IncomeResponseDTO responseDTO = incomeMapper.convertIncomeToResponseDTO(createdIncome);
+            IncomeDTO responseDTO = incomeService.save(requestDTO);
 
             return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
@@ -64,13 +56,11 @@ public class IncomeController {
 
     //Actualizar Income
     @PutMapping(path = "/income", consumes = "application/json")
-    public ResponseEntity<IncomeResponseDTO> updateIncome(@RequestBody IncomeResponseDTO requestDTO){
+    public ResponseEntity<IncomeDTO> updateIncome(@RequestBody IncomeDTO requestDTO){
         try {
-            Income income = incomeMapper.convertRequestDTOToIncome(requestDTO);
-            Income updatedIncome = incomeService.save(income);
-            IncomeResponseDTO responseDTO = incomeMapper.convertIncomeToResponseDTO(updatedIncome);
+            IncomeDTO updatedIncome = incomeService.save(requestDTO);
 
-            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+            return new ResponseEntity<>(updatedIncome, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
@@ -78,7 +68,7 @@ public class IncomeController {
 
     //Eliminar Ingreso
     @DeleteMapping(path = "/income/{id}")
-    public ResponseEntity<Income> deleteIncomeById(@PathVariable Long id) {
+    public ResponseEntity<IncomeDTO> deleteIncomeById(@PathVariable Long id) {
         try {
             incomeService.delete(id);
             return ResponseEntity.ok().build();

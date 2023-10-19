@@ -33,7 +33,6 @@ public class EgressServiceImpl implements EgressService {
         this.egressCategoryService = egressCategoryService;
         this.egressMapper = egressMapper;
         this.userRepository = userRepository;
-
     }
 
     @Transactional
@@ -42,13 +41,13 @@ public class EgressServiceImpl implements EgressService {
         Egress egress = egressMapper.toEgress(egressDTO);
         User user = userRepository.findById(egress.getUser().getId()).get();
 
+        // Al crear este egressCategory, no estoy repitiendolo? deberia de sacar esto?
         EgressCategory egressCategory = egressCategoryService.createEgressCategory(egress.getEgressCategory());
         egress.setEgressCategory(egressCategory);
         egress.setUser(user);
         egressRepository.save(egress);
 
         user.getEgresses().add(egress); // guardo el egreso nuevo en la lista de egresos del usuario
-
         user.setTotalIncome(user.getTotalIncome() - egress.getAmount());
 
         return egressMapper.toDTO(egress);
@@ -76,7 +75,7 @@ public class EgressServiceImpl implements EgressService {
     @Override
     public EgressDTO getEgressById(Long id) {
 
-        return egressMapper.toDTO(egressRepository.findById(id).orElse(null));
+        return egressMapper.toDTO(egressRepository.findById(id).get());
     }
 
     @Transactional

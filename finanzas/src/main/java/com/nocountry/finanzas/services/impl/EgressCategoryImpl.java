@@ -1,6 +1,6 @@
 package com.nocountry.finanzas.services.impl;
 
-import com.nocountry.finanzas.entities.CategoryEnum;
+import com.nocountry.finanzas.entities.enums.CategoryEnum;
 import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.repositories.EgressCategoryRepository;
 import com.nocountry.finanzas.services.EgressCategoryService;
@@ -15,8 +15,12 @@ import java.util.List;
 @Service
 public class EgressCategoryImpl implements EgressCategoryService {
 
+    private final EgressCategoryRepository repository;
+
     @Autowired
-    private EgressCategoryRepository repository;
+    public EgressCategoryImpl(EgressCategoryRepository repository){
+        this.repository = repository;
+    }
 
     @Transactional
     @Override

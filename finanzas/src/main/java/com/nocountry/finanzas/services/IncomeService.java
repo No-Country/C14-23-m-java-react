@@ -1,16 +1,17 @@
 package com.nocountry.finanzas.services;
 
 import com.nocountry.finanzas.entities.Income;
+import com.nocountry.finanzas.models.income.IncomeDTO;
 
 import java.util.List;
 
 public interface IncomeService {
 
-    public List<Income> listIncome();
+    public List<IncomeDTO> listIncome();
 
-    public Income findById(Long id);
+    public IncomeDTO findById(Long id);
 
-    Income save (Income income);
+    public IncomeDTO save (IncomeDTO income);
 
-    void delete(Long id);
+    public void delete(Long id);
 }

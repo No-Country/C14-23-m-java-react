@@ -1,6 +1,6 @@
 package com.nocountry.finanzas.models.egress;
 
-import com.nocountry.finanzas.entities.CategoryEnum;
+import com.nocountry.finanzas.entities.enums.CategoryEnum;
 import com.nocountry.finanzas.entities.Egress;
 import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.entities.User;
