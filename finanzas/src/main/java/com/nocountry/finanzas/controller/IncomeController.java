@@ -3,6 +3,7 @@ package com.nocountry.finanzas.controller;
 import com.nocountry.finanzas.models.income.IncomeDTO;
 import com.nocountry.finanzas.services.IncomeService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,12 @@ import java.util.NoSuchElementException;
 @RequestMapping("/user")
 public class IncomeController {
 
-    private IncomeService incomeService;
+    private final IncomeService incomeService;
+
+    @Autowired
+    public IncomeController(IncomeService incomeService) {
+        this.incomeService = incomeService;
+    }
 
     //Listar
     @GetMapping("/income")

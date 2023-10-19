@@ -1,6 +1,5 @@
 package com.nocountry.finanzas.services;
 
-import com.nocountry.finanzas.entities.Income;
 import com.nocountry.finanzas.models.income.IncomeDTO;
 
 import java.util.List;
