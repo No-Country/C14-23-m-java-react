@@ -1,5 +1,6 @@
 package com.nocountry.finanzas.controller;
 
+import com.nocountry.finanzas.models.income.CreateIncomeDTO;
 import com.nocountry.finanzas.models.income.IncomeDTO;
 import com.nocountry.finanzas.services.IncomeService;
 import jakarta.validation.Valid;
@@ -50,7 +51,7 @@ public class IncomeController {
 
     //Guardar Income
     @PostMapping(path = "/income", consumes = "application/json")
-    public ResponseEntity<IncomeDTO> createIncome(@RequestBody @Valid IncomeDTO requestDTO) {
+    public ResponseEntity<IncomeDTO> createIncome(@RequestBody @Valid CreateIncomeDTO requestDTO) {
         try {
             IncomeDTO responseDTO = incomeService.save(requestDTO);
 
