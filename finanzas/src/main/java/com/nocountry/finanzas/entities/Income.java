@@ -2,8 +2,9 @@ package com.nocountry.finanzas.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 
@@ -31,6 +32,7 @@ public class Income {
     private String description;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private IncomeCategory categoryIncome;
 
     @ManyToOne
