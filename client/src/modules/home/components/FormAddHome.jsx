@@ -14,18 +14,21 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { PropTypes } from 'prop-types';
 import { useEgress } from '../../../context/EgressContext';
+import { useIncome } from '../../../context/IncomeContext';
 
 const FormAddHome = ({
   formType,
   handleClose,
   categories,
   handleOpenAlert,
+  setLoading,
 }) => {
   FormAddHome.propTypes = {
     formType: PropTypes.string.isRequired,
     handleClose: PropTypes.func.isRequired,
     handleOpenAlert: PropTypes.func.isRequired,
     categories: PropTypes.array.isRequired,
+    setLoading: PropTypes.func.isRequired,
   };
 
   const theme = createTheme({
@@ -46,8 +49,9 @@ const FormAddHome = ({
   });
 
   const { addNewGasto } = useEgress();
+  const { addNewIncome } = useIncome();
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     let amount = parseFloat(data.amount);
     amount =
       amount % 1 !== 0
@@ -61,15 +65,26 @@ const FormAddHome = ({
       date: new Date().toISOString().split('T')[0],
     };
 
-    if (formType === 'GASTO') {
-      addNewGasto(newData);
-    } else {
-      //addNewIncome
-      console.log('añadir ingreso');
-    }
-
     handleClose();
-    handleOpenAlert();
+
+    setLoading(true);
+    try {
+      if (formType === 'GASTO') {
+        const res = await addNewGasto(newData);
+        if (res.status === 201) {
+          handleOpenAlert();
+        }
+      } else {
+        const res = await addNewIncome(newData);
+        if (res.status === 201) {
+          handleOpenAlert();
+        }
+      }
+    } catch {
+      handleOpenAlert(true);
+    } finally {
+      setLoading(false);
+    }
   });
 
   return (

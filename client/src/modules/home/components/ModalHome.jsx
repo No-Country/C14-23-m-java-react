@@ -3,12 +3,19 @@ import FormAddHome from './FormAddHome';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { PropTypes } from 'prop-types';
 
-const ModalHome = ({ open, handleClose, handleOpenAlert, formType }) => {
+const ModalHome = ({
+  open,
+  handleClose,
+  handleOpenAlert,
+  formType,
+  setLoading,
+}) => {
   ModalHome.propTypes = {
     open: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
     handleOpenAlert: PropTypes.func.isRequired,
     formType: PropTypes.string.isRequired,
+    setLoading: PropTypes.func.isRequired,
   };
 
   const expenseCategories = [
@@ -63,6 +70,7 @@ const ModalHome = ({ open, handleClose, handleOpenAlert, formType }) => {
           formType={formType}
           handleClose={handleClose}
           categories={categories}
+          setLoading={setLoading}
         />
       </Box>
     </Modal>
