@@ -72,6 +72,7 @@ public class IncomeServiceImpl implements IncomeService {
         Income income = repository.findById(id).get();
         User user = userRepository.findById(income.getUser().getId()).get();
         user.getIncomes().remove(income);
+        // tambien deberia de restar el monto del ingreso al borrarlo??? Lo mismo en egress
 
         repository.deleteById(id);
         incomeCategoryService.deleteIncomeCategoryById(id);
