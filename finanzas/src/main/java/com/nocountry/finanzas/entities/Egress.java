@@ -3,6 +3,8 @@ package com.nocountry.finanzas.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 
@@ -27,6 +29,7 @@ public class Egress {
     protected String description;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     protected EgressCategory egressCategory;
 
     @ManyToOne
