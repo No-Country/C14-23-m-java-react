@@ -28,8 +28,8 @@ public class Egress {
     @Column(name = "description")
     protected String description;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @ManyToOne()
+    //@OnDelete(action = OnDeleteAction.NO_ACTION)
     protected EgressCategory egressCategory;
 
     @ManyToOne
