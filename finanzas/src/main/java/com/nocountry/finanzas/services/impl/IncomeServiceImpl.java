@@ -3,8 +3,10 @@ package com.nocountry.finanzas.services.impl;
 import com.nocountry.finanzas.entities.Income;
 import com.nocountry.finanzas.entities.IncomeCategory;
 import com.nocountry.finanzas.entities.User;
+import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.income.IncomeDTO;
 import com.nocountry.finanzas.models.income.MapperIncome;
+import com.nocountry.finanzas.repositories.IncomeCategoryRepository;
 import com.nocountry.finanzas.repositories.IncomeRepository;
 import com.nocountry.finanzas.repositories.UserRepository;
 import com.nocountry.finanzas.services.IncomeCategoryService;
@@ -24,14 +26,18 @@ public class IncomeServiceImpl implements IncomeService {
 
     private final IncomeCategoryService incomeCategoryService;
 
+    private final IncomeCategoryRepository incomeCategoryRepository;
+
     private final UserRepository userRepository;
 
     @Autowired
-    public IncomeServiceImpl(IncomeRepository repository, MapperIncome mapperIncome, IncomeCategoryService incomeCategoryService, UserRepository userRepository) {
+    public IncomeServiceImpl(IncomeRepository repository, MapperIncome mapperIncome, IncomeCategoryService incomeCategoryService,
+                             UserRepository userRepository, IncomeCategoryRepository incomeCategoryRepository) {
         this.repository = repository;
         this.mapperIncome = mapperIncome;
         this.incomeCategoryService = incomeCategoryService;
         this.userRepository = userRepository;
+        this.incomeCategoryRepository = incomeCategoryRepository;
     }
 
     @Transactional(readOnly = true)
@@ -50,35 +56,42 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Transactional
     @Override
-    public IncomeDTO save(IncomeDTO incomeDTO) {
+    public IncomeDTO save(IncomeDTO incomeDTO) throws BadRequestException {
         Income income = mapperIncome.toIncome(incomeDTO);
         User user = userRepository.findById(income.getUser().getId()).get();
 
-        IncomeCategory incomeCategory = incomeCategoryService.createIncomeCategory(income.getCategoryIncome());
+        IncomeCategory incomeCategory = incomeCategoryRepository.findByName(incomeDTO.getCategoryName());
+
+        if (incomeCategory == null) {
+            throw new BadRequestException("La categoría no existe: " + incomeDTO.getCategoryName());
+        }
+
         income.setCategoryIncome(incomeCategory);
         income.setUser(user);
         repository.save(income);
 
         user.getIncomes().add(income);
-        user.setTotalIncome(user.getTotalIncome() + income.getAmount()); // deberia de actualizar esto en la bd?
+        user.setTotalIncome(user.getTotalIncome() + income.getAmount());
 
         return mapperIncome.toIncomeDTO(income);
     }
-
 
     @Transactional
     @Override
     public void delete(Long id) {
         Income income = repository.findById(id).get();
         User user = userRepository.findById(income.getUser().getId()).get();
+
+        user.setTotalIncome(user.getTotalIncome() - income.getAmount());
         user.getIncomes().remove(income);
-        // tambien deberia de restar el monto del ingreso al borrarlo??? Lo mismo en egress
 
         repository.deleteById(id);
-        incomeCategoryService.deleteIncomeCategoryById(id);
-        //ver como borrar q no sea x el id, porq no siempre va a ser el mismo id q el income
     }
 
-
+    @Transactional
+    @Override
+    public IncomeDTO updateIncome(IncomeDTO requestDTO) {
+        return null;
+    }
 
 }

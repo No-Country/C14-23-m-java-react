@@ -1,5 +1,6 @@
 package com.nocountry.finanzas.controller;
 
+import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.income.CreateIncomeDTO;
 import com.nocountry.finanzas.models.income.IncomeDTO;
 import com.nocountry.finanzas.services.IncomeService;
@@ -51,13 +52,15 @@ public class IncomeController {
 
     //Guardar Income
     @PostMapping(path = "/income", consumes = "application/json")
-    public ResponseEntity<IncomeDTO> createIncome(@RequestBody @Valid CreateIncomeDTO requestDTO) {
+    public ResponseEntity<IncomeDTO> createIncome(@RequestBody @Valid CreateIncomeDTO requestDTO) throws BadRequestException  {
         try {
             IncomeDTO responseDTO = incomeService.save(requestDTO);
 
             return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
+        } catch (BadRequestException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -65,7 +68,7 @@ public class IncomeController {
     @PutMapping(path = "/income", consumes = "application/json")
     public ResponseEntity<IncomeDTO> updateIncome(@RequestBody IncomeDTO requestDTO){
         try {
-            IncomeDTO updatedIncome = incomeService.save(requestDTO);
+            IncomeDTO updatedIncome = incomeService.updateIncome(requestDTO);
 
             return new ResponseEntity<>(updatedIncome, HttpStatus.OK);
         } catch (NoSuchElementException e) {

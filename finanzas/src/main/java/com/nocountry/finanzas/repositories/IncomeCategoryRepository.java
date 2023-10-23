@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IncomeCategoryRepository extends JpaRepository<IncomeCategory,Long>  {
+
+    IncomeCategory findByName(String name);
+
 }

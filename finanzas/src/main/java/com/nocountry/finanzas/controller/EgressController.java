@@ -1,6 +1,7 @@
 package com.nocountry.finanzas.controller;
 
 import com.nocountry.finanzas.entities.Egress;
+import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
 import com.nocountry.finanzas.services.EgressService;
@@ -55,12 +56,14 @@ public class EgressController {
     }
 
     @PostMapping(path = "/egress", consumes = "application/json")
-    public ResponseEntity<EgressDTO> createEgress(@RequestBody @Valid CreateEgressDTO egressDTO) {
+    public ResponseEntity<EgressDTO> createEgress(@RequestBody @Valid CreateEgressDTO egressDTO) throws BadRequestException {
         try {
             EgressDTO responseDTO = egressService.createdEgress(egressDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
+        } catch (BadRequestException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 

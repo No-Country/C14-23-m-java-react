@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EgressCategoryRepository extends JpaRepository<EgressCategory, Long> {
+
+    EgressCategory findByName(String name);
+
 }
