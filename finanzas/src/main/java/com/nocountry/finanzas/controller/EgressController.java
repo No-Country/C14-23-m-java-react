@@ -3,6 +3,7 @@ package com.nocountry.finanzas.controller;
 import com.nocountry.finanzas.entities.Egress;
 import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.exceptions.BadRequestException;
+import com.nocountry.finanzas.models.egress.CategoryEgressDTO;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
 import com.nocountry.finanzas.services.EgressCategoryService;
@@ -93,7 +94,7 @@ public class EgressController {
     }
 
     @PostMapping(path = "/egress/category", consumes = "application/json")
-    public ResponseEntity<EgressCategory> createCategory(@RequestBody String name) {
+    public ResponseEntity<EgressCategory> createCategory(@RequestBody CategoryEgressDTO name) {
         try {
             EgressCategory egressCategory = egressCategoryService.createEgressCategory(name);
             return new ResponseEntity<>(egressCategory, HttpStatus.OK);

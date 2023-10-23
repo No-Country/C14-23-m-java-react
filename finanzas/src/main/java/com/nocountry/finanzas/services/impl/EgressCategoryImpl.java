@@ -2,6 +2,7 @@ package com.nocountry.finanzas.services.impl;
 
 import com.nocountry.finanzas.entities.enums.CategoryEnum;
 import com.nocountry.finanzas.entities.EgressCategory;
+import com.nocountry.finanzas.models.egress.CategoryEgressDTO;
 import com.nocountry.finanzas.repositories.EgressCategoryRepository;
 import com.nocountry.finanzas.services.EgressCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class EgressCategoryImpl implements EgressCategoryService {
 
     @Transactional
     @Override
-    public EgressCategory createEgressCategory(String name) {
-        EgressCategory newCategory = searchCategory(name);
+    public EgressCategory createEgressCategory(CategoryEgressDTO category) {
+        EgressCategory newCategory = searchCategory(category.getName());
         return repository.save(newCategory);
     }
 

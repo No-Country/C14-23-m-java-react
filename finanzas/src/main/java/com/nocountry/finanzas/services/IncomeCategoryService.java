@@ -1,12 +1,13 @@
 package com.nocountry.finanzas.services;
 
 import com.nocountry.finanzas.entities.IncomeCategory;
+import com.nocountry.finanzas.models.income.CategoryIncomeDTO;
 
 import java.util.List;
 
 public interface IncomeCategoryService {
 
-    IncomeCategory createIncomeCategory(String incomeCategory);
+    IncomeCategory createIncomeCategory(CategoryIncomeDTO category);
 
     IncomeCategory getIncomeCategoryById(Long id);
 
