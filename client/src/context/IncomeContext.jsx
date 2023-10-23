@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
-import { addIncome, getIncomes } from '../API/income';
+
+import { getIncomes, addIncome, deleteIncome } from '../API/income';
 
 const IncomeContext = createContext();
 
@@ -36,8 +37,17 @@ export function IncomeProvider({ children }) {
     }
   };
 
+  const delIncome = async (id) => {
+    try {
+      const res = await deleteIncome(id);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <IncomeContext.Provider value={{ allIncomes, addNewIncome }}>
+    <IncomeContext.Provider value={{ allIncomes, addNewIncome, delIncome }}>
       {children}
     </IncomeContext.Provider>
   );

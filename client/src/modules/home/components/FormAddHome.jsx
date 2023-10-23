@@ -65,7 +65,6 @@ const FormAddHome = ({
       date: new Date().toISOString().split('T')[0],
     };
 
-    console.log(newData);
     handleClose();
 
     setLoading(true);
