@@ -23,8 +23,8 @@ public class IncomeCategoryImpl implements IncomeCategoryService {
     @Transactional
     @Override
     public IncomeCategory createIncomeCategory(String name) {
-
-        return repository.save(searchCategory(name));
+        IncomeCategory newCategory = searchCategory(name);
+        return repository.save(newCategory);
     }
 
     @Transactional(readOnly = true)
