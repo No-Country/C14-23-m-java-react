@@ -24,9 +24,9 @@ public class EgressCategoryImpl implements EgressCategoryService {
 
     @Transactional
     @Override
-    public EgressCategory createEgressCategory(EgressCategory egressCategory) {
-        //Hacer verificaciones de campos nulos? correctos? ver requerimientos
-        return repository.save(egressCategory);
+    public EgressCategory createEgressCategory(String name) {
+
+        return repository.save(searchCategory(name));
     }
 
     @Transactional(readOnly = true)
@@ -58,16 +58,17 @@ public class EgressCategoryImpl implements EgressCategoryService {
         return repository.save(egressCategory);
     }
 
-    private CategoryEnum searchCategory(String name) {
+    private EgressCategory searchCategory(String name) {
+        EgressCategory egressCategory = new EgressCategory();
 
         for (CategoryEnum element : CategoryEnum.values()) {
             if (element.name().equalsIgnoreCase(name)) {
-                return element;
+                egressCategory.setName(element);
             }
         }
 
-        // controlar q pasa si no existe el enum indicado
-        return null;
+        return egressCategory;
     }
+
 
 }

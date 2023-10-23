@@ -1,6 +1,7 @@
 package com.nocountry.finanzas.services.impl;
 
 import com.nocountry.finanzas.entities.IncomeCategory;
+import com.nocountry.finanzas.entities.enums.CategoryIncomeEnum;
 import com.nocountry.finanzas.repositories.IncomeCategoryRepository;
 import com.nocountry.finanzas.services.IncomeCategoryService;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,9 +22,9 @@ public class IncomeCategoryImpl implements IncomeCategoryService {
 
     @Transactional
     @Override
-    public IncomeCategory createIncomeCategory(IncomeCategory incomeCategory) {
+    public IncomeCategory createIncomeCategory(String name) {
 
-        return repository.save(incomeCategory);
+        return repository.save(searchCategory(name));
     }
 
     @Transactional(readOnly = true)
@@ -45,6 +46,17 @@ public class IncomeCategoryImpl implements IncomeCategoryService {
     public void deleteIncomeCategoryById(Long id) {
 
         repository.deleteById(id);
+    }
+
+    private IncomeCategory searchCategory(String name) {
+        IncomeCategory incomeCategory = new IncomeCategory();
+
+        for (CategoryIncomeEnum element: CategoryIncomeEnum.values()) {
+            if (element.name().equalsIgnoreCase(name)) {
+                incomeCategory.setName(element);
+            }
+        }
+        return incomeCategory;
     }
 
 
