@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
 import { addExpenses, deleteExpenses, getExpenses } from '../API/egress';
@@ -17,6 +18,8 @@ export function EgressProvider({ children }) {
     children: PropTypes.node.isRequired,
   };
 
+  const [newExpense, setNewExpense] = useState([]);
+
   const allExpenses = async () => {
     try {
       const res = await getExpenses();
@@ -29,10 +32,7 @@ export function EgressProvider({ children }) {
   const addNewGasto = async (expenses) => {
     try {
       const res = await addExpenses(expenses);
-
-      console.log(res);
-
-      // console.log(expenses);
+      setNewExpense(res);
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +48,9 @@ export function EgressProvider({ children }) {
   };
 
   return (
-    <EgressContext.Provider value={{ allExpenses, addNewGasto, delExpense }}>
+    <EgressContext.Provider
+      value={{ allExpenses, addNewGasto, delExpense, newExpense }}
+    >
       {children}
     </EgressContext.Provider>
   );

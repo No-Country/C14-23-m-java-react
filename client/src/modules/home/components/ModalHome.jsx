@@ -2,6 +2,7 @@ import { Box, IconButton, Modal } from '@mui/material';
 import FormAddHome from './FormAddHome';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { PropTypes } from 'prop-types';
+import { expenseCategories } from '../../../helpers/egressCategory';
 
 const ModalHome = ({ open, handleClose, handleOpenAlert, formType }) => {
   ModalHome.propTypes = {
@@ -10,20 +11,6 @@ const ModalHome = ({ open, handleClose, handleOpenAlert, formType }) => {
     handleOpenAlert: PropTypes.func.isRequired,
     formType: PropTypes.string.isRequired,
   };
-
-  const expenseCategories = [
-    { option: 'Alimentación', value: 'ALIMENTACION' },
-    { option: 'Vivienda', value: 'VIVIENDA' },
-    { option: 'Transporte', value: 'TRANSPORTE' },
-    { option: 'Entretenimiento', value: 'ENTRETENIMIENTO' },
-    { option: 'Salud - Cuidado Personal', value: 'SALUD_CUIDADO PERSONAL' },
-    { option: 'Educación', value: 'EDUCACION' },
-    { option: 'Vestimenta', value: 'VESTIMENTA' },
-    { option: 'Servicios', value: 'SERVICIOS' },
-    { option: 'Ahorro - Inversión', value: 'AHORRO_INVERSION' },
-    { option: 'Viaje - Vacaciones', value: 'VIAJE_VACACIONES' },
-    { option: 'Otros', value: 'OTROS' },
-  ];
 
   const incomeCategories = [
     { option: 'Sueldo Mensual', value: 'SUELDO_MENSUAL' },

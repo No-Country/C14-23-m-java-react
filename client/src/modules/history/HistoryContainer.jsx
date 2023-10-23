@@ -1,13 +1,10 @@
-import React from 'react';
 import EgressDetails from './components/EgressDetails';
 import IncomeDetails from './components/IncomeDetails';
 import { Box, Typography } from '@mui/material';
 import Lottie from 'lottie-react';
 import womenPayment from '../../assets/LottiesAnimations/womenPayment.json';
 
-
-function HistoryContainer(props) {
-
+function HistoryContainer() {
   const containerStyle = {
     display: 'flex',
     flexDirection: 'row',
@@ -31,19 +28,25 @@ function HistoryContainer(props) {
 
     '@media (max-width: 767px)': {
       height: '15rem',
-      marginTop: '10rem'
+      marginTop: '10rem',
     },
   };
 
   return (
     <>
-     
       <Box display={'flex'}>
-        <Box display={'flex'} flex={1} justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
-          <Typography variant='h5' margin={'1rem'} >Historial de transacciones</Typography>
+        <Box
+          display={'flex'}
+          flex={1}
+          justifyContent={'center'}
+          alignItems={'center'}
+          flexDirection={'column'}
+        >
+          <Typography variant='h5' margin={'1rem'}>
+            Historial de transacciones
+          </Typography>
 
-          <Typography textAlign={'justify'} margin={'1rem'} >
-          
+          <Typography textAlign={'justify'} margin={'1rem'}>
             En esta sección, encontrarás un registro detallado de todas tus
             transacciones. Cada entrada incluye la hora, el monto, el día, el
             mes y el año de la transacción. Además, se especifica si se trata de
