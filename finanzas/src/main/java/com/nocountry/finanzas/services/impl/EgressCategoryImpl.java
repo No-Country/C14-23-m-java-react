@@ -59,7 +59,7 @@ public class EgressCategoryImpl implements EgressCategoryService {
     }
 
     private EgressCategory searchCategory(String name) {
-        
+
         for (CategoryEnum element : CategoryEnum.values()) {
             if (element.name().equalsIgnoreCase(name)) {
                 return new EgressCategory(element);

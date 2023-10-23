@@ -23,7 +23,9 @@ public class IncomeCategoryImpl implements IncomeCategoryService {
     @Transactional
     @Override
     public IncomeCategory createIncomeCategory(String name) {
+        System.out.println("Name en el service: " + name);
         IncomeCategory newCategory = searchCategory(name);
+        System.out.println("Name ya como un income category: " + newCategory.getName().name());
         return repository.save(newCategory);
     }
 
@@ -51,8 +53,12 @@ public class IncomeCategoryImpl implements IncomeCategoryService {
     private IncomeCategory searchCategory(String name) {
         IncomeCategory incomeCategory = new IncomeCategory();
 
+        System.out.println("Nmae en el search: " + name);
+
         for (CategoryIncomeEnum element: CategoryIncomeEnum.values()) {
+            System.out.println("Element en el for: " + element.name());
             if (element.name().equalsIgnoreCase(name)) {
+                System.out.println("Element en el if: " + element.name());
                 incomeCategory.setName(element);
             }
         }
