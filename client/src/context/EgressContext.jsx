@@ -26,13 +26,10 @@ export function EgressProvider({ children }) {
     }
   };
 
-  const addNewGasto = async (expenses) => {
+  const addNewGasto = async (expense) => {
     try {
-      const res = await addExpenses(expenses);
-
-      console.log(res);
-
-      // console.log(expenses);
+      const res = await addExpenses(expense);
+      return res;
     } catch (error) {
       console.log(error);
     }
