@@ -29,7 +29,7 @@ export function EgressProvider({ children }) {
     }
   };
 
-  const addNewGasto = async (expenses) => {
+  const addNewGasto = async (expense) => {
     try {
       const res = await addExpenses(expenses);
       setNewExpense(res);

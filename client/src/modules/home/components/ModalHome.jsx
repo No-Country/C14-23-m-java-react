@@ -4,18 +4,25 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { PropTypes } from 'prop-types';
 import { expenseCategories } from '../../../helpers/egressCategory';
 
-const ModalHome = ({ open, handleClose, handleOpenAlert, formType }) => {
+const ModalHome = ({
+  open,
+  handleClose,
+  handleOpenAlert,
+  formType,
+  setLoading,
+}) => {
   ModalHome.propTypes = {
     open: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
     handleOpenAlert: PropTypes.func.isRequired,
     formType: PropTypes.string.isRequired,
+    setLoading: PropTypes.func.isRequired,
   };
 
   const incomeCategories = [
     { option: 'Sueldo Mensual', value: 'SUELDO_MENSUAL' },
     { option: 'Préstamo', value: 'PRESTAMO' },
-    { option: 'Clientes Regalo', value: 'CLIENTES_REGALO' },
+    { option: 'Clientes', value: 'CLIENTES' },
     { option: 'Bono Extra', value: 'BONO_EXTRA' },
     { option: 'Otros', value: 'OTROS' },
   ];
@@ -50,6 +57,7 @@ const ModalHome = ({ open, handleClose, handleOpenAlert, formType }) => {
           formType={formType}
           handleClose={handleClose}
           categories={categories}
+          setLoading={setLoading}
         />
       </Box>
     </Modal>

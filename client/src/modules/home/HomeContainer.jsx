@@ -1,4 +1,12 @@
-import { Alert, Box, Grid, IconButton, Snackbar } from '@mui/material';
+import {
+  Alert,
+  Backdrop,
+  Box,
+  CircularProgress,
+  Grid,
+  IconButton,
+  Snackbar,
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import IncomeExpenseComponent from './components/IncomeExpenseComponent';
 import ExpenseByCategory from './components/ExpenseByCategory';
@@ -7,14 +15,20 @@ import RecentActivity from './components/RecentActivity';
 import ModalHome from './components/ModalHome';
 import { useEffect, useState } from 'react';
 import { useEgress } from '../../context/EgressContext';
+import { useIncome } from '../../context/IncomeContext';
 
 const HomeContainer = () => {
   const [modal, setModal] = useState(false);
   const [type, setType] = useState('');
   const [alert, setAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleCloseAlert = () => setAlert(false);
-  const handleOpenAlert = () => setAlert(true);
+  const handleOpenAlert = (error = false) => {
+    setAlert(true);
+    setError(error);
+  };
 
   const handleOpen = (formType) => {
     setType(formType);
@@ -23,16 +37,26 @@ const HomeContainer = () => {
   const handleClose = () => setModal(false);
 
   const { allExpenses } = useEgress();
+  const { allIncomes } = useIncome();
 
   useEffect(() => {
     allExpenses();
-  }, [allExpenses]);
+    allIncomes();
+  }, [allExpenses, allIncomes]);
 
   return (
     <Box
       component='main'
       sx={{ width: '100%', margin: 0, height: 'calc(100vh - 64px)' }}
     >
+      {loading && (
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={true}
+        >
+          <CircularProgress color='inherit' />
+        </Backdrop>
+      )}
       <TotalAmountHome
         text={'Saldo disponible'}
         total={10000}
@@ -44,17 +68,19 @@ const HomeContainer = () => {
           handleClose={handleClose}
           handleOpenAlert={handleOpenAlert}
           formType={type}
+          setLoading={setLoading}
         />
 
         <Snackbar
           open={alert}
           onClose={handleCloseAlert}
-          autoHideDuration={3000}
+          autoHideDuration={error ? 8000 : 3000}
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         >
           <Alert
-            variant='filled'
-            color={type === 'GASTO' ? 'error' : 'success'}
+            variant={error ? 'standard' : 'filled'}
+            severity={error ? 'error' : 'success'}
+            color={error ? 'error' : type === 'GASTO' ? 'error' : 'success'}
             action={
               <IconButton
                 aria-label='close'
@@ -66,7 +92,9 @@ const HomeContainer = () => {
               </IconButton>
             }
           >
-            {type === 'GASTO'
+            {error
+              ? 'Ocurrió un error, intente mas tarde'
+              : type === 'GASTO'
               ? 'Tu gasto se registró con éxito!'
               : 'Tu ingreso se registró con éxito!'}
           </Alert>
