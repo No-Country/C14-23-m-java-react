@@ -3,6 +3,7 @@ package com.nocountry.finanzas.controller;
 import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.entities.IncomeCategory;
 import com.nocountry.finanzas.exceptions.BadRequestException;
+import com.nocountry.finanzas.models.income.CategoryIncomeDTO;
 import com.nocountry.finanzas.models.income.CreateIncomeDTO;
 import com.nocountry.finanzas.models.income.IncomeDTO;
 import com.nocountry.finanzas.services.IncomeCategoryService;
@@ -94,10 +95,9 @@ public class IncomeController {
     }
 
     @PostMapping(path = "/income/category", consumes = "application/json")
-    public ResponseEntity<IncomeCategory> createCategory(@RequestBody String name) {
+    public ResponseEntity<IncomeCategory> createCategory(@RequestBody CategoryIncomeDTO category) {
         try {
-            System.out.println("name en el controller: " + name);
-            IncomeCategory incomeCategory = incomeCategoryService.createIncomeCategory(name);
+            IncomeCategory incomeCategory = incomeCategoryService.createIncomeCategory(category);
             return new ResponseEntity<>(incomeCategory, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
