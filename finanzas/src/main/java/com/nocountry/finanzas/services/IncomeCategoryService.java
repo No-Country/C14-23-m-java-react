@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IncomeCategoryService {
 
-    IncomeCategory createIncomeCategory(IncomeCategory incomeCategory);
+    IncomeCategory createIncomeCategory(String incomeCategory);
 
     IncomeCategory getIncomeCategoryById(Long id);
 

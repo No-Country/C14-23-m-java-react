@@ -1,9 +1,11 @@
 package com.nocountry.finanzas.controller;
 
 import com.nocountry.finanzas.entities.Egress;
+import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
+import com.nocountry.finanzas.services.EgressCategoryService;
 import com.nocountry.finanzas.services.EgressService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,12 @@ public class EgressController {
 
     private final EgressService egressService;
 
+    private final EgressCategoryService egressCategoryService;
+
     @Autowired
-    public EgressController(EgressService egressService) {
+    public EgressController(EgressService egressService, EgressCategoryService egressCategoryService) {
         this.egressService = egressService;
+        this.egressCategoryService = egressCategoryService;
     }
 
     @GetMapping(path = "/egress/{id}")
@@ -82,6 +87,16 @@ public class EgressController {
         try {
             egressService.deleteEgressById(id);
             return ResponseEntity.ok().build();
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping(path = "/category")
+    public ResponseEntity<EgressCategory> createCategory(@PathVariable String name) {
+        try {
+            EgressCategory egressCategory = egressCategoryService.createEgressCategory(name);
+            return new ResponseEntity<>(egressCategory, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }

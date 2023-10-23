@@ -1,8 +1,11 @@
 package com.nocountry.finanzas.controller;
 
+import com.nocountry.finanzas.entities.EgressCategory;
+import com.nocountry.finanzas.entities.IncomeCategory;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.income.CreateIncomeDTO;
 import com.nocountry.finanzas.models.income.IncomeDTO;
+import com.nocountry.finanzas.services.IncomeCategoryService;
 import com.nocountry.finanzas.services.IncomeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +22,12 @@ public class IncomeController {
 
     private final IncomeService incomeService;
 
+    private final IncomeCategoryService incomeCategoryService;
+
     @Autowired
-    public IncomeController(IncomeService incomeService) {
+    public IncomeController(IncomeService incomeService, IncomeCategoryService incomeCategoryService) {
         this.incomeService = incomeService;
+        this.incomeCategoryService = incomeCategoryService;
     }
 
     //Listar
@@ -82,6 +88,16 @@ public class IncomeController {
         try {
             incomeService.delete(id);
             return ResponseEntity.ok().build();
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping(path = "/category")
+    public ResponseEntity<IncomeCategory> createCategory(@PathVariable String name) {
+        try {
+            IncomeCategory incomeCategory = incomeCategoryService.createIncomeCategory(name);
+            return new ResponseEntity<>(incomeCategory, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface EgressCategoryService {
 
-    public EgressCategory createEgressCategory(EgressCategory egressCategory);
+    public EgressCategory createEgressCategory(String name);
 
     public EgressCategory getEgressCategoryById(Long id);
 
