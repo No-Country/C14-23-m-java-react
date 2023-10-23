@@ -6,7 +6,6 @@ import { useEgress } from '../../../context/EgressContext';
 
 function EgressDetails() {
   const [isHovered, setIsHovered] = useState(false);
-  const [deletedItems, setDeletedItems] = useState([]);
   const [expensesData, setExpensesData] = useState(null);
 
   const {allExpenses, delExpense} = useEgress() // uso el contexto
@@ -18,7 +17,7 @@ function EgressDetails() {
         setExpensesData(res); // Almacena res en el estado
        
       } catch (error) {
-        console.log('error');
+        console.log(error);
       }
     }
     fetchData();
@@ -38,10 +37,7 @@ function EgressDetails() {
     },
   };
 
-  const handleDeleteItem = (index) => {
-    const updatedDeletedItems = [...deletedItems, index];
-    setDeletedItems(updatedDeletedItems);
-  };
+ 
 
   return (
     <Paper
