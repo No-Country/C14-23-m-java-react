@@ -34,6 +34,7 @@ export function EgressProvider({ children }) {
     try {
       const res = await addExpenses(expense);
       setNewExpense(res);
+      return res;
     } catch (error) {
       console.log(error);
     }
