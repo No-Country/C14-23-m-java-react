@@ -65,6 +65,7 @@ const FormAddHome = ({
       date: new Date().toISOString().split('T')[0],
     };
 
+    console.log(newData);
     handleClose();
 
     setLoading(true);
@@ -96,11 +97,7 @@ const FormAddHome = ({
 
         <FormProvider {...methods}>
           <Box component='form' sx={{ mt: 2 }} onSubmit={onSubmit}>
-            <AmountInput
-              name='amount'
-              defaultValue=''
-              sx={{ mb: 2, width: '100%' }}
-            />
+            <AmountInput sx={{ mb: 2, width: '100%' }} />
             <FormControl
               fullWidth
               error={errors.categoryName ? true : false}
