@@ -96,6 +96,7 @@ public class IncomeController {
     @PostMapping(path = "/income/category", consumes = "application/json")
     public ResponseEntity<IncomeCategory> createCategory(@RequestBody String name) {
         try {
+            System.out.println("name en el controller: " + name);
             IncomeCategory incomeCategory = incomeCategoryService.createIncomeCategory(name);
             return new ResponseEntity<>(incomeCategory, HttpStatus.OK);
         } catch (NoSuchElementException e) {
