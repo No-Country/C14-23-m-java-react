@@ -3,9 +3,11 @@ package com.nocountry.finanzas.services.impl;
 import com.nocountry.finanzas.entities.Egress;
 import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.entities.User;
+import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
 import com.nocountry.finanzas.models.egress.MapperEgress;
+import com.nocountry.finanzas.repositories.EgressCategoryRepository;
 import com.nocountry.finanzas.repositories.EgressRepository;
 import com.nocountry.finanzas.repositories.UserRepository;
 import com.nocountry.finanzas.services.EgressCategoryService;
@@ -23,26 +25,33 @@ public class EgressServiceImpl implements EgressService {
 
     private final EgressCategoryService egressCategoryService;
 
+    private final EgressCategoryRepository egressCategoryRepository;
+
     private final MapperEgress egressMapper;
 
     private final UserRepository userRepository;
 
     @Autowired
-    public EgressServiceImpl(EgressRepository egressRepository, EgressCategoryService egressCategoryService, MapperEgress egressMapper, UserRepository userRepository) {
+    public EgressServiceImpl(EgressRepository egressRepository, EgressCategoryService egressCategoryService,
+                             MapperEgress egressMapper, UserRepository userRepository, EgressCategoryRepository egressCategoryRepository) {
         this.egressRepository = egressRepository;
         this.egressCategoryService = egressCategoryService;
         this.egressMapper = egressMapper;
         this.userRepository = userRepository;
+        this.egressCategoryRepository = egressCategoryRepository;
     }
 
     @Transactional
     @Override
-    public EgressDTO createdEgress(CreateEgressDTO egressDTO) {
+    public EgressDTO createdEgress(CreateEgressDTO egressDTO) throws BadRequestException {
         Egress egress = egressMapper.toEgress(egressDTO);
         User user = userRepository.findById(egress.getUser().getId()).get();
+        EgressCategory egressCategory = egressCategoryRepository.findByName(egressDTO.getCategoryName());
 
-        // Al crear este egressCategory, no estoy repitiendolo? deberia de sacar esto?
-        EgressCategory egressCategory = egressCategoryService.createEgressCategory(egress.getEgressCategory());
+        if (egressCategory == null) {
+            throw new BadRequestException("La categoría no existe: " + egressDTO.getCategoryName());
+        }
+
         egress.setEgressCategory(egressCategory);
         egress.setUser(user);
         egressRepository.save(egress);
@@ -83,10 +92,13 @@ public class EgressServiceImpl implements EgressService {
     public void deleteEgressById(Long id) {
         Egress egress = egressRepository.findById(id).get();
         User user = userRepository.findById(egress.getUser().getId()).get();
+
+        // como antes al agregar un egreso, le resto al total el monto del mismo. Al eliminar el egreso,
+        // por la razon q sea, tengo q agregar el monto de nuevo al usuario, ya que no se gasto realmente.
+        user.setTotalIncome(user.getTotalIncome() + egress.getAmount());
         user.getEgresses().remove(egress);
 
         egressRepository.deleteById(id);
-        egressCategoryService.deleteEgressCategoryById(id);
     }
 
     @Transactional

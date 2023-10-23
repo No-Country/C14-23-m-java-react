@@ -32,7 +32,7 @@ public class Income {
     private String description;
 
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JoinColumn(name = "income_category_id", referencedColumnName = "id")
     private IncomeCategory categoryIncome;
 
     @ManyToOne

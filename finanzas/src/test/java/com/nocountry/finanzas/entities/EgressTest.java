@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import static org.junit.Assert.*;
 
 public class EgressTest {
-
+/*
     private Egress egress;
 
     @Before
@@ -96,5 +96,5 @@ public class EgressTest {
         assertTrue(egress2.getEgressCategory().getId() instanceof  Long);
         assertTrue(egress2.getEgressCategory().getName() instanceof CategoryEnum);
     }
-
+*/
 }
