@@ -19,6 +19,7 @@ export function EgressProvider({ children }) {
   };
 
   const [newExpense, setNewExpense] = useState([]);
+  const [deleteExpense, setDelExpense] = useState([]);
 
   const allExpenses = async () => {
     try {
@@ -31,7 +32,7 @@ export function EgressProvider({ children }) {
 
   const addNewGasto = async (expense) => {
     try {
-      const res = await addExpenses(expenses);
+      const res = await addExpenses(expense);
       setNewExpense(res);
     } catch (error) {
       console.log(error);
@@ -41,7 +42,7 @@ export function EgressProvider({ children }) {
   const delExpense = async (id) => {
     try {
       const res = await deleteExpenses(id);
-      console.log(res);
+      setDelExpense(res);
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +50,13 @@ export function EgressProvider({ children }) {
 
   return (
     <EgressContext.Provider
-      value={{ allExpenses, addNewGasto, delExpense, newExpense }}
+      value={{
+        allExpenses,
+        addNewGasto,
+        delExpense,
+        newExpense,
+        deleteExpense,
+      }}
     >
       {children}
     </EgressContext.Provider>
