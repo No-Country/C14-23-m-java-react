@@ -25,8 +25,8 @@ public class EgressCategoryImpl implements EgressCategoryService {
     @Transactional
     @Override
     public EgressCategory createEgressCategory(String name) {
-
-        return repository.save(searchCategory(name));
+        EgressCategory newCategory = searchCategory(name);
+        return repository.save(newCategory);
     }
 
     @Transactional(readOnly = true)
