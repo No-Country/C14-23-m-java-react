@@ -30,7 +30,7 @@ function IncomeDetails() {
       }
     }
     fetchData();
-  }, [incomesData]);
+  }, []);
 
   const styles = {
     paper: {
@@ -76,7 +76,6 @@ function IncomeDetails() {
             );
           })}
         </List>
-        
       </Box>
     </Paper>
   );

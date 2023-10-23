@@ -21,7 +21,6 @@ export function IncomeProvider({ children }) {
   const allIncomes = async () => {
     try {
       const res = await getIncomes();
-      console.log(res.data);
       return res.data;
     } catch (error) {
       console.log(error);

@@ -23,7 +23,7 @@ const ModalHome = ({
     { option: 'Vivienda', value: 'VIVIENDA' },
     { option: 'Transporte', value: 'TRANSPORTE' },
     { option: 'Entretenimiento', value: 'ENTRETENIMIENTO' },
-    { option: 'Salud - Cuidado Personal', value: 'SALUD_CUIDADO PERSONAL' },
+    { option: 'Salud - Cuidado Personal', value: 'SALUD_CUIDADO_PERSONAL' },
     { option: 'Educación', value: 'EDUCACION' },
     { option: 'Vestimenta', value: 'VESTIMENTA' },
     { option: 'Servicios', value: 'SERVICIOS' },
@@ -35,7 +35,7 @@ const ModalHome = ({
   const incomeCategories = [
     { option: 'Sueldo Mensual', value: 'SUELDO_MENSUAL' },
     { option: 'Préstamo', value: 'PRESTAMO' },
-    { option: 'Clientes Regalo', value: 'CLIENTES_REGALO' },
+    { option: 'Clientes', value: 'CLIENTES' },
     { option: 'Bono Extra', value: 'BONO_EXTRA' },
     { option: 'Otros', value: 'OTROS' },
   ];

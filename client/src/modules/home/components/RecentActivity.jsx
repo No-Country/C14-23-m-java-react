@@ -1,4 +1,4 @@
-import {React, useEffect, useState} from 'react';
+import { React, useEffect, useState } from 'react';
 import { Box, Typography, Paper } from '@mui/material';
 import TransactionCard from './TransactionCard';
 
@@ -6,14 +6,13 @@ import { useIncome } from '../../../context/IncomeContext';
 import { useEgress } from '../../../context/EgressContext';
 
 function RecentActivity(props) {
-
   const [incomesData, setIncomesData] = useState([]);
   const [expensesData, setExpensesData] = useState([]);
   const [lastFiveIncomes, setLastFiveIncomes] = useState([]);
   const [lastFiveExpenses, setLastFiveExpenses] = useState([]);
 
-  const {allExpenses} = useEgress()
-  const { allIncomes} = useIncome()
+  const { allExpenses } = useEgress();
+  const { allIncomes } = useIncome();
 
   useEffect(() => {
     async function fetchData() {
@@ -24,14 +23,12 @@ function RecentActivity(props) {
         // Actualiza los estados para mantener solo las últimas 5 entradas
         setLastFiveIncomes(allInc.slice(-5).reverse());
         setLastFiveExpenses(allExp.slice(-5).reverse());
-       
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  }, [lastFiveExpenses,lastFiveIncomes]);
-
+  }, []);
 
   const styles = {
     paper: {
@@ -85,11 +82,15 @@ function RecentActivity(props) {
           <Typography variant='h6' textAlign={'center'}>
             Ingresos
           </Typography>
-          {
-            lastFiveIncomes?.map((item, index) => (
-              <TransactionCard key={index} amount={` $${item.amount} `}  categoryName={item.categoryName} description={item.description} date={item.date}/>
-            ))
-          }
+          {lastFiveIncomes?.map((item, index) => (
+            <TransactionCard
+              key={index}
+              amount={` $${item.amount} `}
+              categoryName={item.categoryName}
+              description={item.description}
+              date={item.date}
+            />
+          ))}
         </Box>
       </Paper>
 
@@ -102,11 +103,15 @@ function RecentActivity(props) {
           <Typography variant='h6' textAlign={'center'}>
             Gastos
           </Typography>
-          {
-            lastFiveExpenses?.map((item, index) => (
-              <TransactionCard key={index} amount={`-  $${item.amount} `}  categoryName={item.categoryName} description={item.description} date={item.date}/>
-            ))
-          }
+          {lastFiveExpenses?.map((item, index) => (
+            <TransactionCard
+              key={index}
+              amount={`-  $${item.amount} `}
+              categoryName={item.categoryName}
+              description={item.description}
+              date={item.date}
+            />
+          ))}
         </Box>
       </Paper>
     </Box>

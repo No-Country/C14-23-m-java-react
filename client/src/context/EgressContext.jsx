@@ -20,7 +20,6 @@ export function EgressProvider({ children }) {
   const allExpenses = async () => {
     try {
       const res = await getExpenses();
-      console.log(res.data);
       return res.data;
     } catch (error) {
       console.log(error);
