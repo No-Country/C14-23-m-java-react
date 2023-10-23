@@ -17,7 +17,7 @@ function EgressDetails() {
   const [isHovered, setIsHovered] = useState(false);
   const [expensesData, setExpensesData] = useState(null);
 
-  const { allExpenses, delExpense, newExpense } = useEgress(); // uso el contexto
+  const { allExpenses, delExpense, newExpense, deleteExpense } = useEgress(); // uso el contexto
 
   useEffect(() => {
     async function fetchData() {
@@ -29,7 +29,7 @@ function EgressDetails() {
       }
     }
     fetchData();
-  }, [newExpense]);
+  }, [newExpense, deleteExpense]);
 
   const styles = {
     paper: {
