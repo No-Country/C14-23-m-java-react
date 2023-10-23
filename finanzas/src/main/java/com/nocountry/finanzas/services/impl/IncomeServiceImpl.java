@@ -3,6 +3,7 @@ package com.nocountry.finanzas.services.impl;
 import com.nocountry.finanzas.entities.Income;
 import com.nocountry.finanzas.entities.IncomeCategory;
 import com.nocountry.finanzas.entities.User;
+import com.nocountry.finanzas.entities.enums.CategoryIncomeEnum;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.income.IncomeDTO;
 import com.nocountry.finanzas.models.income.MapperIncome;
@@ -60,7 +61,8 @@ public class IncomeServiceImpl implements IncomeService {
         Income income = mapperIncome.toIncome(incomeDTO);
         User user = userRepository.findById(income.getUser().getId()).get();
 
-        IncomeCategory incomeCategory = incomeCategoryRepository.findByName(incomeDTO.getCategoryName());
+        CategoryIncomeEnum categoryIncomeEnum = searchCategoryEnumIncome(incomeDTO.getCategoryName());
+        IncomeCategory incomeCategory = incomeCategoryRepository.findByName(categoryIncomeEnum);
 
         if (incomeCategory == null) {
             throw new BadRequestException("La categoría no existe: " + incomeDTO.getCategoryName());
@@ -91,6 +93,15 @@ public class IncomeServiceImpl implements IncomeService {
     @Transactional
     @Override
     public IncomeDTO updateIncome(IncomeDTO requestDTO) {
+        return null;
+    }
+
+    private CategoryIncomeEnum searchCategoryEnumIncome(String name) {
+        for (CategoryIncomeEnum element: CategoryIncomeEnum.values()) {
+            if (element.name().equalsIgnoreCase(name)) {
+                return element;
+            }
+        }
         return null;
     }
 

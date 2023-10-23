@@ -3,6 +3,7 @@ package com.nocountry.finanzas.services.impl;
 import com.nocountry.finanzas.entities.Egress;
 import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.entities.User;
+import com.nocountry.finanzas.entities.enums.CategoryEnum;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
@@ -46,7 +47,9 @@ public class EgressServiceImpl implements EgressService {
     public EgressDTO createdEgress(CreateEgressDTO egressDTO) throws BadRequestException {
         Egress egress = egressMapper.toEgress(egressDTO);
         User user = userRepository.findById(egress.getUser().getId()).get();
-        EgressCategory egressCategory = egressCategoryRepository.findByName(egressDTO.getCategoryName());
+
+        CategoryEnum categoryEnum = searchCategoryEnum(egressDTO.getCategoryName());
+        EgressCategory egressCategory = egressCategoryRepository.findByName(categoryEnum);
 
         if (egressCategory == null) {
             throw new BadRequestException("La categoría no existe: " + egressDTO.getCategoryName());
@@ -107,6 +110,16 @@ public class EgressServiceImpl implements EgressService {
         User user = userRepository.findById(idUser).get();
 
         return  egressMapper.egressDTOList(user.getEgresses());
+    }
+
+    private CategoryEnum searchCategoryEnum(String name) {
+        for (CategoryEnum element: CategoryEnum.values()) {
+            if (element.name().equalsIgnoreCase(name)) {
+                return element;
+            }
+        }
+
+        return null;
     }
 
 }
