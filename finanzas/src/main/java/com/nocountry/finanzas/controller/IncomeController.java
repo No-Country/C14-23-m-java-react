@@ -93,7 +93,7 @@ public class IncomeController {
         }
     }
 
-    @PostMapping(path = "/income/category")
+    @PostMapping(path = "/income/category", consumes = "application/json")
     public ResponseEntity<IncomeCategory> createCategory(@RequestBody String name) {
         try {
             IncomeCategory incomeCategory = incomeCategoryService.createIncomeCategory(name);

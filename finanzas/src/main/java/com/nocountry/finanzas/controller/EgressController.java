@@ -92,7 +92,7 @@ public class EgressController {
         }
     }
 
-    @PostMapping(path = "/egress/category")
+    @PostMapping(path = "/egress/category", consumes = "application/json")
     public ResponseEntity<EgressCategory> createCategory(@RequestBody String name) {
         try {
             EgressCategory egressCategory = egressCategoryService.createEgressCategory(name);
