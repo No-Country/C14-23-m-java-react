@@ -93,7 +93,7 @@ public class IncomeController {
         }
     }
 
-    @PostMapping(path = "/category")
+    @PostMapping(path = "/income/category")
     public ResponseEntity<IncomeCategory> createCategory(@PathVariable String name) {
         try {
             IncomeCategory incomeCategory = incomeCategoryService.createIncomeCategory(name);
