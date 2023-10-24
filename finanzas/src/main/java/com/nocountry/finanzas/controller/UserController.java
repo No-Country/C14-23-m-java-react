@@ -85,12 +85,14 @@ public class UserController {
     }
 
     @PutMapping(path = "/savings", consumes = "application/json")
-    public ResponseEntity<UserResponseDTO> savingsMoney(@RequestBody @Valid SavingsDTO savings) throws BadRequestException {
+    public ResponseEntity<UserResponseDTO> savingsMoney(@RequestBody @Valid SavingsDTO savings) throws BadRequestException, NotFoundException {
         try {
             UserResponseDTO userResponseDTO = userService.addSavings(savings);
             return new ResponseEntity<>(userResponseDTO,HttpStatus.OK);
-        }catch (DataAccessException e){
+        } catch (DataAccessException e){
             throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e) {
+            throw new NotFoundException(e.getMessage());
         }
     }
 

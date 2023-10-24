@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService {
         }
         user.setAccumulatedSavings(user.getAccumulatedSavings() + toSaving.getToSaving());
         user.setTotalIncome(user.getTotalIncome() - toSaving.getToSaving());
-        
+
         userRepository.save(user);
         return Mapper.userToUserResponseDto(user);
     }
