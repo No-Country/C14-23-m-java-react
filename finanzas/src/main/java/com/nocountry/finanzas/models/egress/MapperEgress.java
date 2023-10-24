@@ -24,8 +24,6 @@ public class MapperEgress {
         egress.setDate(egressDTO.getDate());
         egress.setDescription(egressDTO.getDescription());
 
-        //egress.setEgressCategory(searchCategory(egressDTO.getCategoryName()));
-
         if (egressDTO instanceof CreateEgressDTO) {
             User user = new User();
             user.setId(((CreateEgressDTO) egressDTO).getIdUser());
@@ -69,19 +67,5 @@ public class MapperEgress {
 
         return listResponse;
     }
-
-    /*
-    public EgressCategory searchCategory(String name) {
-        EgressCategory egressCategory = new EgressCategory();
-
-        for (CategoryEnum element : CategoryEnum.values()) {
-            if (element.name().equalsIgnoreCase(name)) {
-                egressCategory.setName(element);
-            }
-        }
-
-        return egressCategory;
-    }
-*/
 
 }

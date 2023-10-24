@@ -15,5 +15,6 @@ public interface IncomeCategoryService {
 
     void deleteIncomeCategoryById(Long id);
 
+    IncomeCategory updateIncomeCategory(IncomeCategory incomeCategory);
 
 }

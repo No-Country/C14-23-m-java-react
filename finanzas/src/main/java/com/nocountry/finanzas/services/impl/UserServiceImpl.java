@@ -5,42 +5,46 @@ import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.EmailAlreadyExistsException;
 import com.nocountry.finanzas.exceptions.InvalidEmailType;
 import com.nocountry.finanzas.exceptions.NotFoundException;
-import com.nocountry.finanzas.models.Mapper;
-import com.nocountry.finanzas.models.request.UserLoggingDTO;
-import com.nocountry.finanzas.models.request.UserRequestDTO;
-import com.nocountry.finanzas.models.response.UserLoggingResponse;
-import com.nocountry.finanzas.models.response.UserResponseDTO;
+import com.nocountry.finanzas.models.user.Mapper;
+import com.nocountry.finanzas.models.user.UserLoggingDTO;
+import com.nocountry.finanzas.models.user.UserRequestDTO;
+import com.nocountry.finanzas.models.user.UserLoggingResponse;
+import com.nocountry.finanzas.models.user.UserResponseDTO;
 import com.nocountry.finanzas.repositories.UserRepository;
 import com.nocountry.finanzas.services.UserService;
+import com.nocountry.finanzas.validators.BirthdayValidator;
 import com.nocountry.finanzas.validators.EmailValidator;
 import jakarta.transaction.Transactional;
-import org.hibernate.type.format.jackson.JacksonIntegration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
     private final EmailValidator emailValidator;
 
+    private final BirthdayValidator birthdayValidator;
+
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, EmailValidator emailValidator) {
+    public UserServiceImpl(UserRepository userRepository, EmailValidator emailValidator, BirthdayValidator birthdayValidator) {
         this.userRepository = userRepository;
         this.emailValidator = emailValidator;
+        this.birthdayValidator = birthdayValidator;
     }
 
 
     @Transactional
     @Override
-    public UserResponseDTO saveUser(UserRequestDTO userRequestDTO) throws InvalidEmailType, EmailAlreadyExistsException {
-        User user = Mapper.userRequestDTOToUser(userRequestDTO);
+    public UserResponseDTO saveUser(UserRequestDTO userRequestDTO) throws EmailAlreadyExistsException, InvalidEmailType, BadRequestException {
+        doEmailValidation(userRequestDTO.getEmail());
+        doBirthdayValidation(userRequestDTO.getBirthday_date());
 
-        if (!emailValidator.isEmailValid(user.getEmail())) {
-            throw new InvalidEmailType("El email ingresa no posee una estructura valida.");
-        }
+        User user = Mapper.userRequestDTOToUser(userRequestDTO);
 
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
 
@@ -111,6 +115,20 @@ public class UserServiceImpl implements UserService {
         }
 
         return response;
+    }
+
+    private void doEmailValidation(String email) throws InvalidEmailType {
+
+        if (!emailValidator.isEmailValid(email)) {
+            throw new InvalidEmailType("El email ingresa no posee una estructura valida.");
+        }
+    }
+
+    private void doBirthdayValidation(LocalDate birthday) throws BadRequestException {
+
+        if (!birthdayValidator.isOldest18Years(birthday)) {
+            throw new BadRequestException("La fecha ingresada no es mayor de 18 años.");
+        }
     }
 
 }

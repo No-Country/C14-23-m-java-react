@@ -1,5 +1,6 @@
-package com.nocountry.finanzas.models.response;
+package com.nocountry.finanzas.models.user;
 
+import com.nocountry.finanzas.models.user.UserResponseDTO;
 import lombok.Data;
 
 @Data

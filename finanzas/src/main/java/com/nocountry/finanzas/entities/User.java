@@ -3,6 +3,7 @@ package com.nocountry.finanzas.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nocountry.finanzas.entities.enums.Countries;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,6 +45,7 @@ public class User {
     private Countries country;
 
     @Column(name = "total_income")
+    @Digits(integer = Integer.MAX_VALUE, fraction = 2)
     private Double totalIncome;
 
     private Integer countLogging;

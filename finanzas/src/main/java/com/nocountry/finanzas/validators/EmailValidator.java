@@ -20,7 +20,7 @@ public class EmailValidator {
         if (email.contains(" ")) {
             return false;
         }
-        if (email.length() > 255) {
+        if (email.length() > 200) {
             return false;
         }
 

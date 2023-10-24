@@ -26,6 +26,7 @@ public class EgressCategoryImpl implements EgressCategoryService {
     @Transactional
     @Override
     public EgressCategory createEgressCategory(CategoryEgressDTO category) {
+
         EgressCategory newCategory = searchCategory(category.getName());
         return repository.save(newCategory);
     }
@@ -54,7 +55,6 @@ public class EgressCategoryImpl implements EgressCategoryService {
     @Transactional
     @Override
     public EgressCategory updateEgressCategory(EgressCategory egressCategory) {
-        //Hacer verificaciones de campos nulos? correctos? ver requerimientos
 
         return repository.save(egressCategory);
     }
@@ -67,7 +67,7 @@ public class EgressCategoryImpl implements EgressCategoryService {
             }
         }
 
-        return null;
+        return new EgressCategory(CategoryEnum.OTROS);
     }
 
 
