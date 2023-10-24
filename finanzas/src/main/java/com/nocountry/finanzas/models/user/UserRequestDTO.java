@@ -1,4 +1,4 @@
-package com.nocountry.finanzas.models.request;
+package com.nocountry.finanzas.models.user;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -20,7 +20,7 @@ public class UserRequestDTO {
 
     @NotEmpty(message = "Este campo es obligatorio")
     @Email(message = "El mail ingresado no es valido")
-    @Size(min = 11, max = 255, message = "El email debe poseer un minimo de 11 caracteres y maximo de 255.")
+    @Size(min = 11, max = 200, message = "El email debe poseer un minimo de 11 caracteres y maximo de 255.")
     private String email;
 
     @NotBlank(message = "Este campo es obligatorio")

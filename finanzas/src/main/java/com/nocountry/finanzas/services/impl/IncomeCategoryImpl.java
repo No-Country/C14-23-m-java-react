@@ -50,15 +50,22 @@ public class IncomeCategoryImpl implements IncomeCategoryService {
         repository.deleteById(id);
     }
 
+    @Transactional
+    @Override
+    public IncomeCategory updateIncomeCategory(IncomeCategory incomeCategory) {
+
+        return repository.save(incomeCategory);
+    }
+
     private IncomeCategory searchCategory(String name) {
-        IncomeCategory incomeCategory = new IncomeCategory();
 
         for (CategoryIncomeEnum element: CategoryIncomeEnum.values()) {
             if (element.name().equalsIgnoreCase(name)) {
-                incomeCategory.setName(element);
+                return new IncomeCategory(element);
             }
         }
-        return incomeCategory;
+
+        return new IncomeCategory(CategoryIncomeEnum.OTROS);
     }
 
 

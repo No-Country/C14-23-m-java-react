@@ -68,7 +68,6 @@ public class EgressServiceImpl implements EgressService {
     @Transactional
     @Override
     public EgressDTO updateEgress(EgressDTO egressDTO) {
-        //Hacer verificaciones de campos nulos? correctos? ver requerimientos
         Egress egress = egressMapper.toEgress(egressDTO);
 
         egressCategoryService.updateEgressCategory(egress.getEgressCategory());
@@ -119,7 +118,7 @@ public class EgressServiceImpl implements EgressService {
             }
         }
 
-        return null;
+        return CategoryEnum.OTROS;
     }
 
 }

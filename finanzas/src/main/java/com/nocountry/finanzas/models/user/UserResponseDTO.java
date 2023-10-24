@@ -1,7 +1,6 @@
-package com.nocountry.finanzas.models.response;
+package com.nocountry.finanzas.models.user;
 
 import lombok.Data;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 
@@ -13,4 +12,5 @@ public class UserResponseDTO {
     private String email;
     private LocalDate birthday_date;
     private Double totalIncome;
+    private Double accumulatedSavings;
 }
