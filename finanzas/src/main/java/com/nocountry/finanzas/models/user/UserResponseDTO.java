@@ -1,7 +1,6 @@
 package com.nocountry.finanzas.models.user;
 
 import lombok.Data;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 

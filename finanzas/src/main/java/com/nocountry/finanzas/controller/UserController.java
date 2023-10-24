@@ -4,6 +4,7 @@ import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.EmailAlreadyExistsException;
 import com.nocountry.finanzas.exceptions.InvalidEmailType;
 import com.nocountry.finanzas.exceptions.NotFoundException;
+import com.nocountry.finanzas.models.user.SavingsDTO;
 import com.nocountry.finanzas.models.user.*;
 import com.nocountry.finanzas.services.UserService;
 import jakarta.validation.Valid;
@@ -83,7 +84,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "/savings", consumes = "application/json")
+    @PutMapping(path = "/savings", consumes = "application/json")
     public ResponseEntity<UserResponseDTO> savingsMoney(@RequestBody @Valid SavingsDTO savings) throws BadRequestException {
         try {
             UserResponseDTO userResponseDTO = userService.addSavings(savings);
@@ -92,4 +93,15 @@ public class UserController {
             throw new BadRequestException(e.getMessage());
         }
     }
+
+    @PutMapping(path = "/savings/revertState")
+    public ResponseEntity<UserResponseDTO> revertToInitialStateSavings(@PathVariable Long id) throws BadRequestException {
+        try {
+            UserResponseDTO userResponseDTO = userService.revertSavings(id);
+            return new ResponseEntity<>(userResponseDTO,HttpStatus.OK);
+        }catch (DataAccessException e){
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
 }
