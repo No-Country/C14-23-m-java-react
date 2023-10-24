@@ -24,7 +24,7 @@ public interface UserService {
 
     public UserLoggingResponse loggingUser(UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException;
 
-    UserResponseDTO addSavings(SavingsDTO toSaving);
+    UserResponseDTO addSavings(SavingsDTO toSaving) throws NotFoundException;
 
     UserResponseDTO revertSavings(Long id);
 
