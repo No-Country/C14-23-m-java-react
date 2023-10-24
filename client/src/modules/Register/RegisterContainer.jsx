@@ -130,7 +130,7 @@ const RegisterContainer = () => {
                 {...register('name', {
                   required: 'Nombre es requerido',
                   pattern: {
-                    value: /^[A-Za-z\s]+$/,
+                    value: /^[A-Za-zÁáÉéÍíÓóÚúÜüÑñ\s]+$/,
                     message: 'Solo se permiten letras y espacios',
                   },
                   minLength: {
@@ -255,11 +255,14 @@ const RegisterContainer = () => {
                     mínimo
                   </ListItem>
                   <ListItem sx={{ fontSize: '0.7rem' }}>
-                    <TbPointFilled style={{ color: 'green' }} /> 1 Símbolo
+                    <TbPointFilled style={{ color: 'green' }} /> 1 Letra
+                    mayúscula
                   </ListItem>
                   <ListItem sx={{ fontSize: '0.7rem' }}>
-                    <TbPointFilled style={{ color: 'green' }} /> Letras y
-                    números
+                    <TbPointFilled style={{ color: 'green' }} /> 1 Número
+                  </ListItem>
+                  <ListItem sx={{ fontSize: '0.7rem' }}>
+                    <TbPointFilled style={{ color: 'green' }} /> 1 Símbolo
                   </ListItem>
                 </List>
               )}
