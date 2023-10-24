@@ -94,22 +94,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDTO addSavings(SavingsDTO toSaving) {
+    public UserResponseDTO addSavings(SavingsDTO toSaving) throws NotFoundException {
 
         User user = userRepository.findById(toSaving.getIdUser()).get();
 
-        if (toSaving.getToSaving() <= user.getTotalIncome()) {
-            user.setAccumulatedSavings(user.getAccumulatedSavings() + toSaving.getToSaving());
-            user.setTotalIncome(user.getTotalIncome() - toSaving.getToSaving());
-        } else {
-            return null;
+        if (toSaving.getToSaving() > user.getTotalIncome()) {
+            throw new NotFoundException("No hay fondos suficientes para invertir en ahorros.");
         }
+        user.setAccumulatedSavings(user.getAccumulatedSavings() + toSaving.getToSaving());
+        user.setTotalIncome(user.getTotalIncome() - toSaving.getToSaving());
 
         userRepository.save(user);
-
-        return  Mapper.userToUserResponseDto(user);
+        return Mapper.userToUserResponseDto(user);
     }
 
+    @Override
+    public UserResponseDTO revertSavings(Long id) {
+        User user = userRepository.findById(id).get();
+
+        user.setTotalIncome(user.getTotalIncome() + user.getAccumulatedSavings());
+        user.setAccumulatedSavings(0.0);
+
+        userRepository.save(user);
+        return Mapper.userToUserResponseDto(user);
+    }
 
     private void doEmailValidation(String email) throws InvalidEmailType {
 

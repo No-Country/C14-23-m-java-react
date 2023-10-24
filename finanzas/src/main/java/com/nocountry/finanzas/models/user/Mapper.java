@@ -19,6 +19,7 @@ public class Mapper {
         user.setBirthday_date(userRequestDTO.getBirthday_date());
         user.setCountry(searchCountry(userRequestDTO.getCountry()));
         user.setTotalIncome(0.0);
+        user.setAccumulatedSavings(0.0);
 
         return user;
     }

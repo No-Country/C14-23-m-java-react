@@ -23,5 +23,9 @@ public interface UserService {
 
     public void deleteUser(Long id);
 
-    UserResponseDTO addSavings(SavingsDTO savingsDTO);
+    UserResponseDTO addSavings(SavingsDTO toSaving) throws NotFoundException;
+
+    UserResponseDTO revertSavings(Long id);
+
+
 }

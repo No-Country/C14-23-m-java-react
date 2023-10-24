@@ -3,7 +3,7 @@ package com.nocountry.finanzas.controller;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.InvalidEmailType;
 import com.nocountry.finanzas.exceptions.NotFoundException;
-import com.nocountry.finanzas.models.egress.EgressDTO;
+
 import com.nocountry.finanzas.models.egress.SavingsDTO;
 import com.nocountry.finanzas.models.user.Mapper;
 import com.nocountry.finanzas.models.user.UserRequestDTO;
@@ -15,8 +15,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api")
@@ -63,15 +61,26 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "/savings", consumes = "application/json")
-    public ResponseEntity<UserResponseDTO> savingsMoney(@RequestBody @Valid SavingsDTO savingsDTO) {
+    @PutMapping(path = "/savings", consumes = "application/json")
+    public ResponseEntity<UserResponseDTO> savingsMoney(@RequestBody @Valid SavingsDTO savings) throws BadRequestException, NotFoundException {
         try {
-            UserResponseDTO responseDTO = userService.addSavings(savingsDTO);
-            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
+            UserResponseDTO userResponseDTO = userService.addSavings(savings);
+            return new ResponseEntity<>(userResponseDTO,HttpStatus.OK);
+        } catch (DataAccessException e){
+            throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e) {
+            throw new NotFoundException(e.getMessage());
         }
     }
 
+    @PutMapping(path = "/savings/revertState/user/{id}")
+    public ResponseEntity<UserResponseDTO> revertToInitialStateSavings(@PathVariable Long id) throws BadRequestException {
+        try {
+            UserResponseDTO userResponseDTO = userService.revertSavings(id);
+            return new ResponseEntity<>(userResponseDTO,HttpStatus.OK);
+        }catch (DataAccessException e){
+            throw new BadRequestException(e.getMessage());
+        }
+    }
 
 }
