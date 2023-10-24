@@ -103,4 +103,11 @@ public class EgressController {
         }
     }
 
+
+    @GetMapping(path = "/egress/month/{id}")
+    public ResponseEntity<List<Egress>> egressByMonth(@PathVariable Long id,@RequestBody Integer mes){
+
+        return ResponseEntity.ok().body(egressService.findByMontAndCategory(1L,null,mes));
+    }
+
 }

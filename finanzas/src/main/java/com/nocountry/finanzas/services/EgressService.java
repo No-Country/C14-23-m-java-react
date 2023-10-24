@@ -1,8 +1,10 @@
 package com.nocountry.finanzas.services;
 
+import com.nocountry.finanzas.entities.Egress;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
+import jakarta.annotation.Nullable;
 
 import java.util.List;
 
@@ -19,5 +21,7 @@ public interface EgressService {
     public void deleteEgressById(Long id);
 
     public List<EgressDTO> getEgressByUser(Long id);
+
+    public List<Egress> findByMontAndCategory (Long id, @Nullable Long category, @Nullable Integer mes);
 
 }

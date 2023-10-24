@@ -13,10 +13,12 @@ import com.nocountry.finanzas.repositories.EgressRepository;
 import com.nocountry.finanzas.repositories.UserRepository;
 import com.nocountry.finanzas.services.EgressCategoryService;
 import com.nocountry.finanzas.services.EgressService;
+import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -110,6 +112,20 @@ public class EgressServiceImpl implements EgressService {
         User user = userRepository.findById(idUser).get();
 
         return  egressMapper.egressDTOList(user.getEgresses());
+    }
+
+    @Override
+    public List<Egress> findByMontAndCategory(Long id, @Nullable Long category, @Nullable Integer mes) {
+
+        if (category == null && mes != null){
+            int year =  LocalDate.now().getYear();
+            int mes1 = mes.intValue();
+            LocalDate monthLocalDate = LocalDate.of(year,mes1,1);
+
+            return egressRepository.findByMont(monthLocalDate);
+        }
+
+        return null;
     }
 
     private CategoryEnum searchCategoryEnum(String name) {
