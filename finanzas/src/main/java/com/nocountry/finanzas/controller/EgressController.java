@@ -6,6 +6,7 @@ import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.egress.CategoryEgressDTO;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
+import com.nocountry.finanzas.models.egress.SavingsDTO;
 import com.nocountry.finanzas.services.EgressCategoryService;
 import com.nocountry.finanzas.services.EgressService;
 import jakarta.validation.Valid;
@@ -94,7 +95,7 @@ public class EgressController {
     }
 
     @PostMapping(path = "/egress/category", consumes = "application/json")
-    public ResponseEntity<EgressCategory> createCategory(@RequestBody CategoryEgressDTO name) {
+    public ResponseEntity<EgressCategory> createCategory(@RequestBody @Valid CategoryEgressDTO name) {
         try {
             EgressCategory egressCategory = egressCategoryService.createEgressCategory(name);
             return new ResponseEntity<>(egressCategory, HttpStatus.OK);
@@ -102,5 +103,6 @@ public class EgressController {
             return ResponseEntity.notFound().build();
         }
     }
+
 
 }

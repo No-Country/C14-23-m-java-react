@@ -5,10 +5,9 @@ import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.EmailAlreadyExistsException;
 import com.nocountry.finanzas.exceptions.InvalidEmailType;
 import com.nocountry.finanzas.exceptions.NotFoundException;
+import com.nocountry.finanzas.models.egress.SavingsDTO;
 import com.nocountry.finanzas.models.user.Mapper;
-import com.nocountry.finanzas.models.user.UserLoggingDTO;
 import com.nocountry.finanzas.models.user.UserRequestDTO;
-import com.nocountry.finanzas.models.user.UserLoggingResponse;
 import com.nocountry.finanzas.models.user.UserResponseDTO;
 import com.nocountry.finanzas.repositories.UserRepository;
 import com.nocountry.finanzas.services.UserService;
@@ -46,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
         User user = Mapper.userRequestDTOToUser(userRequestDTO);
 
-        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+        Optional<User> existingUser = userRepository.findUserByEmail(user.getEmail());
 
         if (existingUser.isPresent()) {
             throw new EmailAlreadyExistsException("El email ya está registrado.");
@@ -73,13 +72,16 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDTO) throws NotFoundException {
+    public UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDTO) throws NotFoundException, InvalidEmailType, BadRequestException {
+        doEmailValidation(userRequestDTO.getEmail());
+        doBirthdayValidation(userRequestDTO.getBirthday_date());
+
         User userToEdit = getUserById(id);
 
         userToEdit.setName(userRequestDTO.getName());
         userToEdit.setLast_name(userRequestDTO.getLast_name());
         userToEdit.setEmail(userRequestDTO.getEmail());
-        userToEdit.setPassword(userRequestDTO.getPassword());
+        userToEdit.setPassword1(userRequestDTO.getPassword());
         userToEdit.setBirthday_date(userRequestDTO.getBirthday_date());
 
         return Mapper.userToUserResponseDto(userToEdit);
@@ -91,31 +93,23 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    @Transactional
     @Override
-    public UserLoggingResponse loggingUser(UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException {
-        Optional<User> userOptional = userRepository.findById(userLoggingDTO.getIdUser());
+    public UserResponseDTO addSavings(SavingsDTO toSaving) {
 
-        if (userOptional.isEmpty()){
-            throw new NotFoundException("Could not found user");
-        }
+        User user = userRepository.findById(toSaving.getIdUser()).get();
 
-        boolean isEmailCorrect = userOptional.get().getEmail().equalsIgnoreCase(userLoggingDTO.getEmail());
-        boolean isPasswordCorrect = userOptional.get().getPassword().equals(userLoggingDTO.getPassword());
-
-        UserLoggingResponse response = Mapper.userToUserLoggingResponseDto(userOptional.get());
-
-        if (isEmailCorrect && isPasswordCorrect) {
-            userOptional.get().setCountLogging(userOptional.get().getCountLogging() + 1);
-            userRepository.save(userOptional.get());
-
-            response.setErrorMessage(null);
+        if (toSaving.getToSaving() <= user.getTotalIncome()) {
+            user.setAccumulatedSavings(user.getAccumulatedSavings() + toSaving.getToSaving());
+            user.setTotalIncome(user.getTotalIncome() - toSaving.getToSaving());
         } else {
-            response.setErrorMessage("Credenciales incorrectas. Verifica tu correo electrónico y contraseña.");
+            return null;
         }
 
-        return response;
+        userRepository.save(user);
+
+        return  Mapper.userToUserResponseDto(user);
     }
+
 
     private void doEmailValidation(String email) throws InvalidEmailType {
 

@@ -8,6 +8,8 @@ import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
 import com.nocountry.finanzas.models.egress.MapperEgress;
+import com.nocountry.finanzas.models.egress.SavingsDTO;
+import com.nocountry.finanzas.models.user.UserResponseDTO;
 import com.nocountry.finanzas.repositories.EgressCategoryRepository;
 import com.nocountry.finanzas.repositories.EgressRepository;
 import com.nocountry.finanzas.repositories.UserRepository;

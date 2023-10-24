@@ -5,9 +5,8 @@ import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.EmailAlreadyExistsException;
 import com.nocountry.finanzas.exceptions.InvalidEmailType;
 import com.nocountry.finanzas.exceptions.NotFoundException;
-import com.nocountry.finanzas.models.user.UserLoggingDTO;
+import com.nocountry.finanzas.models.egress.SavingsDTO;
 import com.nocountry.finanzas.models.user.UserRequestDTO;
-import com.nocountry.finanzas.models.user.UserLoggingResponse;
 import com.nocountry.finanzas.models.user.UserResponseDTO;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +19,9 @@ public interface UserService {
 
     public UserResponseDTO getUserDtoById(Long id);
 
-    public UserResponseDTO updateUser(Long id,UserRequestDTO userRequestDTO) throws NotFoundException;
+    public UserResponseDTO updateUser(Long id,UserRequestDTO userRequestDTO) throws NotFoundException, InvalidEmailType, BadRequestException;
 
     public void deleteUser(Long id);
 
-    public UserLoggingResponse loggingUser(UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException;
-
+    UserResponseDTO addSavings(SavingsDTO savingsDTO);
 }

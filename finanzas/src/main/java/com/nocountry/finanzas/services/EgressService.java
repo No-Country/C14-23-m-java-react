@@ -3,6 +3,7 @@ package com.nocountry.finanzas.services;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
+import com.nocountry.finanzas.models.egress.SavingsDTO;
 
 import java.util.List;
 
@@ -21,3 +22,4 @@ public interface EgressService {
     public List<EgressDTO> getEgressByUser(Long id);
 
 }
+

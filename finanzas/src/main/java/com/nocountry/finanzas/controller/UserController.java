@@ -1,13 +1,12 @@
 package com.nocountry.finanzas.controller;
 
 import com.nocountry.finanzas.exceptions.BadRequestException;
-import com.nocountry.finanzas.exceptions.EmailAlreadyExistsException;
 import com.nocountry.finanzas.exceptions.InvalidEmailType;
 import com.nocountry.finanzas.exceptions.NotFoundException;
+import com.nocountry.finanzas.models.egress.EgressDTO;
+import com.nocountry.finanzas.models.egress.SavingsDTO;
 import com.nocountry.finanzas.models.user.Mapper;
-import com.nocountry.finanzas.models.user.UserLoggingDTO;
 import com.nocountry.finanzas.models.user.UserRequestDTO;
-import com.nocountry.finanzas.models.user.UserLoggingResponse;
 import com.nocountry.finanzas.models.user.UserResponseDTO;
 import com.nocountry.finanzas.services.UserService;
 import jakarta.validation.Valid;
@@ -16,6 +15,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api")
@@ -28,15 +29,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(path = "/register")
-    public ResponseEntity<?> saveUser(@RequestBody @Valid UserRequestDTO userRequestDTO) throws BadRequestException, InvalidEmailType, EmailAlreadyExistsException {
-        try {
-            UserResponseDTO userResponseDTO = userService.saveUser(userRequestDTO);
-            return new ResponseEntity<>(userResponseDTO,HttpStatus.CREATED);
-        }catch (DataAccessException e){
-            throw new BadRequestException(e.getMessage());
-        }
-    }
+
     @GetMapping(path = "/user/{id}")
     public ResponseEntity<?> getUser(@PathVariable Long id) throws NotFoundException, BadRequestException {
 
@@ -49,9 +42,9 @@ public class UserController {
     }
 
     @PutMapping(path = "/user/update/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody @Valid UserRequestDTO userRequestDTO) throws BadRequestException, NotFoundException {
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody @Valid UserRequestDTO userRequestDTO) throws NotFoundException, InvalidEmailType, BadRequestException {
         try {
-            UserResponseDTO userResponseDTO = userService.updateUser(id,userRequestDTO);
+            UserResponseDTO userResponseDTO = userService.updateUser(id, userRequestDTO);
             return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
         }catch (NotFoundException e){
             throw new NotFoundException(e.getMessage());
@@ -70,21 +63,15 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "/user/login")
-    public ResponseEntity<?> loggingUser(@RequestBody @Valid UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException {
+    @PostMapping(path = "/savings", consumes = "application/json")
+    public ResponseEntity<UserResponseDTO> savingsMoney(@RequestBody @Valid SavingsDTO savingsDTO) {
         try {
-            UserLoggingResponse userResponseDTO = userService.loggingUser(userLoggingDTO);
-
-            if (userResponseDTO.getErrorMessage() != null) {
-                return new ResponseEntity<>(userResponseDTO, HttpStatus.BAD_REQUEST);
-            }
-
-            return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
-        } catch (DataAccessException e){
-            throw new BadRequestException(e.getMessage());
-        } catch (NotFoundException e){
-            throw new NotFoundException(e.getMessage());
+            UserResponseDTO responseDTO = userService.addSavings(savingsDTO);
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
         }
     }
+
 
 }

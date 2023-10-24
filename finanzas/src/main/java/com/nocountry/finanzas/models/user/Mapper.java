@@ -15,7 +15,7 @@ public class Mapper {
         user.setName(userRequestDTO.getName());
         user.setLast_name(userRequestDTO.getLast_name());
         user.setEmail(userRequestDTO.getEmail());
-        user.setPassword(userRequestDTO.getPassword());
+        user.setPassword1(userRequestDTO.getPassword());
         user.setBirthday_date(userRequestDTO.getBirthday_date());
         user.setCountry(searchCountry(userRequestDTO.getCountry()));
         user.setTotalIncome(0.0);
@@ -29,10 +29,11 @@ public class Mapper {
 
         userResponseDTO.setIdUser(user.getId());
         userResponseDTO.setName(user.getName());
-        userResponseDTO.setLast_name(user.getLast_name());
+        userResponseDTO.setLastName(user.getLast_name());
         userResponseDTO.setEmail(user.getEmail());
-        userResponseDTO.setBirthday_date(user.getBirthday_date());
+        userResponseDTO.setBirthdayDate(user.getBirthday_date());
         userResponseDTO.setTotalIncome(user.getTotalIncome());
+        userResponseDTO.setAccumulatedSavings(user.getAccumulatedSavings());
 
         return userResponseDTO;
     }
@@ -43,18 +44,6 @@ public class Mapper {
             userResponseDTOList.add(userToUserResponseDto(user));
         }
         return userResponseDTOList;
-    }
-
-    public static UserLoggingResponse userToUserLoggingResponseDto(User user) {
-        UserLoggingResponse userLoggingResponse = new UserLoggingResponse();
-
-        userLoggingResponse.setIdUser(user.getId());
-        userLoggingResponse.setName(user.getName());
-        userLoggingResponse.setLast_name(user.getLast_name());
-        userLoggingResponse.setEmail(user.getEmail());
-        userLoggingResponse.setBirthday_date(user.getBirthday_date());
-
-        return userLoggingResponse;
     }
 
     public static Countries searchCountry(String country) {
