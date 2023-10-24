@@ -84,7 +84,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "/savings", consumes = "application/json")
+    @PutMapping(path = "/savings", consumes = "application/json")
     public ResponseEntity<UserResponseDTO> savingsMoney(@RequestBody @Valid SavingsDTO savings) throws BadRequestException {
         try {
             UserResponseDTO userResponseDTO = userService.addSavings(savings);
@@ -94,7 +94,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "/savings/revertState/user/{id}")
+    @PutMapping(path = "/savings/revertState/user/{id}")
     public ResponseEntity<UserResponseDTO> revertToInitialStateSavings(@PathVariable Long id) throws BadRequestException {
         try {
             UserResponseDTO userResponseDTO = userService.revertSavings(id);
