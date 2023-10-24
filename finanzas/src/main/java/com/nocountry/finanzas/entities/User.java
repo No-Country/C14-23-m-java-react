@@ -50,6 +50,9 @@ public class User {
 
     private Integer countLogging;
 
+    @Column(name = "accumulated_savings")
+    private Double accumulatedSavings;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Egress> egresses = new ArrayList<>();
 

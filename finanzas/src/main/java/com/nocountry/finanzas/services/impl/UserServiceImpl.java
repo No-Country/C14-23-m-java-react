@@ -5,11 +5,7 @@ import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.EmailAlreadyExistsException;
 import com.nocountry.finanzas.exceptions.InvalidEmailType;
 import com.nocountry.finanzas.exceptions.NotFoundException;
-import com.nocountry.finanzas.models.user.Mapper;
-import com.nocountry.finanzas.models.user.UserLoggingDTO;
-import com.nocountry.finanzas.models.user.UserRequestDTO;
-import com.nocountry.finanzas.models.user.UserLoggingResponse;
-import com.nocountry.finanzas.models.user.UserResponseDTO;
+import com.nocountry.finanzas.models.user.*;
 import com.nocountry.finanzas.repositories.UserRepository;
 import com.nocountry.finanzas.services.UserService;
 import com.nocountry.finanzas.validators.BirthdayValidator;
@@ -115,6 +111,23 @@ public class UserServiceImpl implements UserService {
         }
 
         return response;
+    }
+
+    @Override
+    public UserResponseDTO addSavings(SavingsDTO toSaving) {
+
+        User user = userRepository.findById(toSaving.getIdUser()).get();
+
+        if (toSaving.getToSaving() <= user.getTotalIncome()) {
+            user.setAccumulatedSavings(user.getAccumulatedSavings() + toSaving.getToSaving());
+            user.setTotalIncome(user.getTotalIncome() - toSaving.getToSaving());
+        } else {
+            return null;
+        }
+
+        userRepository.save(user);
+
+        return  Mapper.userToUserResponseDto(user);
     }
 
     private void doEmailValidation(String email) throws InvalidEmailType {

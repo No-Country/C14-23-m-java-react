@@ -4,11 +4,7 @@ import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.EmailAlreadyExistsException;
 import com.nocountry.finanzas.exceptions.InvalidEmailType;
 import com.nocountry.finanzas.exceptions.NotFoundException;
-import com.nocountry.finanzas.models.user.Mapper;
-import com.nocountry.finanzas.models.user.UserLoggingDTO;
-import com.nocountry.finanzas.models.user.UserRequestDTO;
-import com.nocountry.finanzas.models.user.UserLoggingResponse;
-import com.nocountry.finanzas.models.user.UserResponseDTO;
+import com.nocountry.finanzas.models.user.*;
 import com.nocountry.finanzas.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,4 +83,13 @@ public class UserController {
         }
     }
 
+    @PostMapping(path = "/savings", consumes = "application/json")
+    public ResponseEntity<UserResponseDTO> savingsMoney(@RequestBody @Valid SavingsDTO savings) throws BadRequestException {
+        try {
+            UserResponseDTO userResponseDTO = userService.addSavings(savings);
+            return new ResponseEntity<>(userResponseDTO,HttpStatus.OK);
+        }catch (DataAccessException e){
+            throw new BadRequestException(e.getMessage());
+        }
+    }
 }
