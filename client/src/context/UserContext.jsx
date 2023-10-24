@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
 import { registerRequest } from '../API/user';
+import Cookies from 'js-cookie';
 
 const UserContext = createContext();
 
@@ -50,9 +51,13 @@ export function UserProvider({ children }) {
     }
   };
 
+  const logout = () => {
+    Cookies.remove('token');
+  };
+
   return (
     <UserContext.Provider
-      value={{ userRegister, getDataUser, updateUser, delUser }}
+      value={{ userRegister, getDataUser, updateUser, delUser, logout }}
     >
       {children}
     </UserContext.Provider>

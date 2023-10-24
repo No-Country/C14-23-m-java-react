@@ -6,11 +6,13 @@ import {
   Button,
   Drawer,
   IconButton,
+  Modal,
   Toolbar,
   Typography,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
 
 const navLinks = [
   { title: 'Landing', path: '/' },
@@ -18,12 +20,29 @@ const navLinks = [
   { title: 'Estadísticas', path: '/statistics' },
   { title: 'Usuario', path: '/user' },
   { title: 'Historial', path: '/financialHistory' },
-  { title: 'iniciar sesión', path: '/login' },
-  { title: 'registrarse', path: '/register' },
+  { title: 'Iniciar sesión', path: '/login' },
+  { title: 'Registrarse', path: '/register' },
 ];
 
 function NavBar() {
   const [open, setOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const { logout } = useUser();
+  const navigate = useNavigate();
+
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
+  const handleLogOut = () => {
+    logout();
+    navigate('/');
+    setModalOpen(false);
+  };
 
   return (
     <>
@@ -58,7 +77,7 @@ function NavBar() {
                 {item.title}
               </Button>
             ))}
-            <Button color='inherit' component='a' href='#cerrar sesion'>
+            <Button color='inherit' onClick={handleModalOpen}>
               Cerrar sesión
             </Button>
           </Box>
@@ -68,6 +87,54 @@ function NavBar() {
       <Drawer open={open} anchor='right' onClose={() => setOpen(false)}>
         <NavbarListDrawer navLinks={navLinks} />
       </Drawer>
+
+      <Modal open={modalOpen} onClose={handleModalClose}>
+        <Box
+          sx={{
+            width: {
+              xs: '90%',
+              sm: '80%',
+            },
+            maxWidth: '500px',
+            bgcolor: '#fff',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            p: 2,
+            gap: 2,
+          }}
+        >
+          <Typography variant='h5'>
+            ¿Estás seguro que deseas cerrar sesión?
+          </Typography>
+          <Box
+            component='div'
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            <Button type='button' onClick={handleLogOut} variant='contained'>
+              si
+            </Button>
+            <Button
+              type='button'
+              onClick={handleModalClose}
+              color='error'
+              variant='contained'
+            >
+              No
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </>
   );
 }

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
 
@@ -18,6 +19,9 @@ export function IncomeProvider({ children }) {
     children: PropTypes.node.isRequired,
   };
 
+  const [newIncome, setNewIncome] = useState([]);
+  const [deleteOneIncome, setDeleteOneIncome] = useState();
+
   const allIncomes = async () => {
     try {
       const res = await getIncomes();
@@ -30,6 +34,7 @@ export function IncomeProvider({ children }) {
   const addNewIncome = async (income) => {
     try {
       const res = await addIncome(income);
+      setNewIncome(res);
       return res;
     } catch (error) {
       console.log(error);
@@ -39,14 +44,22 @@ export function IncomeProvider({ children }) {
   const delIncome = async (id) => {
     try {
       const res = await deleteIncome(id);
-      console.log(res);
+      setDeleteOneIncome(res);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <IncomeContext.Provider value={{ allIncomes, addNewIncome, delIncome }}>
+    <IncomeContext.Provider
+      value={{
+        allIncomes,
+        addNewIncome,
+        delIncome,
+        newIncome,
+        deleteOneIncome,
+      }}
+    >
       {children}
     </IncomeContext.Provider>
   );

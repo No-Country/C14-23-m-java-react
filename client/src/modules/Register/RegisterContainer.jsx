@@ -8,6 +8,8 @@ import {
   Grid,
   IconButton,
   InputLabel,
+  List,
+  ListItem,
   MenuItem,
   Select,
   Snackbar,
@@ -21,6 +23,7 @@ import { useForm } from 'react-hook-form';
 import { useUser } from '../../context/UserContext';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
+import { TbPointFilled } from 'react-icons/tb';
 
 const theme = createTheme({
   palette: {
@@ -51,6 +54,7 @@ const RegisterContainer = () => {
   const [alert, setAlert] = useState(false);
   const handleCloseAlert = () => setAlert(false);
   const handleOpenAlert = () => setAlert(true);
+  const [showMessage, setShowMessage] = useState(false);
 
   const onSubmit = handleSubmit(async (data) => {
     if (data.country === 'select') {
@@ -66,6 +70,14 @@ const RegisterContainer = () => {
       setTimeout(() => navigate('/login'), 3000);
     }
   });
+
+  const handleFocus = () => {
+    setShowMessage(true);
+  };
+
+  const handleBlur = () => {
+    setShowMessage(false);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -119,8 +131,7 @@ const RegisterContainer = () => {
                   required: 'Nombre es requerido',
                   pattern: {
                     value: /^[A-Za-z\s]+$/,
-                    message:
-                      'Solo se permiten caracteres alfabéticos y espacios',
+                    message: 'Solo se permiten letras y espacios',
                   },
                   minLength: {
                     value: 2,
@@ -153,8 +164,7 @@ const RegisterContainer = () => {
                   required: 'Apellido es requerido',
                   pattern: {
                     value: /^[A-Za-z\s]+$/,
-                    message:
-                      'Solo se permiten caracteres alfabéticos y espacios',
+                    message: 'Solo se permiten letras y espacios',
                   },
                   minLength: {
                     value: 2,
@@ -192,12 +202,12 @@ const RegisterContainer = () => {
                     message: 'El email no es valido',
                   },
                   minLength: {
-                    value: 18,
-                    message: 'Debe ser mayor a 18 caracteres',
+                    value: 11,
+                    message: 'Debe ser mayor a 11 caracteres',
                   },
                   maxLength: {
-                    value: 255,
-                    message: 'Debe ser menor a 255 caracteres',
+                    value: 200,
+                    message: 'Debe ser menor a 200 caracteres',
                   },
                 })}
                 error={errors.email ? true : false}
@@ -209,9 +219,7 @@ const RegisterContainer = () => {
                 fullWidth
                 type='password'
                 id={'password'}
-                label={
-                  'Contraseña: 8+ caracteres, letras y/o números y 1 símbolo'
-                }
+                label={'Contraseña'}
                 name={'password'}
                 required={true}
                 autoComplete={'current-password'}
@@ -221,7 +229,7 @@ const RegisterContainer = () => {
                     value:
                       /^(?=.*[A-Za-z0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]+$/,
                     message:
-                      "La contraseña debe contener letras, símbolos y no debe incluir los siguientes símbolos: /= ¡ ' ? ¿ ´ [ { ] } , ; . : -",
+                      "La contraseña no debe contener espacios, ni los siguientes símbolos /= ¡ ' ? ¿ ´ [ { ] } , ; . : - <>°|¬ ",
                   },
                   minLength: {
                     value: 8,
@@ -232,9 +240,29 @@ const RegisterContainer = () => {
                     message: 'Debe ser menor a 45 caracteres',
                   },
                 })}
+                onFocus={handleFocus}
                 error={errors.password ? true : false}
                 helperText={errors.password?.message}
+                onBlur={handleBlur}
               />
+              {showMessage && (
+                <List>
+                  <ListItem sx={{ fontSize: '0.7rem', fontWeight: 'bold' }}>
+                    Tu contraseña debe contener:
+                  </ListItem>
+                  <ListItem sx={{ fontSize: '0.7rem' }}>
+                    <TbPointFilled style={{ color: 'green' }} />8 caracteres
+                    mínimo
+                  </ListItem>
+                  <ListItem sx={{ fontSize: '0.7rem' }}>
+                    <TbPointFilled style={{ color: 'green' }} /> 1 Símbolo
+                  </ListItem>
+                  <ListItem sx={{ fontSize: '0.7rem' }}>
+                    <TbPointFilled style={{ color: 'green' }} /> Letras y
+                    números
+                  </ListItem>
+                </List>
+              )}
             </Grid>
             <Grid item container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -251,11 +279,12 @@ const RegisterContainer = () => {
                     validate: (value) => {
                       const birthDate = new Date(value);
                       const currentDate = new Date();
-                      const age =
-                        currentDate.getFullYear() - birthDate.getFullYear();
-                      return age < 18
+                      const ageInMilliseconds = currentDate - birthDate;
+                      const ageInYears =
+                        ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.25);
+                      return ageInYears < 18
                         ? 'Debes ser mayor de edad para registrarte'
-                        : age > 100
+                        : ageInYears > 100
                         ? 'La fecha ingresada no es valida'
                         : true;
                     },
@@ -272,7 +301,7 @@ const RegisterContainer = () => {
                   <Select
                     labelId='country'
                     id='country'
-                    label='País de residencia'
+                    label='País de residencia  .'
                     sx={{ width: '100%' }}
                     {...register('country', {
                       required: 'País de residencia es requerido',
