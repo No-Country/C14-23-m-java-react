@@ -10,9 +10,9 @@ function SectionInfo() {
       flexDirection={{ xs: 'column', sm: 'row' }}
       alignItems="center"
       padding="1rem"
-       bgcolor="#f5f5f5"
+       bgcolor="#dcdcdc"
     >
-      <Box flex={{ xs: 'none', sm: '1' }} maxWidth={{ lg : '' }}>
+      <Box flex={{ xs: 'none', sm: '1' }} maxWidth={{ lg : '20%' }}>
         <Lottie animationData={ConfUser} />
       </Box>
       <Box flex="1">
