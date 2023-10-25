@@ -16,6 +16,9 @@ import ModalHome from './components/ModalHome';
 import { useEffect, useState } from 'react';
 import { useEgress } from '../../context/EgressContext';
 import { useIncome } from '../../context/IncomeContext';
+import { useUser } from '../../context/UserContext';
+import SavingsTotal  from './components/SavingsTotal';
+import BalanceInfo from './components/BalanceInfo';
 
 const HomeContainer = () => {
   const [modal, setModal] = useState(false);
@@ -23,6 +26,7 @@ const HomeContainer = () => {
   const [alert, setAlert] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [infoUser, setInfoUser] = useState(); // estado que guarda toda la informnacion del usuario
 
   const handleCloseAlert = () => setAlert(false);
   const handleOpenAlert = (error = false) => {
@@ -38,11 +42,28 @@ const HomeContainer = () => {
 
   const { allExpenses } = useEgress();
   const { allIncomes } = useIncome();
+  const { getDataUser } = useUser();
 
   useEffect(() => {
     allExpenses();
     allIncomes();
   }, [allExpenses, allIncomes]);
+
+  //agreegue este useeffect para no tocar el otro
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await getDataUser(1);
+        if (res) {
+          // Verifica que res no sea undefined
+          setInfoUser(res);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <Box
@@ -57,11 +78,15 @@ const HomeContainer = () => {
           <CircularProgress color='inherit' />
         </Backdrop>
       )}
-      <TotalAmountHome
-        text={'Saldo disponible'}
-        total={10000}
-        color={'green'}
-      />
+
+      <Box
+        sx={{ display: 'flex', maxWidth: '100vw', justifyContent:'space-around' }}
+      >
+        <BalanceInfo totalBalance={infoUser?.totalIncome} availableBalance={infoUser?.totalIncome - infoUser?.accumulatedSavings } />
+
+        <SavingsTotal totalSavings={infoUser?.accumulatedSavings}/>
+      </Box>
+
       <Grid container spacing={2} sx={{ height: '100%' }}>
         <ModalHome
           open={modal}

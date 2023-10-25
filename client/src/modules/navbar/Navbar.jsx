@@ -13,9 +13,9 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
+import logo from '../../assets/logos/logoCashFlow.png';
 
 const navLinks = [
-  { title: 'Landing', path: '/' },
   { title: 'Inicio', path: '/home' },
   { title: 'Estadísticas', path: '/statistics' },
   { title: 'Usuario', path: '/user' },
@@ -58,6 +58,21 @@ function NavBar() {
 
             <Typography variant='h6'>Menu</Typography>
           </IconButton>
+          {/* Coloca tu logo en lugar de 'Landing' */}
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexGrow: 1,
+            }}
+          >
+            <img
+              src={logo}
+              alt='Logo'
+              style={{ height: '2rem', maxWidth: '20rem' }}
+            />
+          </Box>
 
           <Box sx={{ display: { xs: 'none', md: 'block' } }}>
             {/**para lograr responsive que se vea un menu o el otro */}

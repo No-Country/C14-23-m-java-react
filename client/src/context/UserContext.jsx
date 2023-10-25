@@ -1,6 +1,10 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { registerRequest } from '../API/user';
+import {
+  registerRequest,
+  dataUserRequest,
+  updateUserSavings,
+} from '../API/user';
 import Cookies from 'js-cookie';
 
 const UserContext = createContext();
@@ -29,9 +33,20 @@ export function UserProvider({ children }) {
 
   const getDataUser = async (id) => {
     try {
-      console.log(id);
+      const res = await dataUserRequest(id);
+      console.log(res?.data);
+      return res?.data;
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const updateSaving = async (id, amount) => {
+    try {
+      const res = await updateUserSavings(id, amount);
+      console.log(res);
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -57,7 +72,14 @@ export function UserProvider({ children }) {
 
   return (
     <UserContext.Provider
-      value={{ userRegister, getDataUser, updateUser, delUser, logout }}
+      value={{
+        userRegister,
+        getDataUser,
+        updateUser,
+        delUser,
+        logout,
+        updateSaving,
+      }}
     >
       {children}
     </UserContext.Provider>
