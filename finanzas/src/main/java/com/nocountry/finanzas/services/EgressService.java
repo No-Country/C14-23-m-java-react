@@ -7,6 +7,7 @@ import com.nocountry.finanzas.models.egress.EgressDTO;
 import jakarta.annotation.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EgressService {
 
@@ -22,6 +23,6 @@ public interface EgressService {
 
     public List<EgressDTO> getEgressByUser(Long id);
 
-    public List<Egress> findByMontAndCategory (Long id, @Nullable Long category, @Nullable Integer mes);
+    public List<EgressDTO> findByMontAndCategory (Long id, Optional<Long> category, Optional<Integer> mes);
 
 }

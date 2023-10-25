@@ -8,6 +8,7 @@ import com.nocountry.finanzas.models.egress.CreateEgressDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
 import com.nocountry.finanzas.services.EgressCategoryService;
 import com.nocountry.finanzas.services.EgressService;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -103,11 +105,12 @@ public class EgressController {
         }
     }
 
+    @GetMapping(path = "/egress/month/{id}/{mes}/{categoryId}")
+    public ResponseEntity<List<EgressDTO>> egressByMonth(@PathVariable Long id,
+                                                         @PathVariable Optional<Integer> mes,
+                                                         @PathVariable Optional<Long> categoryId){
 
-    @GetMapping(path = "/egress/month/{id}/{mes}")
-    public ResponseEntity<List<Egress>> egressByMonth(@PathVariable Long id,@PathVariable Integer mes){
-
-        return ResponseEntity.ok().body(egressService.findByMontAndCategory(1L,null,mes));
+        return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,categoryId,mes));
     }
 
 }

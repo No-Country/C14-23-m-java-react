@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EgressServiceImpl implements EgressService {
@@ -115,17 +116,19 @@ public class EgressServiceImpl implements EgressService {
     }
 
     @Override
-    public List<Egress> findByMontAndCategory(Long id, @Nullable Long category, @Nullable Integer mes) {
+    public List<EgressDTO> findByMontAndCategory(Long id, Optional<Long> categoryId, Optional<Integer> month) {
+        int year = LocalDate.now().getYear();
+        int monthValue = month.orElse(LocalDate.now().getMonthValue());
+        LocalDate monthLocalDate = LocalDate.of(year, monthValue, 1);
 
-        if (category == null && mes != null){
-            int year =  LocalDate.now().getYear();
-            int mes1 = mes.intValue();
-            LocalDate monthLocalDate = LocalDate.of(year,mes1,1);
-
-            return egressRepository.findByMont(monthLocalDate);
+        if (categoryId.isEmpty() && month.isPresent()) {
+            return egressMapper.egressDTOList(egressRepository.findByMonth(id, monthLocalDate));
+        } else if (categoryId.isPresent() && month.isEmpty()) {
+            return egressMapper.egressDTOList(egressRepository.findEgressByCategoryId(id, categoryId.get()));
+        } else if (categoryId.isPresent() && month.isPresent()) {
+            return egressMapper.egressDTOList(egressRepository.findByMonthAndCategory(id, monthLocalDate, categoryId.get()));
         }
-
-        return null;
+        return egressMapper.egressDTOList(egressRepository.findAllByUserId(id));
     }
 
     private CategoryEnum searchCategoryEnum(String name) {
