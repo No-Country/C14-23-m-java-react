@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
-import { registerRequest } from '../API/user';
+import { dataUserRequest, registerRequest } from '../API/user';
 
 const UserContext = createContext();
 
@@ -28,7 +28,8 @@ export function UserProvider({ children }) {
 
   const getDataUser = async (id) => {
     try {
-      console.log(id);
+      const res = await dataUserRequest(id);
+      return res.data;
     } catch (error) {
       console.log(error);
     }
