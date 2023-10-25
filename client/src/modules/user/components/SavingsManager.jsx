@@ -25,7 +25,7 @@ function SavingsManager(props) {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   
-  const{getDataUser, updateUser} = useUser() //traigo el contexto user
+  const{getDataUser, updateSaving} = useUser() //traigo el contexto user
 
   useEffect(() => {
     async function fetchData() {
@@ -58,11 +58,15 @@ function SavingsManager(props) {
     }
   };
 
-  const handleAddClick = () => {
+  const handleAddClick = async () => {
     const inputValueAsNumber = parseFloat(inputValue);
+    console.log('aca')
     if (!isNaN(inputValueAsNumber)) {
       if (inputValueAsNumber <= restMoney) {
         setSavings(savings + inputValueAsNumber);
+        await updateSaving(1, savings)
+        
+
         setSavedSavings(true);
         setInputValue('');
         setRestMoney(restMoney - inputValueAsNumber.toFixed(2));
@@ -171,7 +175,7 @@ function SavingsManager(props) {
                 },
                 margin: '0.5rem',
               }}
-              onClick={handleAddClick}
+              onClick={() => handleAddClick()}
             >
               Agregar
             </Button>
@@ -211,7 +215,7 @@ function SavingsManager(props) {
         </Typography>
         <Typography variant="h4">
           <span style={{ color: '#00796B' }}>
-            {`$${savings.toFixed(2)}`}
+            {`$${infoUser?.accumulatedSavings.toFixed(2)}`}
           </span>
         </Typography>
         <Typography variant="h6" sx={{ marginTop: '2rem' }}>

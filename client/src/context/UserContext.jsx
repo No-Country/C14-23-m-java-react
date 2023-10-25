@@ -1,6 +1,10 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { registerRequest ,dataUserRequest, updateUserRequest} from '../API/user';
+import {
+  registerRequest,
+  dataUserRequest,
+  updateUserSavings,
+} from '../API/user';
 
 const UserContext = createContext();
 
@@ -17,6 +21,8 @@ export function UserProvider({ children }) {
     children: PropTypes.node.isRequired,
   };
 
+  
+
   const userRegister = async (user) => {
     try {
       const res = await registerRequest(user);
@@ -29,24 +35,24 @@ export function UserProvider({ children }) {
   const getDataUser = async (id) => {
     try {
       const res = await dataUserRequest(id);
-      console.log(res?.data)
+      console.log(res?.data);
       return res?.data;
     } catch (error) {
       console.log(error);
     }
   };
 
-  // {
-  //   idUser: 1,
-  //   name: 'Usuario Primero',
-  //   last_name: 'Apellido',
-  //   email: 'usuario1@gmail.com',
-  //   birthday_date: [ 1991, 10, 19 ],
-  //   totalIncome: 179550,
-  //   accumulatedSavings: 0
-  // }
+  const updateSaving = async (id, amount) => {
+    try {
+      const res = await updateUserSavings(id, amount);
+      console.log(res)
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const updateUser = async ( id , user) => {
+  const updateUser = async (id, user) => {
     try {
       console.log(id, user);
     } catch (error) {
@@ -64,7 +70,7 @@ export function UserProvider({ children }) {
 
   return (
     <UserContext.Provider
-      value={{ userRegister, getDataUser, updateUser, delUser }}
+      value={{ userRegister, getDataUser, updateUser, delUser, updateSaving }}
     >
       {children}
     </UserContext.Provider>

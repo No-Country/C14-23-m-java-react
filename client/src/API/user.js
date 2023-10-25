@@ -12,3 +12,8 @@ export const updateUserRequest = (id, userInfo) =>
 
 //Eliminar un usuario
 export const deleteUserRequest = (id) => axios.delete(`/api/user/${id}`);
+
+//actualizar los ahorros de un usuario
+export const updateUserSavings = ( idUser, toSaving ) =>
+  axios.put('/api/savings',idUser,toSaving)
+
