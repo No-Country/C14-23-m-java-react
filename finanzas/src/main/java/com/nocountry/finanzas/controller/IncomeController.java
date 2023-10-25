@@ -98,9 +98,10 @@ public class IncomeController {
     public ResponseEntity<IncomeCategory> createCategory(@RequestBody CategoryIncomeDTO category) {
         try {
             IncomeCategory incomeCategory = incomeCategoryService.createIncomeCategory(category);
-            return new ResponseEntity<>(incomeCategory, HttpStatus.OK);
+            return new ResponseEntity<>(incomeCategory, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }
+
 }

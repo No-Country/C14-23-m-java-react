@@ -12,7 +12,7 @@ import com.nocountry.finanzas.models.user.UserResponseDTO;
 import com.nocountry.finanzas.repositories.UserRepository;
 import com.nocountry.finanzas.services.UserService;
 import com.nocountry.finanzas.validators.BirthdayValidator;
-import com.nocountry.finanzas.validators.EmailValidator;
+import com.nocountry.finanzas.validators.EmailValidatorLocal;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,12 +25,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final EmailValidator emailValidator;
+    private final EmailValidatorLocal emailValidator;
 
     private final BirthdayValidator birthdayValidator;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, EmailValidator emailValidator, BirthdayValidator birthdayValidator) {
+    public UserServiceImpl(UserRepository userRepository, EmailValidatorLocal emailValidator, BirthdayValidator birthdayValidator) {
         this.userRepository = userRepository;
         this.emailValidator = emailValidator;
         this.birthdayValidator = birthdayValidator;

@@ -69,6 +69,8 @@ public class UserController {
         } catch (DataAccessException e){
             throw new BadRequestException(e.getMessage());
         } catch (NotFoundException e) {
+
+            //Ver e implementar la excepcion para cuando el email ingresado ya existe
             throw new NotFoundException(e.getMessage());
         }
     }
@@ -82,5 +84,7 @@ public class UserController {
             throw new BadRequestException(e.getMessage());
         }
     }
+
+
 
 }

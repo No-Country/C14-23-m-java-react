@@ -2,6 +2,8 @@ package com.nocountry.finanzas.services.impl;
 
 import com.nocountry.finanzas.entities.enums.CategoryEnum;
 import com.nocountry.finanzas.entities.EgressCategory;
+import com.nocountry.finanzas.exceptions.BadRequestException;
+import com.nocountry.finanzas.exceptions.NotFoundException;
 import com.nocountry.finanzas.models.egress.CategoryEgressDTO;
 import com.nocountry.finanzas.repositories.EgressCategoryRepository;
 import com.nocountry.finanzas.services.EgressCategoryService;

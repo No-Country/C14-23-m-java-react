@@ -18,5 +18,6 @@ public class AuthenticationRequest {
     private String email;
 
     @NotEmpty(message = "Este campo  password es obligatorio")
-    private String password;
+    private String password1;
+
 }

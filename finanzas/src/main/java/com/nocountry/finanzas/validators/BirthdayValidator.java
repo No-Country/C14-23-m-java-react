@@ -19,4 +19,8 @@ public class BirthdayValidator {
         return period.getYears() >= 18;
     }
 
+    public boolean isOlderOfYear1900(LocalDate birthdayDate) {
+        return birthdayDate.getYear() < 1900;
+    }
+
 }

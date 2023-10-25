@@ -63,7 +63,7 @@ public class EgressController {
     }
 
     @PostMapping(path = "/egress", consumes = "application/json")
-    public ResponseEntity<EgressDTO> createEgress(@RequestBody @Valid CreateEgressDTO egressDTO) throws BadRequestException {
+    public ResponseEntity<EgressDTO> createEgress(@RequestBody @Valid CreateEgressDTO egressDTO) {
         try {
             EgressDTO responseDTO = egressService.createdEgress(egressDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
@@ -98,11 +98,10 @@ public class EgressController {
     public ResponseEntity<EgressCategory> createCategory(@RequestBody @Valid CategoryEgressDTO name) {
         try {
             EgressCategory egressCategory = egressCategoryService.createEgressCategory(name);
-            return new ResponseEntity<>(egressCategory, HttpStatus.OK);
+            return new ResponseEntity<>(egressCategory, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }
-
 
 }
