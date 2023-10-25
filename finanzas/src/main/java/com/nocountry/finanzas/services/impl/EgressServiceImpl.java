@@ -124,9 +124,11 @@ public class EgressServiceImpl implements EgressService {
         if (categoryId.isEmpty() && month.isPresent()) {
             return egressMapper.egressDTOList(egressRepository.findByMonth(id, monthLocalDate));
         } else if (categoryId.isPresent() && month.isEmpty()) {
-            return egressMapper.egressDTOList(egressRepository.findEgressByCategoryId(id, categoryId.get()));
+            Long category = categoryId.get();
+            return egressMapper.egressDTOList(egressRepository.findEgressByCategoryId(id, category));
         } else if (categoryId.isPresent() && month.isPresent()) {
-            return egressMapper.egressDTOList(egressRepository.findByMonthAndCategory(id, monthLocalDate, categoryId.get()));
+            Long category = categoryId.get();
+            return egressMapper.egressDTOList(egressRepository.findByMonthAndCategory(id, monthLocalDate, category));
         }
         return egressMapper.egressDTOList(egressRepository.findAllByUserId(id));
     }
