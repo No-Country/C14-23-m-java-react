@@ -32,7 +32,7 @@ const options = {
     },
     title: {
       display: true,
-      text: 'Gastos por Mes',
+      text: 'Movimientos de los últimos 6 meses',
     },
   },
 };
