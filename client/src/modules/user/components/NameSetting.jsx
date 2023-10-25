@@ -14,8 +14,8 @@ import FormInput from './FormInput';
 import { useEffect, useState } from 'react';
 import { useUser } from '../../../context/UserContext';
 
-const PersonalSetting = () => {
-  PersonalSetting.propTypes = {};
+const NameSetting = () => {
+  NameSetting.propTypes = {};
 
   const [originalData, setOriginalData] = useState();
   const [isEditing, setIsEditing] = useState(false);
@@ -50,7 +50,7 @@ const PersonalSetting = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const { name, last_name } = await getDataUser(2);
+        const { name, last_name } = await getDataUser(1);
 
         setValue('name', name);
         setValue('last_name', last_name);
@@ -150,7 +150,9 @@ const PersonalSetting = () => {
                   message: 'Debe ser menor a 45 caracteres',
                 },
                 validate: (value) => {
-                  if (value.trim() === '') {
+                  const trimmedValue = value.replace(/\s+/g, ' ').trim();
+
+                  if (trimmedValue === '') {
                     return 'El campo Nombre no puede estar vacío';
                   }
                   return true;
@@ -238,4 +240,4 @@ const PersonalSetting = () => {
   );
 };
 
-export default PersonalSetting;
+export default NameSetting;

@@ -8,9 +8,9 @@ import {
 } from '@mui/material';
 import EmailSetting from './EmailSetting';
 import PasswordSetting from './PasswordSetting';
-import PersonalSetting from './PersonalSetting';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import NameSetting from './NameSetting';
 
 const UserSettings = () => {
   const theme = createTheme({
@@ -93,7 +93,7 @@ const UserSettings = () => {
         </Tabs>
         <Box sx={{ width: '100%' }}>
           <TabPanel value={value} index={0}>
-            <PersonalSetting />
+            <NameSetting />
           </TabPanel>
           <TabPanel value={value} index={1}>
             <PasswordSetting />

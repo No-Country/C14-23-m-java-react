@@ -3,7 +3,7 @@ export const expenseCategories = [
   { option: 'Vivienda', value: 'VIVIENDA' },
   { option: 'Transporte', value: 'TRANSPORTE' },
   { option: 'Entretenimiento', value: 'ENTRETENIMIENTO' },
-  { option: 'Salud - Cuidado Personal', value: 'SALUD_CUIDADO PERSONAL' },
+  { option: 'Salud - Cuidado Personal', value: 'SALUD_CUIDADO_PERSONAL' },
   { option: 'Educación', value: 'EDUCACION' },
   { option: 'Vestimenta', value: 'VESTIMENTA' },
   { option: 'Servicios', value: 'SERVICIOS' },
