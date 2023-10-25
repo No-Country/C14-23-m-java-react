@@ -137,7 +137,7 @@ function SavingsManager(props) {
                 severity='error'
                 
               >
-                El monto no puede ser mayor que 20,000
+               El monto no puede ser mayor a tu dinero disponible.
               </Alert>
             )}
 
