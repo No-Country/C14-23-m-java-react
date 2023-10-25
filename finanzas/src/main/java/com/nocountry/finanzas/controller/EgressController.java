@@ -107,8 +107,8 @@ public class EgressController {
 
     @GetMapping(path = "/egress/month/{id}/{month}/{categoryId}")
     public ResponseEntity<List<EgressDTO>> egressByMonth(@PathVariable Long id,
-                                                         @PathVariable Integer month,
-                                                         @PathVariable Long categoryId){
+                                                         @PathVariable @Nullable Integer month,
+                                                         @PathVariable @Nullable  Long categoryId){
 
         return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,categoryId,month));
     }
