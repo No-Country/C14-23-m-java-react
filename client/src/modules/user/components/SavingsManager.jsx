@@ -10,7 +10,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import { Collapse } from '@mui/material';
-import {useUser} from '../../../context/UserContext'
+import { useUser } from '../../../context/UserContext';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 function SavingsManager(props) {
@@ -18,22 +18,22 @@ function SavingsManager(props) {
   const [inputValue, setInputValue] = useState('');
   const [inputAlert, setInputAlert] = useState(false); // Estado para mostrar alerta si el input excede el total del saldo del usuario
   const [amountSavingAlert, setAmountSavingAlert] = useState(false); // Estado para mostrar alerta si el inputes menor a el total del saldo del usuario pero supera el valor si es sumado
-  const [savedSavings, setSavedSavings] = useState(false) // Estado para mostrar un alerta si se guardo con exito un ahorro
-  const [infoUser, setInfoUser] = useState() // estado que guarda toda la informnacion del usuario
-  const [restMoney, setRestMoney] = useState(null)
+  const [savedSavings, setSavedSavings] = useState(false); // Estado para mostrar un alerta si se guardo con exito un ahorro
+  const [infoUser, setInfoUser] = useState(); // estado que guarda toda la informnacion del usuario
+  const [restMoney, setRestMoney] = useState(null);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  
-  const{getDataUser, updateSaving} = useUser() //traigo el contexto user
+  const { getDataUser, updateSaving } = useUser(); //traigo el contexto user
 
   useEffect(() => {
     async function fetchData() {
       try {
         const res = await getDataUser(1);
-        if (res) { // Verifica que res no sea undefined
+        if (res) {
+          // Verifica que res no sea undefined
           setInfoUser(res);
-          
+
           setRestMoney(res.totalIncome.toFixed(2));
         }
       } catch (error) {
@@ -42,10 +42,6 @@ function SavingsManager(props) {
     }
     fetchData();
   }, []);
-  
-
-
-  
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -60,12 +56,11 @@ function SavingsManager(props) {
 
   const handleAddClick = async () => {
     const inputValueAsNumber = parseFloat(inputValue);
-    console.log('aca')
+    console.log('aca');
     if (!isNaN(inputValueAsNumber)) {
       if (inputValueAsNumber <= restMoney) {
         setSavings(savings + inputValueAsNumber);
-        await updateSaving(1, savings)
-        
+        await updateSaving(1, savings);
 
         setSavedSavings(true);
         setInputValue('');
@@ -79,12 +74,11 @@ function SavingsManager(props) {
       }
     }
   };
-  
 
   const handleResetClick = () => {
     setSavings(0);
     setInputValue('');
-    setRestMoney(infoUser.totalIncome)
+    setRestMoney(infoUser.totalIncome);
   };
 
   return (
@@ -131,13 +125,10 @@ function SavingsManager(props) {
               }}
             />
 
-             {/* alertas para el formulario */}
+            {/* alertas para el formulario */}
             {inputAlert && (
-              <Alert
-                severity='error'
-                
-              >
-               El monto no puede ser mayor a tu dinero disponible.
+              <Alert severity='error'>
+                El monto no puede ser mayor a tu dinero disponible.
               </Alert>
             )}
 
@@ -152,15 +143,12 @@ function SavingsManager(props) {
             </Collapse>
 
             <Collapse in={savedSavings}>
-              <Alert
-                severity='success'
-                onClose={() => setSavedSavings(false)}
-              >
+              <Alert severity='success' onClose={() => setSavedSavings(false)}>
                 Se ha establecido tu meta de ahorro mensual
               </Alert>
             </Collapse>
 
-             {/* fin  alertas para el formulario */}
+            {/* fin  alertas para el formulario */}
 
             <Button
               variant='contained'
@@ -168,6 +156,7 @@ function SavingsManager(props) {
               startIcon={<AddIcon />}
               sx={{
                 backgroundColor: '#00796B',
+                border: '1px solid #00796B',
                 '&:hover': {
                   backgroundColor: 'white',
                   border: '1px solid #00796B',
@@ -184,6 +173,7 @@ function SavingsManager(props) {
               color='error'
               startIcon={<RefreshIcon />}
               sx={{
+                border: '1px solid red',
                 '&:hover': {
                   backgroundColor: 'white',
                   border: '1px solid red',
@@ -210,16 +200,17 @@ function SavingsManager(props) {
         }}
       >
         <AccountBalanceIcon sx={{ fontSize: 64, color: '#00796B' }} />
-        <Typography variant="h5" sx={{ marginTop: '1rem' }}>
+        <Typography variant='h5' sx={{ marginTop: '1rem' }}>
           Este mes has decidido ahorrar:
         </Typography>
-        <Typography variant="h4">
+        <Typography variant='h4'>
           <span style={{ color: '#00796B' }}>
             {`$${infoUser?.accumulatedSavings.toFixed(2)}`}
           </span>
         </Typography>
-        <Typography variant="h6" sx={{ marginTop: '2rem' }}>
-          Saldo disponible: <span style={{ color: '#00796B' }}>{`$${restMoney}`}</span>
+        <Typography variant='h6' sx={{ marginTop: '2rem' }}>
+          Saldo disponible:{' '}
+          <span style={{ color: '#00796B' }}>{`$${restMoney}`}</span>
         </Typography>
       </Paper>
     </Box>

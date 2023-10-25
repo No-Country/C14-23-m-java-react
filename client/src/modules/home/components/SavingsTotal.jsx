@@ -35,6 +35,7 @@ const SavingsTotal = ({ totalSavings }) => {
           startIcon={<EditIcon />}
           sx={{
             bgcolor: '#00796B',
+            border: '1px solid  #00796B',
             '&:hover': {
               bgcolor: 'white',
               border: '1px solid  #00796B',
