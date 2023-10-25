@@ -7,8 +7,8 @@ export const registerRequest = (user) => axios.post('/api/register', user);
 export const dataUserRequest = (id) => axios.get(`/api/user/${id}`);
 
 //Actualizar datos de un usuario
-export const updateUserRequest = (id, user) =>
-  axios.put(`/api/user/${id}`, user);
+export const updateUserRequest = (id, userInfo) =>
+  axios.put(`/api/user/update/${id}`, userInfo);
 
 //Eliminar un usuario
 export const deleteUserRequest = (id) => axios.delete(`/api/user/${id}`);

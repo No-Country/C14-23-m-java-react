@@ -19,27 +19,33 @@ function SavingsManager(props) {
   const [inputAlert, setInputAlert] = useState(false); // Estado para mostrar alerta si el input excede el total del saldo del usuario
   const [amountSavingAlert, setAmountSavingAlert] = useState(false); // Estado para mostrar alerta si el inputes menor a el total del saldo del usuario pero supera el valor si es sumado
   const [savedSavings, setSavedSavings] = useState(false) // Estado para mostrar un alerta si se guardo con exito un ahorro
-  const [infoUser, setInfoUser] = useState(null) // estado que guarda toda la informnacion del usuario
+  const [infoUser, setInfoUser] = useState() // estado que guarda toda la informnacion del usuario
   const [restMoney, setRestMoney] = useState(null)
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   
-  const{getDataUser} = useUser() //traigo el contexto user
+  const{getDataUser, updateUser} = useUser() //traigo el contexto user
 
   useEffect(() => {
     async function fetchData() {
       try {
         const res = await getDataUser(1);
-        setInfoUser(res)
-        console.log(infoUser.totalIncome)
-        setRestMoney(infoUser.totalIncome?.toFixed(2))
+        if (res) { // Verifica que res no sea undefined
+          setInfoUser(res);
+          
+          setRestMoney(res.totalIncome.toFixed(2));
+        }
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
   }, []);
+  
+
+
+  
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -74,6 +80,7 @@ function SavingsManager(props) {
   const handleResetClick = () => {
     setSavings(0);
     setInputValue('');
+    setRestMoney(infoUser.totalIncome)
   };
 
   return (

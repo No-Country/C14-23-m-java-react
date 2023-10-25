@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
-import { registerRequest ,dataUserRequest} from '../API/user';
+import { registerRequest ,dataUserRequest, updateUserRequest} from '../API/user';
 
 const UserContext = createContext();
 
@@ -29,13 +29,24 @@ export function UserProvider({ children }) {
   const getDataUser = async (id) => {
     try {
       const res = await dataUserRequest(id);
-      return res.data;
+      console.log(res?.data)
+      return res?.data;
     } catch (error) {
       console.log(error);
     }
   };
 
-  const updateUser = async (id, user) => {
+  // {
+  //   idUser: 1,
+  //   name: 'Usuario Primero',
+  //   last_name: 'Apellido',
+  //   email: 'usuario1@gmail.com',
+  //   birthday_date: [ 1991, 10, 19 ],
+  //   totalIncome: 179550,
+  //   accumulatedSavings: 0
+  // }
+
+  const updateUser = async ( id , user) => {
     try {
       console.log(id, user);
     } catch (error) {
