@@ -18,7 +18,6 @@
     "@mui/material": "^5.14.12",
     "axios": "^1.5.1",
     "chart.js": "^4.4.0",
-    "faker": "^6.6.6",
     "js-cookie": "^3.0.5",
     "lottie-react": "^2.4.0",
     "react": "^18.2.0",
