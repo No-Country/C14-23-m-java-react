@@ -23,6 +23,6 @@ public interface EgressService {
 
     public List<EgressDTO> getEgressByUser(Long id);
 
-    public List<EgressDTO> findByMontAndCategory (Long id, Optional<Long> category, Optional<Integer> mes);
+    public List<EgressDTO> findByMontAndCategory (Long id, Long categoryId, Integer month);
 
 }

@@ -116,19 +116,17 @@ public class EgressServiceImpl implements EgressService {
     }
 
     @Override
-    public List<EgressDTO> findByMontAndCategory(Long id, Optional<Long> categoryId, Optional<Integer> month) {
+    public List<EgressDTO> findByMontAndCategory(Long id, @Nullable Long categoryId, @Nullable Integer month) {
         int year = LocalDate.now().getYear();
-        int monthValue = month.orElse(LocalDate.now().getMonthValue());
-        LocalDate monthLocalDate = LocalDate.of(year, monthValue, 1);
 
-        if (categoryId.isEmpty() && month.isPresent()) {
+        if (categoryId == null && month != null) {
+            LocalDate monthLocalDate = LocalDate.of(year, month, 1);
             return egressMapper.egressDTOList(egressRepository.findByMonth(id, monthLocalDate));
-        } else if (categoryId.isPresent() && month.isEmpty()) {
-            Long category = categoryId.get();
-            return egressMapper.egressDTOList(egressRepository.findEgressByCategoryId(id, category));
-        } else if (categoryId.isPresent() && month.isPresent()) {
-            Long category = categoryId.get();
-            return egressMapper.egressDTOList(egressRepository.findByMonthAndCategory(id, monthLocalDate, category));
+        } else if (categoryId != null && month == null) {
+            return egressMapper.egressDTOList(egressRepository.findEgressByCategoryId(id, categoryId));
+        } else if (categoryId != null && month != null) {
+            LocalDate monthLocalDate = LocalDate.of(year, month, 1);
+            return egressMapper.egressDTOList(egressRepository.findByMonthAndCategory(id, monthLocalDate, categoryId));
         }
         return egressMapper.egressDTOList(egressRepository.findAllByUserId(id));
     }

@@ -105,12 +105,12 @@ public class EgressController {
         }
     }
 
-    @GetMapping(path = "/egress/month/{id}/{mes}/{categoryId}")
+    @GetMapping(path = "/egress/month/{id}/{month}/{categoryId}")
     public ResponseEntity<List<EgressDTO>> egressByMonth(@PathVariable Long id,
-                                                         @PathVariable Optional<Integer> mes,
-                                                         @PathVariable Optional<Long> categoryId){
+                                                         @PathVariable Integer month,
+                                                         @PathVariable Long categoryId){
 
-        return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,categoryId,mes));
+        return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,categoryId,month));
     }
 
 }
