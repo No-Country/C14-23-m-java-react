@@ -109,7 +109,7 @@ public class EgressController {
 
     @PatchMapping(path = "/egress/month/{id}",consumes = "application/json")
     public ResponseEntity<List<EgressDTO>> egressByMonthAndCategory(@PathVariable Long id,
-                                                         @RequestBody CustomSearchDTO customSearch){
+                                                                    @RequestBody CustomSearchDTO customSearch){
 
         try{
             return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,customSearch));
@@ -119,7 +119,7 @@ public class EgressController {
     }
 
     //No funciona cuando no se envia el valor de page, probar eviando el valor a traves de requestbody
-    @PatchMapping(path = "/egressPageable/{userId}")
+    @PatchMapping(path = "/egressPageable/{userId}",consumes = "application/json")
     public ResponseEntity<List<EgressDTO>> egressPageable(@PathVariable Long userId,
                                                           @RequestBody Integer page){
         try {
