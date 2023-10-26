@@ -9,7 +9,7 @@ import java.time.Period;
 @Data
 @Component
 public class BirthdayValidator {
-    
+
     private LocalDate dateNow = LocalDate.now();
 
     public boolean isOldest18Years(LocalDate birthdayDate) {
