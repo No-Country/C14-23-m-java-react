@@ -14,12 +14,12 @@ public interface EgressRepository extends JpaRepository<Egress, Long> {
 
     List<Egress> findAllByUserId(Long id);
 
-    @Query("SELECT e FROM Egress e WHERE e.user = :id AND MONTH (e.date) = MONTH (:mes)")
+    @Query("SELECT e FROM Egress e WHERE e.user.id = :id AND MONTH (e.date) = MONTH (:mes)")
     List<Egress> findByMonth (@Param("id") Long id,@Param("mes")LocalDate mes);
 
-    @Query("SELECT e FROM Egress  e WHERE e.user = :id AND e.egressCategory = :egressCategory")
+    @Query("SELECT e FROM Egress  e WHERE e.user.id = :id AND e.egressCategory.id = :egressCategory")
     List<Egress> findEgressByCategoryId(@Param("id") Long id, Long egressCategory);
 
-    @Query("SELECT e FROM Egress e WHERE e.user = :id AND MONTH(e.date) = MONTH(:mes) AND e.egressCategory = :egressCategory")
+    @Query("SELECT e FROM Egress e WHERE e.user.id = :id AND MONTH(e.date) = MONTH(:mes) AND e.egressCategory.id = :egressCategory")
     List<Egress> findByMonthAndCategory(@Param("id") Long id,@Param("mes") LocalDate mes, @Param("egressCategory") Long egressCategory);
 }
