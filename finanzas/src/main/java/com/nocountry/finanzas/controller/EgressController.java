@@ -118,4 +118,15 @@ public class EgressController {
         }
     }
 
+    @PatchMapping(path = "/egress/{userId}/{page}")
+    public ResponseEntity<List<EgressDTO>> egressPageable(@PathVariable Long userId,
+                                                          @PathVariable (required = false) Integer page){
+        try {
+            return ResponseEntity.ok().body(egressService.getAllEgressPageable(userId,page)) ;
+        }catch (DataAccessException e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
 }
