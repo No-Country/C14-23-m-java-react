@@ -13,7 +13,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import { useEgress } from '../../context/EgressContext';
 import { useIncome } from '../../context/IncomeContext';
-import HeaderStatics from './components/headerStatics';
+import HeaderStatics from './components/HeaderStatics';
 
 ChartJS.register(
   CategoryScale,
@@ -130,7 +130,6 @@ const StaticsContainer = () => {
 
   return (
     <Box component={'main'} sx={{}}>
-      
       <HeaderStatics />
       <Box
         sx={{
