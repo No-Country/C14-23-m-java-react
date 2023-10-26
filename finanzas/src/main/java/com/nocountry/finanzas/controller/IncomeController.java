@@ -11,6 +11,7 @@ import com.nocountry.finanzas.services.IncomeCategoryService;
 import com.nocountry.finanzas.services.IncomeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -108,6 +109,11 @@ public class IncomeController {
     @PatchMapping(path = "/income/month/{id}",consumes = "application/json")
     public ResponseEntity<List<IncomeDTO>> incomeByMonthAndCategory(@PathVariable Long id,
                                                                     @RequestBody CustomSearchDTO customSearchDTO){
-        return ResponseEntity.ok().body(incomeService.findByMonthAndCategory(id,customSearchDTO));
+        try {
+            return ResponseEntity.ok().body(incomeService.findByMonthAndCategory(id,customSearchDTO));
+        }catch (DataAccessException e){
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 }
