@@ -106,7 +106,7 @@ public class UserController {
         }
     }
 
-    @PutMapping(path = "/savings", consumes = "application/json")
+    @PutMapping(path = "/savings")
     public ResponseEntity<UserResponseDTO> savingsMoney(@RequestBody @Valid SavingsDTO savings) throws BadRequestException, NotFoundException {
         try {
             UserResponseDTO userResponseDTO = userService.addSavings(savings);
