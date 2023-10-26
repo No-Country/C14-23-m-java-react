@@ -118,13 +118,13 @@ public class EgressController {
     }
 
     //No funciona cuando no se envia el valor de page, probar eviando el valor a traves de requestbody
-    @PatchMapping(path = "/egressPageable/{userId}/{page}",consumes = "application/json")
+    @PatchMapping(path = "/egressPageable/{userId}",consumes = "application/json")
     public ResponseEntity<List<EgressDTO>> egressPageable(@PathVariable Long userId,
-                                                          @PathVariable Integer page){
+                                                          @RequestBody Integer page){
         try {
             return ResponseEntity.ok().body(egressService.getAllEgressPageable(userId,page)) ;
 
-        }catch (DataAccessException e){
+        }catch (RuntimeException e){
             return ResponseEntity.badRequest().build();
         }
     }
