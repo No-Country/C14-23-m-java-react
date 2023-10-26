@@ -10,7 +10,7 @@ import com.nocountry.finanzas.models.user.*;
 import com.nocountry.finanzas.repositories.UserRepository;
 import com.nocountry.finanzas.services.UserService;
 import com.nocountry.finanzas.validators.BirthdayValidator;
-import com.nocountry.finanzas.validators.EmailValidator;
+import com.nocountry.finanzas.validators.EmailValidatorLocal;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,12 +23,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final EmailValidator emailValidator;
+    private final EmailValidatorLocal emailValidator;
 
     private final BirthdayValidator birthdayValidator;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, EmailValidator emailValidator, BirthdayValidator birthdayValidator) {
+    public UserServiceImpl(UserRepository userRepository, EmailValidatorLocal emailValidator, BirthdayValidator birthdayValidator) {
         this.userRepository = userRepository;
         this.emailValidator = emailValidator;
         this.birthdayValidator = birthdayValidator;
@@ -70,14 +70,42 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDTO) throws NotFoundException {
+    public UserResponseDTO updateUser(Long id, UserUpdateRequestDTO userRequestDTO) throws NotFoundException, EmailAlreadyExistsException, InvalidEmailType {
         User userToEdit = getUserById(id);
 
-        userToEdit.setName(userRequestDTO.getName());
-        userToEdit.setLast_name(userRequestDTO.getLast_name());
-        userToEdit.setEmail(userRequestDTO.getEmail());
-        userToEdit.setPassword(userRequestDTO.getPassword());
-        userToEdit.setBirthday_date(userRequestDTO.getBirthday_date());
+        if (userRequestDTO.getName() != null && userRequestDTO.getLast_name() != null) {
+            userToEdit.setName(userRequestDTO.getName());
+            userToEdit.setLast_name(userRequestDTO.getLast_name());
+        }
+
+        if (userRequestDTO.getEmail() != null) {
+            doEmailValidation(userRequestDTO.getEmail());
+            Optional<User> existingUser = userRepository.findByEmail(userRequestDTO.getEmail());
+
+            if (existingUser.isPresent()) {
+                throw new EmailAlreadyExistsException("El email ya está registrado.");
+            }
+
+            userToEdit.setEmail(userRequestDTO.getEmail());
+        }
+
+        userRepository.save(userToEdit);
+
+        return Mapper.userToUserResponseDto(userToEdit);
+    }
+
+    @Transactional
+    @Override
+    public UserResponseDTO updatePasswordUser(Long id, UserPasswordUpdateDTO passwordUpdateDTO) throws BadRequestException, NotFoundException {
+        User userToEdit = getUserById(id);
+
+        if (passwordUpdateDTO.getPassword1().equals(userToEdit.getPassword())) {
+            userToEdit.setPassword(passwordUpdateDTO.getNewPassword());
+            userRepository.save(userToEdit);
+
+        } else {
+            throw new BadRequestException("La contraseña original ingresada es incorrecta.");
+        }
 
         return Mapper.userToUserResponseDto(userToEdit);
     }

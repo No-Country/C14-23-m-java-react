@@ -30,7 +30,7 @@ public class UserController {
         try {
             UserResponseDTO userResponseDTO = userService.saveUser(userRequestDTO);
             return new ResponseEntity<>(userResponseDTO,HttpStatus.CREATED);
-        }catch (DataAccessException e){
+        } catch (DataAccessException e){
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -40,29 +40,51 @@ public class UserController {
         try {
             UserResponseDTO userResponseDTO = Mapper.userToUserResponseDto(userService.getUserById(id));
             return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
-        }catch (DataAccessException  e){
+        } catch (DataAccessException  e){
             throw new BadRequestException(e.getMessage());
         }
     }
 
-    @PutMapping(path = "/user/update/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody @Valid UserRequestDTO userRequestDTO) throws BadRequestException, NotFoundException {
+    @PatchMapping(path = "/user/update/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable Long id,
+                                        @RequestBody @Valid UserUpdateRequestDTO userRequestDTO) throws BadRequestException, NotFoundException {
         try {
             UserResponseDTO userResponseDTO = userService.updateUser(id,userRequestDTO);
             return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
-        }catch (NotFoundException e){
+        } catch (NotFoundException e){
             throw new NotFoundException(e.getMessage());
-        }catch (DataAccessException e){
+        } catch (DataAccessException e){
             throw new BadRequestException(e.getMessage());
+        } catch (EmailAlreadyExistsException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidEmailType e) {
+            throw new RuntimeException(e);
         }
     }
+
+    @PatchMapping(path = "/user/update/password/{id}")
+    public ResponseEntity<?> updatePasswordUser(@PathVariable Long id,
+                                                @RequestBody @Valid UserPasswordUpdateDTO passwordUpdateDTO) throws BadRequestException, NotFoundException {
+
+        try {
+            UserResponseDTO userResponseDTO = userService.updatePasswordUser(id, passwordUpdateDTO);
+            return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
+        } catch (NotFoundException e){
+            throw new NotFoundException(e.getMessage());
+        } catch (DataAccessException e){
+            throw new BadRequestException(e.getMessage());
+        }
+
+    }
+
+
 
     @DeleteMapping(path = "/user/delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) throws BadRequestException {
         try {
             userService.deleteUser(id);
             return new ResponseEntity<>("El usuario se elimino correctamente", HttpStatus.OK);
-        }catch (DataAccessException e){
+        } catch (DataAccessException e){
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -101,7 +123,7 @@ public class UserController {
         try {
             UserResponseDTO userResponseDTO = userService.revertSavings(id);
             return new ResponseEntity<>(userResponseDTO,HttpStatus.OK);
-        }catch (DataAccessException e){
+        } catch (DataAccessException e){
             throw new BadRequestException(e.getMessage());
         }
     }
