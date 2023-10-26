@@ -3,6 +3,7 @@ package com.nocountry.finanzas.services;
 import com.nocountry.finanzas.entities.Egress;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
+import com.nocountry.finanzas.models.egress.CustomSearchDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
 import jakarta.annotation.Nullable;
 
@@ -23,6 +24,6 @@ public interface EgressService {
 
     public List<EgressDTO> getEgressByUser(Long id);
 
-    public List<EgressDTO> findByMontAndCategory (Long id, Long categoryId, Integer month);
+    public List<EgressDTO> findByMontAndCategory (Long id, CustomSearchDTO customSearchDTO);
 
 }

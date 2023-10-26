@@ -6,6 +6,7 @@ import com.nocountry.finanzas.entities.User;
 import com.nocountry.finanzas.entities.enums.CategoryEnum;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
+import com.nocountry.finanzas.models.egress.CustomSearchDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
 import com.nocountry.finanzas.models.egress.MapperEgress;
 import com.nocountry.finanzas.repositories.EgressCategoryRepository;
@@ -116,17 +117,18 @@ public class EgressServiceImpl implements EgressService {
     }
 
     @Override
-    public List<EgressDTO> findByMontAndCategory(Long id, @Nullable Long categoryId, @Nullable Integer month) {
+    public List<EgressDTO> findByMontAndCategory(Long id, CustomSearchDTO customSearchDTO) {
         int year = LocalDate.now().getYear();
 
-        if (categoryId == null && month != null) {
-            LocalDate monthLocalDate = LocalDate.of(year, month, 1);
+        if (customSearchDTO.getCategoryId() == null && customSearchDTO.getMonth() != null) {
+            LocalDate monthLocalDate = LocalDate.of(year, customSearchDTO.getMonth(), 1);
             return egressMapper.egressDTOList(egressRepository.findByMonth(id, monthLocalDate));
-        } else if (categoryId != null && month == null) {
-            return egressMapper.egressDTOList(egressRepository.findEgressByCategoryId(id, categoryId));
-        } else if (categoryId != null && month != null) {
-            LocalDate monthLocalDate = LocalDate.of(year, month, 1);
-            return egressMapper.egressDTOList(egressRepository.findByMonthAndCategory(id, monthLocalDate, categoryId));
+
+        } else if (customSearchDTO.getCategoryId() != null && customSearchDTO.getMonth() == null) {
+            return egressMapper.egressDTOList(egressRepository.findEgressByCategoryId(id, customSearchDTO.getCategoryId()));
+        } else if (customSearchDTO.getCategoryId() != null && customSearchDTO.getMonth() != null) {
+            LocalDate monthLocalDate = LocalDate.of(year, customSearchDTO.getMonth(), 1);
+            return egressMapper.egressDTOList(egressRepository.findByMonthAndCategory(id, monthLocalDate, customSearchDTO.getCategoryId()));
         }
         return egressMapper.egressDTOList(egressRepository.findAllByUserId(id));
     }

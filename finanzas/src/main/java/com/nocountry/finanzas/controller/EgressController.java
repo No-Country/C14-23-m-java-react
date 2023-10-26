@@ -5,6 +5,7 @@ import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.egress.CategoryEgressDTO;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
+import com.nocountry.finanzas.models.egress.CustomSearchDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
 import com.nocountry.finanzas.services.EgressCategoryService;
 import com.nocountry.finanzas.services.EgressService;
@@ -105,12 +106,11 @@ public class EgressController {
         }
     }
 
-    @GetMapping(path = "/egress/month/{id}/{month}/{categoryId}")
+    @PostMapping(path = "/egress/month/{id}")
     public ResponseEntity<List<EgressDTO>> egressByMonth(@PathVariable Long id,
-                                                         @PathVariable @Nullable Integer month,
-                                                         @PathVariable @Nullable  Long categoryId){
+                                                         @RequestBody CustomSearchDTO customSearch){
 
-        return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,categoryId,month));
+        return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,customSearch));
     }
 
 }
