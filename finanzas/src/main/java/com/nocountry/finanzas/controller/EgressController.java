@@ -5,17 +5,21 @@ import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.models.egress.CategoryEgressDTO;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
+import com.nocountry.finanzas.models.egress.CustomSearchDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
 import com.nocountry.finanzas.services.EgressCategoryService;
 import com.nocountry.finanzas.services.EgressService;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -100,6 +104,17 @@ public class EgressController {
             return new ResponseEntity<>(egressCategory, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping(path = "/egress/month/{id}",consumes = "application/json")
+    public ResponseEntity<List<EgressDTO>> egressByMonthAndCategory(@PathVariable Long id,
+                                                         @RequestBody CustomSearchDTO customSearch){
+
+        try{
+            return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,customSearch));
+        }catch (DataAccessException e){
+            return ResponseEntity.badRequest().build();
         }
     }
 
