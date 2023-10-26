@@ -184,7 +184,7 @@ const ExpenseByCategory = ({ handleOpen }) => {
           </Grid>
           <Grid item xs={12}>
             <TotalAmountHome
-              text={'Total gastos'}
+              text={'Total Gastos'}
               total={totalGastos}
               color={'red'}
             />

@@ -38,10 +38,10 @@ function NavbarListDrawer({ navLinks }) {
       <nav>
         <List>
           <ListItem disablePadding>
-            <ListItemButton component='a' href='#cerrarSesiond'>
+            <ListItemButton component='a' href='#'>
               <ListItemIcon>
                 <ExitToAppIcon />
-                <ListItemText primary='Cerrar sesion' />
+                <ListItemText primary='Cerrar sesión' />
               </ListItemIcon>
             </ListItemButton>
           </ListItem>

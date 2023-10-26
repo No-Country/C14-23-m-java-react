@@ -7,8 +7,8 @@ export const registerRequest = (user) => axios.post('/api/register', user);
 export const dataUserRequest = (id) => axios.get(`/api/user/${id}`);
 
 //Actualizar datos de un usuario
-export const updateUserRequest = (id, user) =>
-  axios.put(`/api/user/${id}`, user);
+export const updateUserRequest = (id, userInfo) =>
+  axios.put(`/api/user/update/${id}`, userInfo);
 
 //Actualizar datos parciales de un usuario
 export const partialUpdateUserRequest = (id, data) =>
@@ -16,3 +16,13 @@ export const partialUpdateUserRequest = (id, data) =>
 
 //Eliminar un usuario
 export const deleteUserRequest = (id) => axios.delete(`/api/user/${id}`);
+
+//actualizar los ahorros de un usuario
+export const updateUserSavings = ( idUser, toSaving ) =>
+  axios.put('/api/savings',{idUser,toSaving})
+
+//volver los ahorros del usuario a 0
+export const savingsToZero = (id) => 
+  axios.put(`/api/savings/revertState/user/${id}`)
+
+

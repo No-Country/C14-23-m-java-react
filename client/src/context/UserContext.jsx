@@ -1,10 +1,13 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import {
-  dataUserRequest,
-  partialUpdateUserRequest,
   registerRequest,
+  dataUserRequest,
+  updateUserSavings,
+  savingsToZero,
+  partialUpdateUserRequest,
 } from '../API/user';
+import Cookies from 'js-cookie';
 
 const UserContext = createContext();
 
@@ -33,7 +36,26 @@ export function UserProvider({ children }) {
   const getDataUser = async (id) => {
     try {
       const res = await dataUserRequest(id);
-      return res.data;
+      console.log(res?.data);
+      return res?.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateSaving = async (idUser, toSaving) => {
+    console.log('id:' + idUser + 'valor' + toSaving);
+    try {
+      const res = await updateUserSavings(idUser, toSaving);
+      console.log(res);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const delSaving = async (id) => {
+    try {
+      const res = await savingsToZero(id);
+      console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -64,6 +86,10 @@ export function UserProvider({ children }) {
     }
   };
 
+  const logout = () => {
+    Cookies.remove('token');
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -72,6 +98,9 @@ export function UserProvider({ children }) {
         updateUser,
         partialUpdateUser,
         delUser,
+        logout,
+        updateSaving,
+        delSaving,
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   Paper,
@@ -8,8 +8,6 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   IconButton,
-  Card,
-  CardContent,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useIncome } from '../../../context/IncomeContext';
@@ -18,7 +16,7 @@ function IncomeDetails() {
   const [isHovered, setIsHovered] = useState(false);
   const [incomesData, setIncomesData] = useState(null);
 
-  const { allIncomes, delIncome } = useIncome(); // uso el contexto
+  const { allIncomes, delIncome, deleteOneIncome } = useIncome(); // uso el contexto
 
   useEffect(() => {
     async function fetchData() {
@@ -30,7 +28,7 @@ function IncomeDetails() {
       }
     }
     fetchData();
-  }, []);
+  }, [deleteOneIncome]);
 
   const styles = {
     paper: {
