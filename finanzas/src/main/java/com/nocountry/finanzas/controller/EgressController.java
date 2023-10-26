@@ -118,7 +118,7 @@ public class EgressController {
         }
     }
 
-    @PatchMapping(path = "/egress/{userId}/{page}")
+    @PatchMapping(path = "/egressPageable/{userId}/{page}")
     public ResponseEntity<List<EgressDTO>> egressPageable(@PathVariable Long userId,
                                                           @PathVariable (required = false) Integer page){
         try {
