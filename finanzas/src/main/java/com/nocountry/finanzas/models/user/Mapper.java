@@ -15,7 +15,7 @@ public class Mapper {
         user.setName(userRequestDTO.getName());
         user.setLast_name(userRequestDTO.getLast_name());
         user.setEmail(userRequestDTO.getEmail());
-        user.setPassword1(userRequestDTO.getPassword());
+        user.setPassword(userRequestDTO.getPassword());
         user.setBirthday_date(userRequestDTO.getBirthday_date());
         user.setCountry(searchCountry(userRequestDTO.getCountry()));
         user.setTotalIncome(0.0);

@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
         userToEdit.setName(userRequestDTO.getName());
         userToEdit.setLast_name(userRequestDTO.getLast_name());
         userToEdit.setEmail(userRequestDTO.getEmail());
-        userToEdit.setPassword1(userRequestDTO.getPassword());
+        userToEdit.setPassword(userRequestDTO.getPassword());
         userToEdit.setBirthday_date(userRequestDTO.getBirthday_date());
 
         return Mapper.userToUserResponseDto(userToEdit);

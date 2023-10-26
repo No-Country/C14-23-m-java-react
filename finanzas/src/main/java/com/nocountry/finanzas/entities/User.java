@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nocountry.finanzas.entities.enums.Countries;
 import com.nocountry.finanzas.entities.enums.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Digits;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,7 +39,7 @@ public class User implements UserDetails {
     private String email;
 
     @Column(name="password1", nullable = false)
-    private String password1;
+    private String password;
 
     @Column(name="date", nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
@@ -91,7 +90,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password1;
+        return password;
     }
 
     @Override

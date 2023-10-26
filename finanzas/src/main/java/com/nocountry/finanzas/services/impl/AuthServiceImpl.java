@@ -50,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
                 .last_name(request.getLastName())
                 .email(request.getEmail())
                 .birthday_date(request.getBirthdayDate())
-                .password1(passwordEncoder.encode(request.getPassword1()))
+                .password(passwordEncoder.encode(request.getPassword1()))
                 .country(Countries.valueOf(request.getCountry()))
                 .role(Role.USER)
                 .accumulatedSavings(0.0)
