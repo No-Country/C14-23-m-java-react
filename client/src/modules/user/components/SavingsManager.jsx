@@ -21,10 +21,11 @@ function SavingsManager(props) {
   const [savedSavings, setSavedSavings] = useState(false); // Estado para mostrar un alerta si se guardo con exito un ahorro
   const [infoUser, setInfoUser] = useState(); // estado que guarda toda la informnacion del usuario
   const [restMoney, setRestMoney] = useState(null);
+ 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const { getDataUser, updateSaving } = useUser(); //traigo el contexto user
+  const { getDataUser, updateSaving, delSaving } = useUser(); //traigo el contexto user
 
   useEffect(() => {
     async function fetchData() {
@@ -56,15 +57,18 @@ function SavingsManager(props) {
 
   const handleAddClick = async () => {
     const inputValueAsNumber = parseFloat(inputValue);
-    console.log('aca');
+
     if (!isNaN(inputValueAsNumber)) {
       if (inputValueAsNumber <= restMoney) {
         setSavings(savings + inputValueAsNumber);
-        await updateSaving(1, savings);
+        let dato = savings + inputValueAsNumber;
+
+        await updateSaving(1, dato);
 
         setSavedSavings(true);
         setInputValue('');
         setRestMoney(restMoney - inputValueAsNumber.toFixed(2));
+
         // Restaurar la alerta después de 3 segundos
         setTimeout(() => {
           setSavedSavings(false);
@@ -75,8 +79,9 @@ function SavingsManager(props) {
     }
   };
 
-  const handleResetClick = () => {
+  const handleResetClick = async () => {
     setSavings(0);
+    await delSaving(1);
     setInputValue('');
     setRestMoney(infoUser.totalIncome);
   };
@@ -164,7 +169,7 @@ function SavingsManager(props) {
                 },
                 margin: '0.5rem',
               }}
-              onClick={() => handleAddClick()}
+              onClick={(e) => handleAddClick(e)}
             >
               Agregar
             </Button>
