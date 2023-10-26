@@ -4,6 +4,7 @@ import {
   registerRequest,
   dataUserRequest,
   updateUserSavings,
+  savingsToZero
 } from '../API/user';
 import Cookies from 'js-cookie';
 
@@ -41,14 +42,23 @@ export function UserProvider({ children }) {
     }
   };
 
-  const updateSaving = async (id, amount) => {
+  const updateSaving = async (idUser, toSaving) => {
+    console.log('id:'+idUser+'valor'+ toSaving)
     try {
-      const res = await updateUserSavings(id, amount);
+      const res = await updateUserSavings(idUser, toSaving);
       console.log(res);
     } catch (error) {
       console.log(error.message);
     }
   };
+  const delSaving = async (id) => {
+    try {
+      const res = await savingsToZero(id)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const updateUser = async (id, user) => {
     try {
@@ -79,6 +89,7 @@ export function UserProvider({ children }) {
         delUser,
         logout,
         updateSaving,
+        delSaving
       }}
     >
       {children}

@@ -15,5 +15,10 @@ export const deleteUserRequest = (id) => axios.delete(`/api/user/${id}`);
 
 //actualizar los ahorros de un usuario
 export const updateUserSavings = ( idUser, toSaving ) =>
-  axios.put('/api/savings',idUser,toSaving)
+  axios.put('/api/savings',{idUser,toSaving})
+
+//volver los ahorros del usuario a 0
+export const savingsToZero = (id) => 
+  axios.put(`/api/savings/revertState/user/${id}`)
+
 

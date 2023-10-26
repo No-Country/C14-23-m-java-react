@@ -58,7 +58,7 @@ function NavBar() {
 
             <Typography variant='h6'>Menu</Typography>
           </IconButton>
-          {/* Coloca tu logo en lugar de 'Landing' */}
+          
           <Box
             sx={{
               display: 'flex',
