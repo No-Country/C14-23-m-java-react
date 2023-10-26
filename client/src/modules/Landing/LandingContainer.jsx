@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import TextLanding from './components/TextLanding';
 import ImageLanding from './components/ImageLanding';
+import { NavLink } from 'react-router-dom';
 
 const LandingContainer = () => {
   let theme = createTheme();
@@ -39,6 +40,8 @@ const LandingContainer = () => {
             />
 
             <Button
+              component={NavLink}
+              to='/login'
               variant='contained'
               size='large'
               sx={{

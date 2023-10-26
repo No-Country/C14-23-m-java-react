@@ -6,6 +6,7 @@ import {
   updateUserSavings,
   savingsToZero,
   partialUpdateUserRequest,
+  updateUserPasswordRequest,
 } from '../API/user';
 import Cookies from 'js-cookie';
 
@@ -36,7 +37,7 @@ export function UserProvider({ children }) {
   const getDataUser = async (id) => {
     try {
       const res = await dataUserRequest(id);
-      console.log(res?.data);
+      // console.log(res?.data);
       return res?.data;
     } catch (error) {
       console.log(error);
@@ -78,6 +79,15 @@ export function UserProvider({ children }) {
     }
   };
 
+  const updateUserPassword = async (id, data) => {
+    try {
+      const res = await updateUserPasswordRequest(id, data);
+      return res;
+    } catch (error) {
+      return error;
+    }
+  };
+
   const delUser = async (id) => {
     try {
       console.log(id);
@@ -97,6 +107,7 @@ export function UserProvider({ children }) {
         getDataUser,
         updateUser,
         partialUpdateUser,
+        updateUserPassword,
         delUser,
         logout,
         updateSaving,

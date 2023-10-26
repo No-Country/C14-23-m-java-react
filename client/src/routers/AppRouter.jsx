@@ -8,6 +8,7 @@ import Layout from '../modules/Layout';
 import LandingPage from '../pages/LandingPage';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
+import AccountPage from '../pages/AccountPage';
 
 function AppRouter() {
   return (
@@ -21,6 +22,7 @@ function AppRouter() {
           <Route path='/statistics' element={<StatisticsPage />} />
           <Route path='/user' element={<UserPage />} />
           <Route path='/financialHistory' element={<HistoryPage />} />
+          <Route path='/account' element={<AccountPage />} />
           {/* <Route  path='/logOut' element = {<LogoutPage/>} /> */}
 
           <Route path='*' element={<NotFoundPage />} />

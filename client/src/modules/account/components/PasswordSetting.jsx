@@ -12,57 +12,56 @@ import CloseIcon from '@mui/icons-material/Close';
 import { FormProvider, useForm } from 'react-hook-form';
 import FormInput from './FormInput';
 import { useState } from 'react';
+import { useUser } from '../../../context/UserContext';
 
 const PasswordSetting = () => {
-  PasswordSetting.propTypes = {};
-
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
   const [error, setError] = useState(false);
-  const [response, setResponse] = useState({
-    success: null,
-    loading: true,
-    error: null,
-  });
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleCloseAlert = () => setAlert(false);
   const handleOpenAlert = () => setAlert(true);
 
   const methods = useForm({
     defaultValues: {
-      current_password: '',
-      new_password: '',
-      confirm_new_password: '',
+      currentPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
     },
   });
+
+  const { updateUserPassword } = useUser();
 
   const { handleSubmit, reset, watch } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
-    const newData = {
-      current_password: data.current_password,
-      new_password: data.new_password,
-    };
+    const { currentPassword, newPassword } = data;
+    const newData = { currentPassword, newPassword };
+    //Test
+    //password userId 1 : Usuario1111#
+    //password userId 2 : Usuario2222#
 
     setLoading(true);
-    try {
-      const res = await new Promise((res, rej) =>
-        setTimeout(() => res('pass ok'), 3000),
-      );
-
-      console.log(newData);
-      console.log(res);
-    } catch (error) {
-      console.error(error);
-      setError(true);
-    } finally {
-      setLoading(false);
-      handleOpenAlert();
+    setError(false);
+    const res = await updateUserPassword(2, newData);
+    if (res.status === 200) {
       reset();
+    } else {
+      setError(true);
+      if (res.response.request.status === 400) {
+        setErrorMessage(res.response.data.message);
+      }
+
+      if (res.response.request.status > 400) {
+        setErrorMessage('Ocurrió un error, intente mas tarde');
+      }
     }
+    setLoading(false);
+    handleOpenAlert();
   });
 
-  const newPassword = watch('new_password', '');
+  const newPassword = watch('newPassword', '');
 
   return (
     <Box>
@@ -96,9 +95,7 @@ const PasswordSetting = () => {
             </IconButton>
           }
         >
-          {error
-            ? 'Ocurrió un error, intente mas tarde'
-            : 'Datos guardados exitosamente!'}
+          {error ? errorMessage : 'Contraseña actualizada correctamente!'}
         </Alert>
       </Snackbar>
 
@@ -111,7 +108,7 @@ const PasswordSetting = () => {
         <Box component='form' onSubmit={onSubmit}>
           <FormInput
             type='password'
-            name='current_password'
+            name='currentPassword'
             label='Contraseña Actual'
             sx={{ mb: 3, width: '100%' }}
             rules={{
@@ -120,7 +117,7 @@ const PasswordSetting = () => {
                 value:
                   /^(?=.*[A-Za-z0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]+$/,
                 message:
-                  "La contraseña debe contener letras, símbolos y no debe incluir los siguientes símbolos: /= ¡ ' ? ¿ ´ [ { ] } , ; . : -",
+                  "La contraseña debe contener números, letras, símbolos y no debe incluir los siguientes símbolos: /= ¡ ' ? ¿ ´ [ { ] } , ; . : -",
               },
               minLength: {
                 value: 8,
@@ -136,16 +133,16 @@ const PasswordSetting = () => {
 
           <FormInput
             type='password'
-            name='new_password'
+            name='newPassword'
             label='Nueva Contraseña'
             sx={{ mb: 3, width: '100%' }}
             rules={{
               required: 'Nueva contraseña es requerida',
               pattern: {
                 value:
-                  /^(?=.*[A-Za-z0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]+$/,
+                  /^(?=.*[A-Za-z0-9])(?=.*[!@#$%^&*()_+])(?=.*[A-Z])[A-Za-z0-9!@#$%^&*()_+]+$/,
                 message:
-                  "La contraseña debe contener letras, símbolos y no debe incluir los siguientes símbolos: /= ¡ ' ? ¿ ´ [ { ] } , ; . : -",
+                  "La contraseña debe contener números, letras (al menos una mayúscula), símbolos y no debe incluir los siguientes símbolos: /= ¡ ' ? ¿ ´ [ { ] } , ; . : -",
               },
               minLength: {
                 value: 8,
@@ -161,16 +158,16 @@ const PasswordSetting = () => {
 
           <FormInput
             type='password'
-            name='confirm_new_password'
+            name='confirmNewPassword'
             label='Confirmar Nueva Contraseña'
             sx={{ mb: 3, width: '100%' }}
             rules={{
               required: 'Confirmación de nueva contraseña requerida',
               pattern: {
                 value:
-                  /^(?=.*[A-Za-z0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]+$/,
+                  /^(?=.*[A-Za-z0-9])(?=.*[!@#$%^&*()_+])(?=.*[A-Z])[A-Za-z0-9!@#$%^&*()_+]+$/,
                 message:
-                  "La contraseña debe contener letras, símbolos y no debe incluir los siguientes símbolos: /= ¡ ' ? ¿ ´ [ { ] } , ; . : -",
+                  "La contraseña debe contener números, letras (al menos una mayúscula), símbolos y no debe incluir los siguientes símbolos: /= ¡ ' ? ¿ ´ [ { ] } , ; . : -",
               },
               minLength: {
                 value: 8,

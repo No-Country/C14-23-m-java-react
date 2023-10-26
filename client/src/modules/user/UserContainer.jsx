@@ -1,7 +1,6 @@
 import { Box } from '@mui/material';
 import React from 'react';
 import SectionInfo from './components/SectionInfo';
-import UserSettings from './components/UserSettings';
 import SavingsManager from './components/SavingsManager';
 
 function UserContainer(props) {
@@ -14,8 +13,6 @@ function UserContainer(props) {
       <Box>
         <SavingsManager />
       </Box>
-
-      <UserSettings />
     </Box>
   );
 }

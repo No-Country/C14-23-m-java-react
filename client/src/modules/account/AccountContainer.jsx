@@ -7,13 +7,13 @@ import {
   createTheme,
   useMediaQuery,
 } from '@mui/material';
-import EmailSetting from './EmailSetting';
-import PasswordSetting from './PasswordSetting';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import NameSetting from './NameSetting';
+import NameSetting from './components/NameSetting';
+import PasswordSetting from './components/PasswordSetting';
+import EmailSetting from './components/EmailSetting';
 
-const UserSettings = () => {
+const AccountContainer = () => {
   const theme = createTheme({
     palette: {
       primary: {
@@ -68,6 +68,7 @@ const UserSettings = () => {
         sx={{
           maxWidth: 'md',
           mx: 'auto',
+          mt: 5,
         }}
       >
         <Typography variant='h5' mb={2} pl={2}>
@@ -120,4 +121,4 @@ const UserSettings = () => {
   );
 };
 
-export default UserSettings;
+export default AccountContainer;

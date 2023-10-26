@@ -14,6 +14,10 @@ export const updateUserRequest = (id, userInfo) =>
 export const partialUpdateUserRequest = (id, data) =>
   axios.patch(`/api/user/update/${id}`, data);
 
+//Actualizar contraseña de un usuario
+export const updateUserPasswordRequest = (id, data) =>
+  axios.patch(`/api/user/update/password/${id}`, data);
+
 //Eliminar un usuario
 export const deleteUserRequest = (id) => axios.delete(`/api/user/${id}`);
 

@@ -15,8 +15,6 @@ import { useEffect, useState } from 'react';
 import { useUser } from '../../../context/UserContext';
 
 const EmailSetting = () => {
-  EmailSetting.propTypes = {};
-
   const [originalData, setOriginalData] = useState();
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,7 +42,7 @@ const EmailSetting = () => {
     return true;
   };
 
-  const { getDataUser } = useUser();
+  const { getDataUser, partialUpdateUser } = useUser();
 
   useEffect(() => {
     const getUser = async () => {
@@ -55,8 +53,7 @@ const EmailSetting = () => {
 
         setOriginalData({ email });
         setResponse({ success: true, loading: false, error: null });
-      } catch (error) {
-        console.log(error);
+      } catch {
         setResponse({ success: null, loading: false, error: true });
       }
     };
@@ -67,14 +64,10 @@ const EmailSetting = () => {
   const onSubmit = handleSubmit(async (data) => {
     setLoading(true);
     try {
-      const res = await new Promise((res, rej) =>
-        setTimeout(() => res('ok'), 3000),
-      );
-      console.log(res);
-      setOriginalData(data);
-      console.log(data);
+      const res = await partialUpdateUser(2, data);
+      const { email } = res.data;
+      setOriginalData({ email });
     } catch (error) {
-      console.error(error);
       setError(true);
       reset(originalData);
     } finally {

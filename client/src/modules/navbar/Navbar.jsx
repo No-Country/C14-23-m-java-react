@@ -22,6 +22,7 @@ const navLinks = [
   { title: 'Historial', path: '/financialHistory' },
   { title: 'Iniciar sesión', path: '/login' },
   { title: 'Registrarse', path: '/register' },
+  { title: 'Cuenta', path: '/account' },
 ];
 
 function NavBar() {
@@ -58,7 +59,7 @@ function NavBar() {
 
             <Typography variant='h6'>Menu</Typography>
           </IconButton>
-          
+
           <Box
             sx={{
               display: 'flex',
