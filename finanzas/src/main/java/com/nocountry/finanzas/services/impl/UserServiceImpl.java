@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseDTO updatePasswordUser(Long id, UserPasswordUpdateDTO passwordUpdateDTO) throws BadRequestException, NotFoundException {
         User userToEdit = getUserById(id);
 
-        if (passwordUpdateDTO.getPassword1().equals(userToEdit.getPassword())) {
+        if (passwordUpdateDTO.getCurrentPassword().equals(userToEdit.getPassword())) {
             userToEdit.setPassword(passwordUpdateDTO.getNewPassword());
             userRepository.save(userToEdit);
 
