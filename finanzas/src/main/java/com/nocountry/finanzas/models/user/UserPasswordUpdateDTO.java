@@ -10,7 +10,7 @@ public class UserPasswordUpdateDTO {
 
     @NotBlank(message = "Este campo es obligatorio")
     @Size(min = 8, max = 45, message = "La contraseña debe poseer un minimo de 8 caracteres y maximo de 45.")
-    private String password1;
+    private String currentPassword;
 
     @NotBlank(message = "Este campo es obligatorio")
     @Size(min = 8, max = 45, message = "La contraseña debe poseer un minimo de 8 caracteres y maximo de 45.")
