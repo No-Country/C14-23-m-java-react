@@ -3,6 +3,7 @@ package com.nocountry.finanzas.controller;
 import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.entities.IncomeCategory;
 import com.nocountry.finanzas.exceptions.BadRequestException;
+import com.nocountry.finanzas.models.egress.CustomSearchDTO;
 import com.nocountry.finanzas.models.income.CategoryIncomeDTO;
 import com.nocountry.finanzas.models.income.CreateIncomeDTO;
 import com.nocountry.finanzas.models.income.IncomeDTO;
@@ -102,5 +103,11 @@ public class IncomeController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping(path = "/income/month/{id}",consumes = "application/json")
+    public ResponseEntity<List<IncomeDTO>> incomeByMonthAndCategory(@PathVariable Long id,
+                                                                    @RequestBody CustomSearchDTO customSearchDTO){
+        return ResponseEntity.ok().body(incomeService.findByMonthAndCategory(id,customSearchDTO));
     }
 }

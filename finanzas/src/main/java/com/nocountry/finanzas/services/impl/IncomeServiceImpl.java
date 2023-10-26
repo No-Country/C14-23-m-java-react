@@ -5,6 +5,7 @@ import com.nocountry.finanzas.entities.IncomeCategory;
 import com.nocountry.finanzas.entities.User;
 import com.nocountry.finanzas.entities.enums.CategoryIncomeEnum;
 import com.nocountry.finanzas.exceptions.BadRequestException;
+import com.nocountry.finanzas.models.egress.CustomSearchDTO;
 import com.nocountry.finanzas.models.income.IncomeDTO;
 import com.nocountry.finanzas.models.income.MapperIncome;
 import com.nocountry.finanzas.repositories.IncomeCategoryRepository;
@@ -15,6 +16,7 @@ import com.nocountry.finanzas.services.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -94,6 +96,24 @@ public class IncomeServiceImpl implements IncomeService {
     @Override
     public IncomeDTO updateIncome(IncomeDTO requestDTO) {
         return null;
+    }
+
+    @Override
+    public List<IncomeDTO> findByMonthAndCategory(Long id, CustomSearchDTO customSearchDTO) {
+
+        int year = LocalDate.now().getYear();
+
+        if (customSearchDTO.getCategoryId() == null && customSearchDTO.getMonth() != null){
+            LocalDate montLocalDate = LocalDate.of(year,customSearchDTO.getMonth(),1);
+            return mapperIncome.incomeDTOList(repository.findByMonth(id,montLocalDate));
+        }else if (customSearchDTO.getCategoryId() != null && customSearchDTO.getMonth() == null){
+            return mapperIncome.incomeDTOList(repository.findIncomeByCategoryId(id,customSearchDTO.getCategoryId()));
+        } else if (customSearchDTO.getCategoryId() != null && customSearchDTO.getMonth() != null) {
+            LocalDate montLocalDate = LocalDate.of(year,customSearchDTO.getMonth(),1);
+            return mapperIncome.incomeDTOList(repository.findByMonthAndCategory(id,montLocalDate,customSearchDTO.getCategoryId()));
+        }
+
+        return mapperIncome.incomeDTOList(repository.findAllByUserId(id));
     }
 
     private CategoryIncomeEnum searchCategoryEnumIncome(String name) {

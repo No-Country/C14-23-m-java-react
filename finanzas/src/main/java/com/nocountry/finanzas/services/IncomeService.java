@@ -1,6 +1,7 @@
 package com.nocountry.finanzas.services;
 
 import com.nocountry.finanzas.exceptions.BadRequestException;
+import com.nocountry.finanzas.models.egress.CustomSearchDTO;
 import com.nocountry.finanzas.models.income.IncomeDTO;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface IncomeService {
     public void delete(Long id);
 
     public IncomeDTO updateIncome(IncomeDTO requestDTO);
+
+    public List<IncomeDTO> findByMonthAndCategory(Long id, CustomSearchDTO customSearchDTO);
 }

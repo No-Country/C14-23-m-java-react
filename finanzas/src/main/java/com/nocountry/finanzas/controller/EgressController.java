@@ -106,8 +106,8 @@ public class EgressController {
         }
     }
 
-    @PostMapping(path = "/egress/month/{id}")
-    public ResponseEntity<List<EgressDTO>> egressByMonth(@PathVariable Long id,
+    @PostMapping(path = "/egress/month/{id}",consumes = "application/json")
+    public ResponseEntity<List<EgressDTO>> egressByMonthAndCategory(@PathVariable Long id,
                                                          @RequestBody CustomSearchDTO customSearch){
 
         return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,customSearch));
