@@ -9,7 +9,6 @@ import com.nocountry.finanzas.models.egress.CustomSearchDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
 import com.nocountry.finanzas.services.EgressCategoryService;
 import com.nocountry.finanzas.services.EgressService;
-import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/user")
@@ -66,7 +65,7 @@ public class EgressController {
     }
 
     @PostMapping(path = "/egress", consumes = "application/json")
-    public ResponseEntity<EgressDTO> createEgress(@RequestBody @Valid CreateEgressDTO egressDTO) throws BadRequestException {
+    public ResponseEntity<EgressDTO> createEgress(@RequestBody @Valid CreateEgressDTO egressDTO) {
         try {
             EgressDTO responseDTO = egressService.createdEgress(egressDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
@@ -119,11 +118,12 @@ public class EgressController {
     }
 
     //No funciona cuando no se envia el valor de page, probar eviando el valor a traves de requestbody
-    @PatchMapping(path = "/egressPageable/{userId}",consumes = "application/json")
+    @PatchMapping(path = "/egressPageable/{userId}/{page}",consumes = "application/json")
     public ResponseEntity<List<EgressDTO>> egressPageable(@PathVariable Long userId,
-                                                          @RequestBody Integer page){
+                                                          @PathVariable Integer page){
         try {
             return ResponseEntity.ok().body(egressService.getAllEgressPageable(userId,page)) ;
+
         }catch (DataAccessException e){
             return ResponseEntity.badRequest().build();
         }
