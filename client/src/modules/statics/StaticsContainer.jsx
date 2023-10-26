@@ -13,6 +13,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import { useEgress } from '../../context/EgressContext';
 import { useIncome } from '../../context/IncomeContext';
+import HeaderStatics from './components/headerStatics';
 
 ChartJS.register(
   CategoryScale,
@@ -129,13 +130,8 @@ const StaticsContainer = () => {
 
   return (
     <Box component={'main'} sx={{}}>
-      <Typography
-        variant='h2'
-        component='h3'
-        sx={{ textAlign: 'center', mt: 2 }}
-      >
-        Tus estadísticas
-      </Typography>
+      
+      <HeaderStatics />
       <Box
         sx={{
           mt: 2,
