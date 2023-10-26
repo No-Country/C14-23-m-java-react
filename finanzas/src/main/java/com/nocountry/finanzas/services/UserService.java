@@ -18,7 +18,9 @@ public interface UserService {
 
     public UserResponseDTO getUserDtoById(Long id);
 
-    public UserResponseDTO updateUser(Long id,UserRequestDTO userRequestDTO) throws NotFoundException;
+    public UserResponseDTO updateUser(Long id, UserUpdateRequestDTO userRequestDTO) throws NotFoundException, EmailAlreadyExistsException, InvalidEmailType;
+
+    public UserResponseDTO updatePasswordUser(Long id, UserPasswordUpdateDTO passwordUpdateDTO) throws BadRequestException, NotFoundException;
 
     public void deleteUser(Long id);
 
