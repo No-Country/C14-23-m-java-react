@@ -23,7 +23,6 @@ public class MapperIncome {
         income.setAmount(incomeDTO.getAmount());
         income.setDate(incomeDTO.getDate());
         income.setDescription(incomeDTO.getDescription());
-        income.setCategoryIncome(searchIncomeCategory(incomeDTO.getCategoryName()));
 
         if (incomeDTO instanceof CreateIncomeDTO) {
             User user = new User();
@@ -66,16 +65,5 @@ public class MapperIncome {
         return listResponse;
     }
 
-    public IncomeCategory searchIncomeCategory(String name) {
-        IncomeCategory incomeCategory = new IncomeCategory();
-
-        for (CategoryIncomeEnum element: CategoryIncomeEnum.values()) {
-            if (element.name().equalsIgnoreCase(name)) {
-                incomeCategory.setName(element);
-            }
-        }
-
-        return incomeCategory;
-    }
 
 }

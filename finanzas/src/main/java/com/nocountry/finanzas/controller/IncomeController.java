@@ -105,7 +105,7 @@ public class IncomeController {
         }
     }
 
-    @PostMapping(path = "/income/month/{id}",consumes = "application/json")
+    @PatchMapping(path = "/income/month/{id}",consumes = "application/json")
     public ResponseEntity<List<IncomeDTO>> incomeByMonthAndCategory(@PathVariable Long id,
                                                                     @RequestBody CustomSearchDTO customSearchDTO){
         return ResponseEntity.ok().body(incomeService.findByMonthAndCategory(id,customSearchDTO));

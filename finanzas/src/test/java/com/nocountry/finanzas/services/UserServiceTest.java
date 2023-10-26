@@ -1,23 +1,10 @@
 package com.nocountry.finanzas.services;
 
-import com.nocountry.finanzas.entities.User;
-import com.nocountry.finanzas.exceptions.NotFoundException;
-import com.nocountry.finanzas.models.request.UserRequestDTO;
-import com.nocountry.finanzas.models.response.UserResponseDTO;
 import com.nocountry.finanzas.repositories.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-
-import java.time.LocalDate;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class UserServiceTest {
 

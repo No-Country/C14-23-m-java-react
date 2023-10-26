@@ -1,10 +1,7 @@
-package com.nocountry.finanzas.models;
+package com.nocountry.finanzas.models.user;
 
 import com.nocountry.finanzas.entities.enums.Countries;
 import com.nocountry.finanzas.entities.User;
-import com.nocountry.finanzas.models.request.UserRequestDTO;
-import com.nocountry.finanzas.models.response.UserLoggingResponse;
-import com.nocountry.finanzas.models.response.UserResponseDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +19,7 @@ public class Mapper {
         user.setBirthday_date(userRequestDTO.getBirthday_date());
         user.setCountry(searchCountry(userRequestDTO.getCountry()));
         user.setTotalIncome(0.0);
+        user.setAccumulatedSavings(0.0);
 
         return user;
     }
@@ -36,6 +34,7 @@ public class Mapper {
         userResponseDTO.setEmail(user.getEmail());
         userResponseDTO.setBirthday_date(user.getBirthday_date());
         userResponseDTO.setTotalIncome(user.getTotalIncome());
+        userResponseDTO.setAccumulatedSavings(user.getAccumulatedSavings());
 
         return userResponseDTO;
     }

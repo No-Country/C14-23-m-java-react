@@ -95,7 +95,11 @@ public class IncomeServiceImpl implements IncomeService {
     @Transactional
     @Override
     public IncomeDTO updateIncome(IncomeDTO requestDTO) {
-        return null;
+        Income income = mapperIncome.toIncome(requestDTO);
+        incomeCategoryService.updateIncomeCategory(income.getCategoryIncome());
+        repository.save(income);
+
+        return mapperIncome.toIncomeDTO(income);
     }
 
     @Override
@@ -122,7 +126,8 @@ public class IncomeServiceImpl implements IncomeService {
                 return element;
             }
         }
-        return null;
+
+        return CategoryIncomeEnum.OTROS;
     }
 
 }
