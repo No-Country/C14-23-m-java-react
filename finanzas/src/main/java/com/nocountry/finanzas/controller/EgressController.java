@@ -12,6 +12,7 @@ import com.nocountry.finanzas.services.EgressService;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -106,11 +107,15 @@ public class EgressController {
         }
     }
 
-    @PostMapping(path = "/egress/month/{id}",consumes = "application/json")
+    @PatchMapping(path = "/egress/month/{id}",consumes = "application/json")
     public ResponseEntity<List<EgressDTO>> egressByMonthAndCategory(@PathVariable Long id,
                                                          @RequestBody CustomSearchDTO customSearch){
 
-        return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,customSearch));
+        try{
+            return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,customSearch));
+        }catch (DataAccessException e){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }
