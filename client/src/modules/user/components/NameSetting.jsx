@@ -66,15 +66,14 @@ const NameSetting = () => {
     getUser();
   }, [getDataUser, setValue]);
 
+  const { partialUpdateUser } = useUser();
+
   const onSubmit = handleSubmit(async (data) => {
     setLoading(true);
     try {
-      const res = await new Promise((res, rej) =>
-        setTimeout(() => res('ok'), 3000),
-      );
-      console.log(res);
+      const res = await partialUpdateUser(1, data);
       setOriginalData(data);
-      console.log(data);
+      console.log(res);
     } catch (error) {
       console.error(error);
       setError(true);
@@ -124,7 +123,11 @@ const NameSetting = () => {
         </Alert>
       </Snackbar>
 
-      <Typography mb={2}>Información de Usuario</Typography>
+      <Typography variant='h6'>Información de Usuario</Typography>
+      <Typography mb={3}>
+        Gestiona y actualiza tus datos personales desde esta sección
+      </Typography>
+
       {response.loading ? (
         <CircularProgress sx={{ display: 'block', mx: 'auto' }} />
       ) : response.success ? (

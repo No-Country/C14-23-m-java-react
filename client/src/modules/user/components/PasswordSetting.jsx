@@ -102,7 +102,11 @@ const PasswordSetting = () => {
         </Alert>
       </Snackbar>
 
-      <Typography mb={2}>Cambiar Contraseña</Typography>
+      <Typography variant='h6'>Cambiar Contraseña</Typography>
+      <Typography mb={3}>
+        Actualiza tu contraseña para mantener segura tu cuenta.
+      </Typography>
+
       <FormProvider {...methods}>
         <Box component='form' onSubmit={onSubmit}>
           <FormInput

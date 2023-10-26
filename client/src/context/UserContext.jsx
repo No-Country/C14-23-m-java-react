@@ -1,6 +1,10 @@
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
-import { dataUserRequest, registerRequest } from '../API/user';
+import {
+  dataUserRequest,
+  partialUpdateUserRequest,
+  registerRequest,
+} from '../API/user';
 
 const UserContext = createContext();
 
@@ -43,6 +47,15 @@ export function UserProvider({ children }) {
     }
   };
 
+  const partialUpdateUser = async (id, data) => {
+    try {
+      const res = await partialUpdateUserRequest(id, data);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const delUser = async (id) => {
     try {
       console.log(id);
@@ -53,7 +66,13 @@ export function UserProvider({ children }) {
 
   return (
     <UserContext.Provider
-      value={{ userRegister, getDataUser, updateUser, delUser }}
+      value={{
+        userRegister,
+        getDataUser,
+        updateUser,
+        partialUpdateUser,
+        delUser,
+      }}
     >
       {children}
     </UserContext.Provider>

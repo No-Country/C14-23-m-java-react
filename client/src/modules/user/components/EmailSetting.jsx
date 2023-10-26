@@ -122,7 +122,11 @@ const EmailSetting = () => {
         </Alert>
       </Snackbar>
 
-      <Typography mb={2}>Cambiar Correo Electrónico</Typography>
+      <Typography variant='h6'>Cambiar Correo Electrónico</Typography>
+      <Typography mb={3}>
+        Gestiona tu correo electrónico para mantener tu información de contacto
+        actualizada.
+      </Typography>
       {response.loading ? (
         <CircularProgress sx={{ display: 'block', mx: 'auto' }} />
       ) : response.success ? (

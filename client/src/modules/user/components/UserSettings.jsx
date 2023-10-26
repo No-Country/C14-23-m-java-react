@@ -3,6 +3,7 @@ import {
   Tab,
   Tabs,
   ThemeProvider,
+  Typography,
   createTheme,
   useMediaQuery,
 } from '@mui/material';
@@ -63,6 +64,16 @@ const UserSettings = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          maxWidth: 'md',
+          mx: 'auto',
+        }}
+      >
+        <Typography variant='h5' mb={2} pl={2}>
+          Configuración de Cuenta
+        </Typography>
+      </Box>
       <Box
         sx={{
           bgcolor: 'background.paper',
