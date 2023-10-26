@@ -1,8 +1,8 @@
 import EgressDetails from './components/EgressDetails';
 import IncomeDetails from './components/IncomeDetails';
 import { Box, Typography } from '@mui/material';
-import Lottie from 'lottie-react';
-import womenPayment from '../../assets/LottiesAnimations/womenPayment.json';
+import HeaderHistory from './components/HeaderHistory';
+
 
 function HistoryContainer() {
   const containerStyle = {
@@ -34,7 +34,8 @@ function HistoryContainer() {
 
   return (
     <>
-      <Box display={'flex'}>
+    <HeaderHistory />
+      {/* <Box display={'flex'}>
         <Box
           display={'flex'}
           flex={1}
@@ -59,7 +60,7 @@ function HistoryContainer() {
         <Box sx={animationStyle}>
           <Lottie animationData={womenPayment} />
         </Box>
-      </Box>
+      </Box> */}
 
       <Box sx={containerStyle}>
         <Box sx={detailsStyle}>
