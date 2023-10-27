@@ -63,11 +63,6 @@ public class UserServiceImpl implements UserService {
         return userOptional.get();
     }
 
-    @Override
-    public UserResponseDTO getUserDtoById(Long id) {
-        return null;
-    }
-
     @Transactional
     @Override
     public UserResponseDTO updateUser(Long id, UserUpdateRequestDTO userRequestDTO) throws NotFoundException, EmailAlreadyExistsException, InvalidEmailType {

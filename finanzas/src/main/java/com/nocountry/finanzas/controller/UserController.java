@@ -80,14 +80,14 @@ public class UserController {
 
 
     @DeleteMapping(path = "/user/delete/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) throws BadRequestException {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) throws BadRequestException, NotFoundException {
         try {
             userService.deleteUser(id);
             return new ResponseEntity<>("El usuario se elimino correctamente", HttpStatus.OK);
         } catch (DataAccessException e){
             throw new BadRequestException(e.getMessage());
         } catch (NotFoundException e) {
-            throw new RuntimeException(e);
+            throw new NotFoundException(e.getMessage());
         }
     }
 
