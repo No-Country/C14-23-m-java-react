@@ -14,6 +14,7 @@ import { useUser } from '../../../context/UserContext';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 function SavingsManager(props) {
+  const [auxSavings, setAuxSavings] = useState(0)
   const [savings, setSavings] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const [inputAlert, setInputAlert] = useState(false); // Estado para mostrar alerta si el input excede el total del saldo del usuario
@@ -21,7 +22,7 @@ function SavingsManager(props) {
   const [savedSavings, setSavedSavings] = useState(false); // Estado para mostrar un alerta si se guardo con exito un ahorro
   const [infoUser, setInfoUser] = useState(); // estado que guarda toda la informnacion del usuario
   const [restMoney, setRestMoney] = useState(null);
- 
+
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -34,7 +35,8 @@ function SavingsManager(props) {
         if (res) {
           // Verifica que res no sea undefined
           setInfoUser(res);
-
+          setSavings(res.accumulatedSavings)
+          setAuxSavings(res.accumulatedSavings.toFixed(2))
           setRestMoney(res.totalIncome.toFixed(2));
         }
       } catch (error) {
@@ -62,9 +64,9 @@ function SavingsManager(props) {
       if (inputValueAsNumber <= restMoney) {
         setSavings(savings + inputValueAsNumber);
         let dato = savings + inputValueAsNumber;
-
-        await updateSaving(1, dato);
-
+        setAuxSavings(dato.toFixed(2))
+        const res = await updateSaving(1, dato);
+        console.log(res);
         setSavedSavings(true);
         setInputValue('');
         setRestMoney(restMoney - inputValueAsNumber.toFixed(2));
@@ -80,7 +82,8 @@ function SavingsManager(props) {
   };
 
   const handleResetClick = async () => {
-    setSavings(0);
+    setAuxSavings(0);
+    setSavings(0)
     await delSaving(1);
     setInputValue('');
     setRestMoney(infoUser.totalIncome);
@@ -173,23 +176,6 @@ function SavingsManager(props) {
             >
               Agregar
             </Button>
-            <Button
-              variant='contained'
-              color='error'
-              startIcon={<RefreshIcon />}
-              sx={{
-                border: '1px solid red',
-                '&:hover': {
-                  backgroundColor: 'white',
-                  border: '1px solid red',
-                  color: 'red',
-                },
-                margin: '0.5rem',
-              }}
-              onClick={handleResetClick}
-            >
-              Restablecer
-            </Button>
           </Box>
         </Box>
       </Paper>
@@ -209,9 +195,27 @@ function SavingsManager(props) {
           Este mes has decidido ahorrar:
         </Typography>
         <Typography variant='h4'>
-          <span style={{ color: '#00796B' }}>
-            {`$${infoUser?.accumulatedSavings.toFixed(2)}`}
+          <span style={{ color: '#00796B', marginRight: '2rem' }}>
+            {`$${auxSavings}`}
           </span>
+
+          <Button
+            variant='contained'
+            color='error'
+            startIcon={<RefreshIcon />}
+            sx={{
+              border: '1px solid red',
+              '&:hover': {
+                backgroundColor: 'white',
+                border: '1px solid red',
+                color: 'red',
+              },
+              margin: '0.5rem',
+            }}
+            onClick={handleResetClick}
+          >
+            Reiniciar Ahorros
+          </Button>
         </Typography>
         <Typography variant='h6' sx={{ marginTop: '2rem' }}>
           Saldo disponible:{' '}

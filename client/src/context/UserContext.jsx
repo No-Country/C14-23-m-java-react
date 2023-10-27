@@ -49,6 +49,7 @@ export function UserProvider({ children }) {
     try {
       const res = await updateUserSavings(idUser, toSaving);
       console.log(res);
+      return res
     } catch (error) {
       console.log(error.message);
     }
