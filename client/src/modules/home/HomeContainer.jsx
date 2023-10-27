@@ -65,6 +65,7 @@ const HomeContainer = () => {
     fetchData();
   }, []);
 
+  const  saldoDisponible = infoUser?.totalIncome - infoUser?.accumulatedSavings
   return (
     <Box
       component='main'
@@ -82,7 +83,7 @@ const HomeContainer = () => {
       <Box
         sx={{ display: 'flex', maxWidth: '100vw', justifyContent:'space-around' }}
       >
-        <BalanceInfo totalBalance={infoUser?.totalIncome} availableBalance={infoUser?.totalIncome - infoUser?.accumulatedSavings } />
+        <BalanceInfo totalBalance={infoUser?.totalIncome} availableBalance={saldoDisponible } />
 
         <SavingsTotal totalSavings={infoUser?.accumulatedSavings}/>
       </Box>

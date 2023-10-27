@@ -12,6 +12,7 @@ import { useState } from 'react';
 import NameSetting from './components/NameSetting';
 import PasswordSetting from './components/PasswordSetting';
 import EmailSetting from './components/EmailSetting';
+import HeaderAccount from './components/HeaderAccount';
 
 const AccountContainer = () => {
   const theme = createTheme({
@@ -64,6 +65,7 @@ const AccountContainer = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <HeaderAccount />
       <Box
         sx={{
           maxWidth: 'md',
