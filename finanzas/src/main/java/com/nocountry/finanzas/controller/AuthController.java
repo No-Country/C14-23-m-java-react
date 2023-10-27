@@ -30,12 +30,9 @@ public class AuthController {
         try {
             authService.register(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (BadRequestException | InvalidEmailType e) {
+        } catch (BadRequestException | InvalidEmailType | EmailAlreadyExistsException e) {
             throw new BadRequestException(e.getMessage());
-        } catch (EmailAlreadyExistsException e) {
-            throw new RuntimeException(e);
         }
-
     }
 
     @PostMapping(path = "/authenticate")
