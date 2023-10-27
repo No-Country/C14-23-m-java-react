@@ -61,7 +61,7 @@ public class EgressController {
             List<EgressDTO> egressDTO = egressService.getEgressByUser(idUser);
             return ResponseEntity.ok(egressDTO);
         } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
+            throw new NoSuchElementException(e.getMessage());
         }
     }
 
@@ -71,7 +71,7 @@ public class EgressController {
             EgressDTO responseDTO = egressService.createdEgress(egressDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
+            throw new NoSuchElementException(e.getMessage());
         } catch (BadRequestException e) {
             throw new BadRequestException(e.getMessage());
         }
@@ -83,7 +83,7 @@ public class EgressController {
             EgressDTO responseDTO = egressService.updateEgress(egressDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.OK);
         } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
+            throw new NoSuchElementException(e.getMessage());
         }
     }
 
@@ -93,7 +93,7 @@ public class EgressController {
             egressService.deleteEgressById(id);
             return ResponseEntity.ok().build();
         } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
+            throw new NoSuchElementException(e.getMessage());
         }
     }
 
@@ -103,7 +103,7 @@ public class EgressController {
             EgressCategory egressCategory = egressCategoryService.createEgressCategory(name);
             return new ResponseEntity<>(egressCategory, HttpStatus.OK);
         } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
+            throw new NoSuchElementException(e.getMessage());
         }
     }
 

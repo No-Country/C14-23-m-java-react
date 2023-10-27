@@ -56,9 +56,9 @@ public class UserController {
         } catch (DataAccessException e){
             throw new BadRequestException(e.getMessage());
         } catch (EmailAlreadyExistsException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         } catch (InvalidEmailType e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
