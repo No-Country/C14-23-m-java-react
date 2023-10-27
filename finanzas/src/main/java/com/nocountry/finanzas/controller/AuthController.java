@@ -26,11 +26,10 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(path = "/register", consumes = "application/json")
-    public ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request) throws BadRequestException {
+    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request) throws BadRequestException {
         try {
-            AuthResponse response = authService.register(request);
-
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
+            authService.register(request);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (BadRequestException | InvalidEmailType e) {
             throw new BadRequestException(e.getMessage());
         } catch (EmailAlreadyExistsException e) {

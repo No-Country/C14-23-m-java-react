@@ -40,7 +40,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public AuthResponse register(RegisterRequest request) throws BadRequestException, InvalidEmailType, EmailAlreadyExistsException {
+    public void register(RegisterRequest request) throws BadRequestException, InvalidEmailType, EmailAlreadyExistsException {
         doEmailValidation(request.getEmail());
         doBirthdayValidation(request.getBirthdayDate());
         doUserExistingValidator(request.getEmail());
@@ -59,30 +59,25 @@ public class AuthServiceImpl implements AuthService {
                 .build();
 
         userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
 
-        return AuthResponse.builder()
-                .token(jwtToken).build();
+        //var jwtToken = jwtService.generateToken(user);
+        //return AuthResponse.builder()
+        //        .token(jwtToken).build();
     }
 
     @Override
-    public AuthResponse authenticate(AuthenticationRequest request) throws BadRequestException {
-        System.out.println("El request de la authentication: " + request.toString());
-        System.out.println("Antes de autenticarse...");
+    public AuthResponse authenticate(AuthenticationRequest request) {
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword1()
                 )
         );
-        System.out.println("Despues de autenticarse");
+
         // agarro el email del usuario de la base de datos, y no el q me envian para crear el token
-
         var user = userRepository.findUserByEmail(request.getEmail()).orElseThrow();
-        System.out.println("El usuario q encuentra en el repo: " + user.toString());
-
         var jwtToken = jwtService.generateToken(user);
-        System.out.println("El token q envio : " + jwtToken);
 
         return AuthResponse.builder().token(jwtToken).build();
     }

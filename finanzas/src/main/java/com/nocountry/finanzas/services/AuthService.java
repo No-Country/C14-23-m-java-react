@@ -9,7 +9,7 @@ import com.nocountry.finanzas.models.auth.RegisterRequest;
 
 public interface AuthService {
 
-    AuthResponse register(RegisterRequest request) throws BadRequestException, InvalidEmailType, EmailAlreadyExistsException;
+    void register(RegisterRequest request) throws BadRequestException, InvalidEmailType, EmailAlreadyExistsException;
 
     AuthResponse authenticate(AuthenticationRequest request) throws BadRequestException;
 
