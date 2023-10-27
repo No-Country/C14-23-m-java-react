@@ -155,8 +155,7 @@ public class UserServiceImpl implements UserService {
         if (toSaving.getToSaving() > user.getTotalIncome()) {
             throw new NotFoundException("No hay fondos suficientes para invertir en ahorros.");
         }
-        user.setAccumulatedSavings(user.getAccumulatedSavings() + toSaving.getToSaving());
-        user.setTotalIncome(user.getTotalIncome() - toSaving.getToSaving());
+        user.setAccumulatedSavings(toSaving.getToSaving());
 
         userRepository.save(user);
         return Mapper.userToUserResponseDto(user);
@@ -166,7 +165,6 @@ public class UserServiceImpl implements UserService {
     public UserResponseDTO revertSavings(Long id) {
         User user = userRepository.findById(id).get();
 
-        user.setTotalIncome(user.getTotalIncome() + user.getAccumulatedSavings());
         user.setAccumulatedSavings(0.0);
 
         userRepository.save(user);
