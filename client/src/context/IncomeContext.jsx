@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
 
@@ -21,6 +21,19 @@ export function IncomeProvider({ children }) {
 
   const [newIncome, setNewIncome] = useState([]);
   const [deleteOneIncome, setDeleteOneIncome] = useState();
+  const [incomes, setIncomes] = useState([]);
+
+  useEffect(() => {
+    const allIncomes = async () => {
+      try {
+        const res = await getIncomes();
+        setIncomes(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    allIncomes();
+  }, []);
 
   const allIncomes = async () => {
     try {
@@ -35,6 +48,9 @@ export function IncomeProvider({ children }) {
     try {
       const res = await addIncome(income);
       setNewIncome(res);
+      console.log('respuesta al añadir', res.data);
+      setIncomes((prev) => [...prev, res.data]);
+
       return res;
     } catch (error) {
       console.log(error);
@@ -58,6 +74,7 @@ export function IncomeProvider({ children }) {
         delIncome,
         newIncome,
         deleteOneIncome,
+        incomes,
       }}
     >
       {children}

@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 import { useEgress } from '../../context/EgressContext';
 import { useIncome } from '../../context/IncomeContext';
 import { useUser } from '../../context/UserContext';
-import SavingsTotal  from './components/SavingsTotal';
+import SavingsTotal from './components/SavingsTotal';
 import BalanceInfo from './components/BalanceInfo';
 
 const HomeContainer = () => {
@@ -45,8 +45,8 @@ const HomeContainer = () => {
   const { getDataUser } = useUser();
 
   useEffect(() => {
-    allExpenses();
-    allIncomes();
+    // allExpenses();
+    // allIncomes();
   }, [allExpenses, allIncomes]);
 
   //agreegue este useeffect para no tocar el otro
@@ -65,7 +65,7 @@ const HomeContainer = () => {
     fetchData();
   }, []);
 
-  const  saldoDisponible = infoUser?.totalIncome - infoUser?.accumulatedSavings
+  const saldoDisponible = infoUser?.totalIncome - infoUser?.accumulatedSavings;
   return (
     <Box
       component='main'
@@ -81,11 +81,18 @@ const HomeContainer = () => {
       )}
 
       <Box
-        sx={{ display: 'flex', maxWidth: '100vw', justifyContent:'space-around' }}
+        sx={{
+          display: 'flex',
+          maxWidth: '100vw',
+          justifyContent: 'space-around',
+        }}
       >
-        <BalanceInfo totalBalance={infoUser?.totalIncome} availableBalance={saldoDisponible } />
+        <BalanceInfo
+          totalBalance={infoUser?.totalIncome}
+          availableBalance={saldoDisponible}
+        />
 
-        <SavingsTotal totalSavings={infoUser?.accumulatedSavings}/>
+        <SavingsTotal totalSavings={infoUser?.accumulatedSavings} />
       </Box>
 
       <Grid container spacing={2} sx={{ height: '100%' }}>

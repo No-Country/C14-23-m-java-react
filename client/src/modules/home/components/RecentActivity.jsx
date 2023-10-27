@@ -12,7 +12,7 @@ function RecentActivity(props) {
   const [lastFiveExpenses, setLastFiveExpenses] = useState([]);
 
   const { allExpenses } = useEgress();
-  const { allIncomes } = useIncome();
+  const { allIncomes, incomes } = useIncome();
 
   useEffect(() => {
     async function fetchData() {
@@ -59,6 +59,8 @@ function RecentActivity(props) {
     event.currentTarget.style.boxShadow = styles.paper.boxShadow;
   };
 
+  const last5Incomes = incomes.slice(-5).reverse();
+
   return (
     <Box
       width='100%'
@@ -82,7 +84,7 @@ function RecentActivity(props) {
           <Typography variant='h6' textAlign={'center'}>
             Ingresos
           </Typography>
-          {lastFiveIncomes?.map((item, index) => (
+          {last5Incomes?.map((item, index) => (
             <TransactionCard
               key={index}
               amount={` $${item.amount} `}
