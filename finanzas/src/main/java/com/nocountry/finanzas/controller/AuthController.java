@@ -25,7 +25,7 @@ public class AuthController {
     @Autowired
     private final AuthService authService;
 
-    @PostMapping(path = "/register", consumes = "application/json")
+    @PostMapping(path = "/register")
     public ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request) {
         try {
             AuthResponse response = authService.register(request);
@@ -38,7 +38,7 @@ public class AuthController {
 
     }
 
-    @PostMapping(path = "/authenticate", consumes = "application/json")
+    @PostMapping(path = "/authenticate")
     public ResponseEntity<AuthResponse> authenticate(@RequestBody @Valid AuthenticationRequest request) {
         try {
             AuthResponse response = authService.authenticate(request);
