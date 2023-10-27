@@ -28,9 +28,7 @@ public class AuthController {
     @PostMapping(path = "/register", consumes = "application/json")
     public ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request) throws BadRequestException {
         try {
-            System.out.println("Request info: " + request.toString());
             AuthResponse response = authService.register(request);
-            System.out.println("En el controller ya con la respuesta");
 
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (BadRequestException | InvalidEmailType e) {
@@ -44,7 +42,9 @@ public class AuthController {
     @PostMapping(path = "/authenticate")
     public ResponseEntity<AuthResponse> authenticate(@RequestBody @Valid AuthenticationRequest request) throws BadRequestException {
         try {
+            System.out.println("en el controller con la request: " + request.toString());
             AuthResponse response = authService.authenticate(request);
+            System.out.println("En el controller todo ok por enviar respuesta");
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (BadRequestException e) {
             throw new BadRequestException(e.getMessage());
