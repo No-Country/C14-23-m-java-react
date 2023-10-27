@@ -139,12 +139,6 @@ public class EgressServiceImpl implements EgressService {
     @Override
     public List<EgressDTO> getAllEgressPageable(Long userId, Integer page ){
 
-        if (page == null || page == 0) {
-            Pageable egressPageable = PageRequest.of(0, 10);
-            List<Egress> egressList = egressRepository.findByUserId(userId,egressPageable);
-
-            return egressMapper.egressDTOList(egressList);
-        }
         Pageable egressPageable = PageRequest.of(page, 10);
         List<Egress> egressList = egressRepository.findAll(egressPageable).getContent();
 
