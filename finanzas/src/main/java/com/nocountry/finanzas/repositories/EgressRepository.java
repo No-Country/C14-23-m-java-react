@@ -1,6 +1,8 @@
 package com.nocountry.finanzas.repositories;
 
 import com.nocountry.finanzas.entities.Egress;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +16,9 @@ public interface EgressRepository extends JpaRepository<Egress, Long> {
 
     List<Egress> findAllByUserId(Long id);
 
+    @Query("SELECT e FROM Egress e WHERE e.user.id = :userId")
+    List<Egress> findByUserId(Long userId, Pageable pageable);
+
     @Query("SELECT e FROM Egress e WHERE e.user.id = :id AND MONTH (e.date) = MONTH (:mes)")
     List<Egress> findByMonth (@Param("id") Long id,@Param("mes")LocalDate mes);
 
@@ -22,4 +27,7 @@ public interface EgressRepository extends JpaRepository<Egress, Long> {
 
     @Query("SELECT e FROM Egress e WHERE e.user.id = :id AND MONTH(e.date) = MONTH(:mes) AND e.egressCategory.id = :egressCategory")
     List<Egress> findByMonthAndCategory(@Param("id") Long id,@Param("mes") LocalDate mes, @Param("egressCategory") Long egressCategory);
+
+
+
 }

@@ -9,7 +9,6 @@ import com.nocountry.finanzas.models.egress.CustomSearchDTO;
 import com.nocountry.finanzas.models.egress.EgressDTO;
 import com.nocountry.finanzas.services.EgressCategoryService;
 import com.nocountry.finanzas.services.EgressService;
-import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/user")
@@ -66,7 +65,7 @@ public class EgressController {
     }
 
     @PostMapping(path = "/egress", consumes = "application/json")
-    public ResponseEntity<EgressDTO> createEgress(@RequestBody @Valid CreateEgressDTO egressDTO) throws BadRequestException {
+    public ResponseEntity<EgressDTO> createEgress(@RequestBody @Valid CreateEgressDTO egressDTO) {
         try {
             EgressDTO responseDTO = egressService.createdEgress(egressDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
@@ -109,7 +108,7 @@ public class EgressController {
 
     @PatchMapping(path = "/egress/month/{id}",consumes = "application/json")
     public ResponseEntity<List<EgressDTO>> egressByMonthAndCategory(@PathVariable Long id,
-                                                         @RequestBody CustomSearchDTO customSearch){
+                                                                    @RequestBody CustomSearchDTO customSearch){
 
         try{
             return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,customSearch));
@@ -117,5 +116,20 @@ public class EgressController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    //Funciona pero debe recibir por defecto el id y la pagina 0 como primera medida
+/*
+    @GetMapping(path = "/egressPageable/{userId}/{page}")
+    public ResponseEntity<List<EgressDTO>> egressPageable(@PathVariable Long userId,
+                                                          @PathVariable Integer page){
+        try {
+            return ResponseEntity.ok().body(egressService.getAllEgressPageable(userId,page)) ;
+
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+*/
+
 
 }
