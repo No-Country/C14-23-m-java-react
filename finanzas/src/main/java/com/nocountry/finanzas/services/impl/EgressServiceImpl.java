@@ -59,6 +59,10 @@ public class EgressServiceImpl implements EgressService {
             throw new BadRequestException("La categoría no existe: " + egressDTO.getCategoryName());
         }
 
+        if (user.getTotalIncome() < egress.getAmount()) {
+            throw new BadRequestException("El monto ingresado de gasto no puede superar el total disponible.");
+        }
+
         egress.setEgressCategory(egressCategory);
         egress.setUser(user);
         egressRepository.save(egress);
