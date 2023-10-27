@@ -26,12 +26,15 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(path = "/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request) {
+    public ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request) throws BadRequestException {
         try {
+            System.out.println("Request info: " + request.toString());
             AuthResponse response = authService.register(request);
+            System.out.println("En el controller ya con la respuesta");
+
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (BadRequestException | InvalidEmailType e) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequestException(e.getMessage());
         } catch (EmailAlreadyExistsException e) {
             throw new RuntimeException(e);
         }
@@ -39,12 +42,12 @@ public class AuthController {
     }
 
     @PostMapping(path = "/authenticate")
-    public ResponseEntity<AuthResponse> authenticate(@RequestBody @Valid AuthenticationRequest request) {
+    public ResponseEntity<AuthResponse> authenticate(@RequestBody @Valid AuthenticationRequest request) throws BadRequestException {
         try {
             AuthResponse response = authService.authenticate(request);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (BadRequestException e) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequestException(e.getMessage());
         }
     }
 

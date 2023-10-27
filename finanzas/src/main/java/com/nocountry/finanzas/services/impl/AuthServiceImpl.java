@@ -45,6 +45,8 @@ public class AuthServiceImpl implements AuthService {
         doBirthdayValidation(request.getBirthdayDate());
         doUserExistingValidator(request.getEmail());
 
+        System.out.println("Toda slas validaciones ok.. estamos enn el service ");
+
         var user = User.builder()
                 .name(request.getName())
                 .last_name(request.getLastName())
@@ -58,10 +60,11 @@ public class AuthServiceImpl implements AuthService {
                 .totalIncome(0.0)
                 .build();
 
+        System.out.println(" Antes del save repository");
         userRepository.save(user);
-
+        System.out.println("Despues del save repository");
         var jwtToken = jwtService.generateToken(user);
-
+        System.out.println("Despues de generar el token");
         return AuthResponse.builder()
                 .token(jwtToken).build();
     }
