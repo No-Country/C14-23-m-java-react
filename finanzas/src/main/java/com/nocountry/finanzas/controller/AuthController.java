@@ -41,7 +41,7 @@ public class AuthController {
 
     }
 
-    @PostMapping(path = "/authenticate", consumes = "application/json")
+    @PostMapping(path = "/authenticate")
     public ResponseEntity<AuthResponse> authenticate(@RequestBody @Valid AuthenticationRequest request) throws BadRequestException {
         try {
             AuthResponse response = authService.authenticate(request);

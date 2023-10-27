@@ -46,6 +46,8 @@ public class AuthServiceImpl implements AuthService {
         doUserExistingValidator(request.getEmail());
 
         System.out.println("Toda slas validaciones ok.. estamos enn el service ");
+        String passw = passwordEncoder.encode(request.getPassword1());
+        System.out.println("password encriptado: " + passw);
 
         var user = User.builder()
                 .name(request.getName())
