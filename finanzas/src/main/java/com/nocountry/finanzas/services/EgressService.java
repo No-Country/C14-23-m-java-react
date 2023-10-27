@@ -26,7 +26,7 @@ public interface EgressService {
 
     public List<EgressDTO> findByMontAndCategory (Long id, CustomSearchDTO customSearchDTO);
 
-    public List<EgressDTO> getAllEgressPageable(Long userId, Integer page );
+    /*public List<EgressDTO> getAllEgressPageable(Long userId, Integer page );*/
 
 
 }

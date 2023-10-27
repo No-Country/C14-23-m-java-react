@@ -136,6 +136,7 @@ public class EgressServiceImpl implements EgressService {
     }
 
 
+/*
     @Override
     public List<EgressDTO> getAllEgressPageable(Long userId, Integer page ){
 
@@ -145,6 +146,7 @@ public class EgressServiceImpl implements EgressService {
         return egressMapper.egressDTOList(egressList);
 
     }
+*/
 
     private CategoryEnum searchCategoryEnum(String name) {
         for (CategoryEnum element: CategoryEnum.values()) {

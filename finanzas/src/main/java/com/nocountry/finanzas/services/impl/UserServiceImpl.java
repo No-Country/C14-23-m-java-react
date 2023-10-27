@@ -112,8 +112,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+    public void deleteUser(Long id) throws NotFoundException {
+
+        if(userRepository.findById(id).isPresent()){
+            userRepository.deleteById(id);
+        }else {
+            throw new NotFoundException("No se encuentra para eliminar el usuario con el id "+id);
+        }
     }
 
     @Transactional
@@ -122,7 +127,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findById(userLoggingDTO.getIdUser());
 
         if (userOptional.isEmpty()){
-            throw new NotFoundException("Could not found user");
+            throw new NotFoundException("No se pudo encontrar el usuario");
         }
 
         boolean isEmailCorrect = userOptional.get().getEmail().equalsIgnoreCase(userLoggingDTO.getEmail());
@@ -171,7 +176,7 @@ public class UserServiceImpl implements UserService {
     private void doEmailValidation(String email) throws InvalidEmailType {
 
         if (!emailValidator.isEmailValid(email)) {
-            throw new InvalidEmailType("El email ingresa no posee una estructura valida.");
+            throw new InvalidEmailType("El email ingresado no posee una estructura valida.");
         }
     }
 

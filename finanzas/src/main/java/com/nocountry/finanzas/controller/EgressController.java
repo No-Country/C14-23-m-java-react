@@ -117,7 +117,8 @@ public class EgressController {
         }
     }
 
-    //No funciona cuando no se envia el valor de page, probar eviando el valor a traves de requestbody
+    //Funciona pero debe recibir por defecto el id y la pagina 0 como primera medida
+/*
     @GetMapping(path = "/egressPageable/{userId}/{page}")
     public ResponseEntity<List<EgressDTO>> egressPageable(@PathVariable Long userId,
                                                           @PathVariable Integer page){
@@ -128,6 +129,7 @@ public class EgressController {
             return ResponseEntity.badRequest().build();
         }
     }
+*/
 
 
 }
