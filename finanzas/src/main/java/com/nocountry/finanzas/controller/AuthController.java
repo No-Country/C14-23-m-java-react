@@ -25,7 +25,7 @@ public class AuthController {
     @Autowired
     private final AuthService authService;
 
-    @PostMapping(path = "/register")
+    @PostMapping(path = "/register", consumes = "application/json")
     public ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request) throws BadRequestException {
         try {
             System.out.println("Request info: " + request.toString());
@@ -41,7 +41,7 @@ public class AuthController {
 
     }
 
-    @PostMapping(path = "/authenticate")
+    @PostMapping(path = "/authenticate", consumes = "application/json")
     public ResponseEntity<AuthResponse> authenticate(@RequestBody @Valid AuthenticationRequest request) throws BadRequestException {
         try {
             AuthResponse response = authService.authenticate(request);
