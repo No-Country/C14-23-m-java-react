@@ -73,7 +73,7 @@ public class EgressController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         } catch (BadRequestException e) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequestException(e.getMessage());
         }
     }
 
