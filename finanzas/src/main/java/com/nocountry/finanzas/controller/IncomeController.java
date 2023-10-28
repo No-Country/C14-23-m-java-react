@@ -57,6 +57,22 @@ public class IncomeController {
         }
     }
 
+    @GetMapping(path = "/list/income")
+
+
+
+    /*
+      @GetMapping(path = "{idUser}/list/egress/")
+    public ResponseEntity<List<EgressDTO>> getEgressByUser(@PathVariable Long idUser) {
+        try {
+            List<EgressDTO> egressDTO = egressService.getEgressByUser(idUser);
+            return ResponseEntity.ok(egressDTO);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+     */
+
     //Guardar Income
     @PostMapping(path = "/income", consumes = "application/json")
     public ResponseEntity<IncomeDTO> createIncome(@RequestBody @Valid CreateIncomeDTO requestDTO) throws BadRequestException  {
