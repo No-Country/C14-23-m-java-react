@@ -12,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -26,6 +23,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(path = "/register", consumes = "application/json")
+    @CrossOrigin(origins = "*", allowedHeaders = {"*"})
     public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request) throws BadRequestException {
         try {
             authService.register(request);
@@ -36,6 +34,7 @@ public class AuthController {
     }
 
     @PostMapping(path = "/authenticate", consumes = "application/json")
+    @CrossOrigin(origins = "*", allowedHeaders = {"*"})
     public ResponseEntity<AuthResponse> authenticate(@RequestBody @Valid AuthenticationRequest request) throws BadRequestException {
         try {
             System.out.println("en el controller con la request: " + request.toString());
