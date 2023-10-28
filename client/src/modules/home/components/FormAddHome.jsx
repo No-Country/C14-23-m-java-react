@@ -66,7 +66,6 @@ const FormAddHome = ({
     };
 
     handleClose();
-    console.log(newData);
     setLoading(true);
     try {
       if (formType === 'GASTO') {

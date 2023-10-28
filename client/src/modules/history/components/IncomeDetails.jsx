@@ -14,21 +14,7 @@ import { useIncome } from '../../../context/IncomeContext';
 
 function IncomeDetails() {
   const [isHovered, setIsHovered] = useState(false);
-  const [incomesData, setIncomesData] = useState(null);
-
-  const { allIncomes, delIncome, deleteOneIncome } = useIncome(); // uso el contexto
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await allIncomes();
-        setIncomesData(res); // almaceno la informacion en el estado
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchData();
-  }, [deleteOneIncome]);
+  const { incomes, delIncome } = useIncome(); // uso el contexto
 
   const styles = {
     paper: {
@@ -54,7 +40,7 @@ function IncomeDetails() {
         </Typography>
 
         <List>
-          {incomesData?.map((income, index) => {
+          {incomes?.map((income, index) => {
             return (
               <ListItem key={index}>
                 <ListItemText

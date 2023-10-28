@@ -5,30 +5,12 @@ import TransactionCard from './TransactionCard';
 import { useIncome } from '../../../context/IncomeContext';
 import { useEgress } from '../../../context/EgressContext';
 
-function RecentActivity(props) {
-  const [incomesData, setIncomesData] = useState([]);
-  const [expensesData, setExpensesData] = useState([]);
-  const [lastFiveIncomes, setLastFiveIncomes] = useState([]);
-  const [lastFiveExpenses, setLastFiveExpenses] = useState([]);
+function RecentActivity() {
+  const { expenses } = useEgress();
+  const { incomes } = useIncome();
 
-  const { allExpenses } = useEgress();
-  const { allIncomes, incomes } = useIncome();
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const allInc = await allIncomes();
-        const allExp = await allExpenses();
-
-        // Actualiza los estados para mantener solo las últimas 5 entradas
-        setLastFiveIncomes(allInc.slice(-5).reverse());
-        setLastFiveExpenses(allExp.slice(-5).reverse());
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchData();
-  }, []);
+  const lastFiveIncomes = incomes.slice(-5).reverse();
+  const lastFiveExpenses = expenses.slice(-5).reverse();
 
   const styles = {
     paper: {
@@ -59,8 +41,6 @@ function RecentActivity(props) {
     event.currentTarget.style.boxShadow = styles.paper.boxShadow;
   };
 
-  const last5Incomes = incomes.slice(-5).reverse();
-
   return (
     <Box
       width='100%'
@@ -84,7 +64,7 @@ function RecentActivity(props) {
           <Typography variant='h6' textAlign={'center'}>
             Ingresos
           </Typography>
-          {last5Incomes?.map((item, index) => (
+          {lastFiveIncomes?.map((item, index) => (
             <TransactionCard
               key={index}
               amount={` $${item.amount} `}
