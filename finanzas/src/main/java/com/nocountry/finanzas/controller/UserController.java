@@ -39,6 +39,8 @@ public class UserController {
             System.out.println("El id es: " + id);
 
             UserResponseDTO userResponseDTO = Mapper.userToUserResponseDto(userService.getUserById(id));
+
+            System.out.println("en el controller ya con el response " + userResponseDTO);
             return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
         }catch (DataAccessException  e){
             throw new BadRequestException(e.getMessage());

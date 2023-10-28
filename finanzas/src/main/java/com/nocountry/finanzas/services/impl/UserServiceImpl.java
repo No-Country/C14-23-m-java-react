@@ -58,10 +58,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) throws NotFoundException {
+        System.out.println("en el service de user.. el id es " + id);
+        System.out.println("Antes de la busqueda del repository");
         Optional<User> userOptional = userRepository.findById(id);
+        System.out.println(" en el service, se encontro el user, es: " + userOptional);
+
         if (userOptional.isEmpty()){
             throw new NotFoundException("Could not found user");
         }
+        System.out.println(" Antes del return..");
         return userOptional.get();
     }
 
