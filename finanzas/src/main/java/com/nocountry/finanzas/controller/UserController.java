@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,10 +22,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthenticationManager authenticationManager) {
         this.userService = userService;
+        this.authenticationManager = authenticationManager;
     }
 
 
@@ -32,6 +35,9 @@ public class UserController {
     public ResponseEntity<?> getUser(@PathVariable Long id) throws NotFoundException, BadRequestException {
 
         try {
+            System.out.println("En el controller ");
+            System.out.println("El id es: " + id);
+
             UserResponseDTO userResponseDTO = Mapper.userToUserResponseDto(userService.getUserById(id));
             return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
         }catch (DataAccessException  e){
