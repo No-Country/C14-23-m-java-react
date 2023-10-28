@@ -45,9 +45,7 @@ public class User {
     private Countries country;
 
     @Column(name = "total_income")
-/*
     @Digits(integer = Integer.MAX_VALUE, fraction = 2)
-*/
     private Double totalIncome;
 
     private Integer countLogging;
