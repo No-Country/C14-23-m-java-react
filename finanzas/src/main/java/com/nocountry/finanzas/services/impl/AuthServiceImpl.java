@@ -59,10 +59,6 @@ public class AuthServiceImpl implements AuthService {
                 .build();
 
         userRepository.save(user);
-
-        //var jwtToken = jwtService.generateToken(user);
-        //return AuthResponse.builder()
-        //        .token(jwtToken).build();
     }
 
     @Override

@@ -40,8 +40,6 @@ public class SecurityConfig {
 
     private RequestMatcher publicEndpoints() {
 
-        //Ver si alguna otra ruta es libre sin autenticacion y agregarla
-
         return new OrRequestMatcher(
                 new AntPathRequestMatcher("/api/auth/**")
         );
