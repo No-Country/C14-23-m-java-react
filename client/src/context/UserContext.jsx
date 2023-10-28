@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import {
   registerRequest,
@@ -25,6 +25,20 @@ export function UserProvider({ children }) {
     children: PropTypes.node.isRequired,
   };
 
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await dataUserRequest(1);
+        setUserData(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUser();
+  }, []);
+
   const userRegister = async (user) => {
     try {
       const res = await registerRequest(user);
@@ -37,7 +51,7 @@ export function UserProvider({ children }) {
   const getDataUser = async (id) => {
     try {
       const res = await dataUserRequest(id);
-      // console.log(res?.data);
+      console.log(res);
       return res?.data;
     } catch (error) {
       console.log(error);
@@ -45,19 +59,21 @@ export function UserProvider({ children }) {
   };
 
   const updateSaving = async (idUser, toSaving) => {
-    console.log('id:' + idUser + 'valor' + toSaving);
+    // console.log('id:' + idUser + 'valor' + toSaving);
     try {
       const res = await updateUserSavings(idUser, toSaving);
       console.log(res);
-      return res
+      setUserData(res.data);
+      return res;
     } catch (error) {
       console.log(error.message);
     }
   };
+
   const delSaving = async (id) => {
     try {
       const res = await savingsToZero(id);
-      console.log(res);
+      setUserData(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -104,6 +120,8 @@ export function UserProvider({ children }) {
   return (
     <UserContext.Provider
       value={{
+        userData,
+        setUserData,
         userRegister,
         getDataUser,
         updateUser,

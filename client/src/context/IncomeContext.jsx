@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { getIncomes, addIncome, deleteIncome } from '../API/income';
+import { useUser } from './UserContext';
 
 const IncomeContext = createContext();
 
@@ -21,6 +22,21 @@ export function IncomeProvider({ children }) {
 
   const [newIncome, setNewIncome] = useState([]);
   const [deleteOneIncome, setDeleteOneIncome] = useState();
+  const [incomes, setIncomes] = useState([]);
+
+  const { setUserData } = useUser();
+
+  useEffect(() => {
+    const getAllIncomes = async () => {
+      try {
+        const res = await getIncomes();
+        setIncomes(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAllIncomes();
+  }, []);
 
   const allIncomes = async () => {
     try {
@@ -35,6 +51,12 @@ export function IncomeProvider({ children }) {
     try {
       const res = await addIncome(income);
       setNewIncome(res);
+      setIncomes((prev) => [...prev, res.data]);
+      setUserData((prev) => ({
+        ...prev,
+        totalIncome: prev.totalIncome + res.data.amount,
+      }));
+
       return res;
     } catch (error) {
       console.log(error);
@@ -45,6 +67,19 @@ export function IncomeProvider({ children }) {
     try {
       const res = await deleteIncome(id);
       setDeleteOneIncome(res);
+      if (res.status === 200) {
+        const newData = incomes.filter((income) => income.idIncome !== id);
+        setIncomes(newData);
+
+        const amountOfIncomeToDelete = incomes.find(
+          (income) => income.idIncome === id,
+        ).amount;
+
+        setUserData((prev) => ({
+          ...prev,
+          totalIncome: prev.totalIncome - amountOfIncomeToDelete,
+        }));
+      }
     } catch (error) {
       console.log(error);
     }
@@ -58,6 +93,7 @@ export function IncomeProvider({ children }) {
         delIncome,
         newIncome,
         deleteOneIncome,
+        incomes,
       }}
     >
       {children}
