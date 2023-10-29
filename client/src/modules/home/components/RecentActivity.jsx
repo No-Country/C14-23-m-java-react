@@ -20,7 +20,8 @@ function RecentActivity() {
       height: '45%',
       margin: '1rem',
       justifyContent: 'center',
-      backgroundColor: '#BDBDBD',
+      // backgroundColor: '#BDBDBD',
+      backgroundColor: '#EAF6F4',
       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
       transition: 'box-shadow 0.3s',
     },
@@ -45,14 +46,15 @@ function RecentActivity() {
     <Box
       width='100%'
       height='100%'
-      bgcolor='#BDBDBD'
+      // bgcolor='#BDBDBD'
+      bgcolor='#EAF6F4'
       display='flex'
       flexDirection='column'
       alignItems='center'
       padding='16px'
     >
       <Typography variant='h5' textAlign={'center'}>
-        Ultimos movimientos
+        Ultimos Movimientos
       </Typography>
 
       <Paper
@@ -62,17 +64,24 @@ function RecentActivity() {
       >
         <Box sx={styles.contentContainer}>
           <Typography variant='h6' textAlign={'center'}>
-            Ingresos
+            INGRESOS
           </Typography>
-          {lastFiveIncomes?.map((item, index) => (
-            <TransactionCard
-              key={index}
-              amount={` $${item.amount} `}
-              categoryName={item.categoryName}
-              description={item.description}
-              date={item.date}
-            />
-          ))}
+          {lastFiveIncomes.length < 1 ? (
+            <Typography component='em' mt={3}>
+              No hay ingresos
+            </Typography>
+          ) : (
+            lastFiveIncomes?.map((item, index) => (
+              <TransactionCard
+                key={index}
+                amount={` $${item.amount} `}
+                categoryName={item.categoryName}
+                description={item.description}
+                date={item.date}
+                type='INGRESO'
+              />
+            ))
+          )}
         </Box>
       </Paper>
 
@@ -83,17 +92,25 @@ function RecentActivity() {
       >
         <Box sx={styles.contentContainer}>
           <Typography variant='h6' textAlign={'center'}>
-            Gastos
+            GASTOS
           </Typography>
-          {lastFiveExpenses?.map((item, index) => (
-            <TransactionCard
-              key={index}
-              amount={`-  $${item.amount} `}
-              categoryName={item.categoryName}
-              description={item.description}
-              date={item.date}
-            />
-          ))}
+
+          {lastFiveExpenses.length < 1 ? (
+            <Typography component='em' mt={3}>
+              No hay gastos
+            </Typography>
+          ) : (
+            lastFiveExpenses?.map((item, index) => (
+              <TransactionCard
+                key={index}
+                amount={`-  $${item.amount} `}
+                categoryName={item.categoryName}
+                description={item.description}
+                date={item.date}
+                type='GASTO'
+              />
+            ))
+          )}
         </Box>
       </Paper>
     </Box>

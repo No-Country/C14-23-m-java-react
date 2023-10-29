@@ -50,7 +50,7 @@ const NameSetting = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const { name, last_name } = await getDataUser(2);
+        const { name, last_name } = await getDataUser(1);
 
         setValue('name', name);
         setValue('last_name', last_name);
@@ -70,7 +70,7 @@ const NameSetting = () => {
   const onSubmit = handleSubmit(async (data) => {
     setLoading(true);
     try {
-      const res = await partialUpdateUser(2, data);
+      const res = await partialUpdateUser(1, data);
       const { name, last_name } = res.data;
       setOriginalData({ name, last_name });
     } catch {

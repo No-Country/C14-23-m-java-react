@@ -44,7 +44,7 @@ const PasswordSetting = () => {
 
     setLoading(true);
     setError(false);
-    const res = await updateUserPassword(2, newData);
+    const res = await updateUserPassword(1, newData);
     if (res.status === 200) {
       reset();
     } else {

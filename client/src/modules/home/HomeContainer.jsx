@@ -10,10 +10,9 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import IncomeExpenseComponent from './components/IncomeExpenseComponent';
 import ExpenseByCategory from './components/ExpenseByCategory';
-import TotalAmountHome from './components/TotalAmountHome';
 import RecentActivity from './components/RecentActivity';
 import ModalHome from './components/ModalHome';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useUser } from '../../context/UserContext';
 import SavingsTotal from './components/SavingsTotal';
 import BalanceInfo from './components/BalanceInfo';

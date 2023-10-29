@@ -7,7 +7,7 @@ export const expenseCategories = [
   { option: 'Educación', value: 'EDUCACION' },
   { option: 'Vestimenta', value: 'VESTIMENTA' },
   { option: 'Servicios', value: 'SERVICIOS' },
-  { option: 'Ahorro - Inversión', value: 'AHORRO_INVERSION' },
+  { option: 'Inversión', value: 'AHORRO_INVERSION' },
   { option: 'Viaje - Vacaciones', value: 'VIAJE_VACACIONES' },
   { option: 'Otros', value: 'OTROS' },
 ];

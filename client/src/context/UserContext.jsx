@@ -51,7 +51,6 @@ export function UserProvider({ children }) {
   const getDataUser = async (id) => {
     try {
       const res = await dataUserRequest(id);
-      console.log(res);
       return res?.data;
     } catch (error) {
       console.log(error);
