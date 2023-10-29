@@ -1,5 +1,6 @@
 import { Paper, Typography } from '@mui/material';
 import { PropTypes } from 'prop-types';
+import { NumericFormat } from 'react-number-format';
 
 const TotalAmountHome = ({ text, total, color }) => {
   TotalAmountHome.propTypes = {
@@ -17,9 +18,19 @@ const TotalAmountHome = ({ text, total, color }) => {
       }}
     >
       <Typography variant='h6'>{text}:</Typography>
-      <Typography variant='h5' sx={{ color: color }}>
-        ${total}
-      </Typography>
+      <NumericFormat
+        value={total}
+        thousandSeparator=','
+        displayType='text'
+        decimalScale={2}
+        fixedDecimalScale={true}
+        prefix='$'
+        renderText={(value) => (
+          <Typography variant='h5' sx={{ color: color }}>
+            {value}
+          </Typography>
+        )}
+      />
     </Paper>
   );
 };

@@ -13,19 +13,15 @@ import SchoolIcon from '@mui/icons-material/School';
 import WcIcon from '@mui/icons-material/Wc';
 import FlightIcon from '@mui/icons-material/Flight';
 import HelpOutLineIcon from '@mui/icons-material/HelpOutline';
-import TheaterComedyIcon from '@mui/icons-material/TheaterComedy'; 
+import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import SavingsIcon from '@mui/icons-material/Savings';
+import { NumericFormat } from 'react-number-format';
 
-
-function TransactionCard({ categoryName, description, amount, date }) {
-
- 
-
-  
-
+function TransactionCard({ categoryName, description, amount, date, type }) {
+  const formatDate = date.join('/');
   const iconsByTitle = {
-    OTROS: < HelpOutLineIcon />,
+    OTROS: <HelpOutLineIcon />,
     SUELDO: <MonetizationOnIcon />,
     PRESTAMO: <AccountBalanceIcon />,
     CLIENTES: <AccountCircleIcon />,
@@ -33,7 +29,7 @@ function TransactionCard({ categoryName, description, amount, date }) {
     ALIMENTACION: <FastfoodIcon />,
     VIVIENDA: <HomeIcon />,
     TRANSPORTE: <CommuteIcon />,
-    ENTRETENIMIENTO: <TheaterComedyIcon/>,
+    ENTRETENIMIENTO: <TheaterComedyIcon />,
     SALUD: <LocalHospitalIcon />,
     EDUCACION: <SchoolIcon />,
     VESTIMENTA: <WcIcon />,
@@ -42,8 +38,6 @@ function TransactionCard({ categoryName, description, amount, date }) {
     VIAJE_VACACIONES: <FlightIcon />,
   };
   const icon = iconsByTitle[categoryName];
-
-
 
   const styles = {
     container: {
@@ -76,22 +70,38 @@ function TransactionCard({ categoryName, description, amount, date }) {
           variant='h6'
           sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
         >
-          <Typography sx={{ color: '#fff', marginRight: '1rem' }}>
+          <Typography
+            sx={{
+              color: type === 'INGRESO' ? 'green' : 'red',
+              marginRight: '1rem',
+            }}
+          >
             {' '}
             {icon}
           </Typography>
           {categoryName}
         </Typography>
-        <Typography variant='body1' >
+        <Typography variant='body1'>
           {description}
-          <Typography variant='caption' color='textSecondary' sx={{marginLeft : '1rem'}}>
-            {date}
+          <Typography
+            variant='caption'
+            color='textSecondary'
+            sx={{ marginLeft: '1rem' }}
+          >
+            {formatDate}
           </Typography>
         </Typography>
       </div>
-      <Typography variant='h6' sx={styles.amount}>
-        {amount}
-      </Typography>
+
+      <NumericFormat
+        value={amount}
+        thousandSeparator=','
+        displayType='text'
+        decimalScale={2}
+        fixedDecimalScale={true}
+        prefix='$'
+        renderText={(value) => <Typography variant='h6'>{value}</Typography>}
+      />
     </Box>
   );
 }
