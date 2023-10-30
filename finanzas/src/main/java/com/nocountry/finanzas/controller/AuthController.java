@@ -6,6 +6,7 @@ import com.nocountry.finanzas.exceptions.InvalidEmailType;
 import com.nocountry.finanzas.models.auth.AuthResponse;
 import com.nocountry.finanzas.models.auth.AuthenticationRequest;
 import com.nocountry.finanzas.models.auth.RegisterRequest;
+import com.nocountry.finanzas.models.user.UserResponseDTO;
 import com.nocountry.finanzas.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,10 +34,10 @@ public class AuthController {
     }
 
     @PostMapping(path = "/authenticate", consumes = "application/json")
-    public ResponseEntity<AuthResponse> authenticate(@RequestBody @Valid AuthenticationRequest request) throws BadRequestException {
+    public ResponseEntity<UserResponseDTO> authenticate(@RequestBody @Valid AuthenticationRequest request) throws BadRequestException {
         try {
             System.out.println("en el controller con la request: " + request.toString());
-            AuthResponse response = authService.authenticate(request);
+            UserResponseDTO response = authService.authenticate(request);
             System.out.println("En el controller todo ok por enviar respuesta");
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (BadRequestException e) {

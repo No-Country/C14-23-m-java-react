@@ -9,6 +9,8 @@ import com.nocountry.finanzas.exceptions.InvalidEmailType;
 import com.nocountry.finanzas.models.auth.AuthResponse;
 import com.nocountry.finanzas.models.auth.AuthenticationRequest;
 import com.nocountry.finanzas.models.auth.RegisterRequest;
+import com.nocountry.finanzas.models.user.Mapper;
+import com.nocountry.finanzas.models.user.UserResponseDTO;
 import com.nocountry.finanzas.repositories.UserRepository;
 import com.nocountry.finanzas.services.AuthService;
 import com.nocountry.finanzas.validators.BirthdayValidator;
@@ -29,8 +31,6 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
-
-    private final JwtService jwtService;
 
     private final AuthenticationManager authenticationManager;
 
@@ -62,20 +62,20 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthResponse authenticate(AuthenticationRequest request) {
+    public UserResponseDTO authenticate(AuthenticationRequest request) {
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword1()
-                )
-        );
+        Optional<User> existingUser = userRepository.findUserByEmail(request.getEmail());
 
-        // agarro el email del usuario de la base de datos, y no el q me envian para crear el token
-        var user = userRepository.findUserByEmail(request.getEmail()).orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+        if (existingUser.isPresent()) {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword1()
+                    )
+            );
+        }
 
-        return AuthResponse.builder().token(jwtToken).build();
+        return Mapper.userToUserResponseDto(existingUser.get());
     }
 
 
