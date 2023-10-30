@@ -1,18 +1,22 @@
 import { React, useEffect, useState } from 'react';
 import { Box, Typography, Paper, Collapse } from '@mui/material';
-import TransactionCard from './TransactionCard';
-import CardInfo from './CardInfo';
+import TransactionCardIncomes from './TransactionCardIncomes';
+import TransacCardEgress from './TransacCardEgress';
+import CardInfoIncome from './CardInfoIncome';
 import 'animate.css';
 
 import { useIncome } from '../../../context/IncomeContext';
 import { useEgress } from '../../../context/EgressContext';
+import CardInfoExpenses from './CardInfoExpenses';
 
 function RecentActivity() {
   const { expenses } = useEgress();
   const { incomes } = useIncome();
 
   const [lastFiveIncom, setLastFiveIncom] = useState(true); //Estado para mostrar los ultimos ingresos
-  const [infoCard, setInfoCard] = useState( null)
+  const [infoCardIncomes, setInfoCardIncomes] = useState(null);
+  const [infoCardExpenses, setInfoCardExpenses] = useState(null);
+  const [lasFiveEgress, setLastFiveEgress] = useState(true);
   const lastFiveIncomes = incomes.slice(-5).reverse();
   const lastFiveExpenses = expenses.slice(-5).reverse();
 
@@ -54,7 +58,8 @@ function RecentActivity() {
       flexDirection='column'
       alignItems='center'
       padding='0.78rem'
-    >{console.log( 'aca', infoCard)}
+    >
+      {console.log('aca', infoCardIncomes)}
       <Typography variant='h5' textAlign={'center'} color={'white'}>
         Ultimos movimientos
       </Typography>
@@ -83,15 +88,15 @@ function RecentActivity() {
               }}
             >
               {lastFiveIncomes?.map((item, index) => (
-                <TransactionCard
+                <TransactionCardIncomes
                   key={index}
                   amount={` $${item.amount} `}
                   categoryName={item.categoryName}
                   description={item.description}
                   date={item.date}
                   setLastFiveIncom={setLastFiveIncom}
-                  info = { item }
-                  setInfoCard = {setInfoCard}
+                  info={item}
+                  setInfoCard={setInfoCardIncomes}
                   //estado del boton aca
                 />
               ))}
@@ -100,7 +105,13 @@ function RecentActivity() {
 
           {!lastFiveIncom && (
             <div className='animate__animated animate__flipInX'>
-              <CardInfo setLastFiveIncom={setLastFiveIncom} amount={infoCard?.amount} date={infoCard?.date} description={infoCard?.description} categoryName={infoCard?.categoryName}/>
+              <CardInfoIncome
+                setLastFiveIncom={setLastFiveIncom}
+                amount={infoCardIncomes?.amount}
+                date={infoCardIncomes?.date}
+                description={infoCardIncomes?.description}
+                categoryName={infoCardIncomes?.categoryName}
+              />
             </div>
           )}
         </Box>
@@ -115,15 +126,45 @@ function RecentActivity() {
           <Typography variant='h6' textAlign={'center'} sx={{ color: 'white' }}>
             Gastos
           </Typography>
-          {lastFiveExpenses?.map((item, index) => (
-            <TransactionCard
-              key={index}
-              amount={`-$${item.amount} `}
-              categoryName={item.categoryName}
-              description={item.description}
-              date={item.date}
-            />
-          ))}
+
+          {/**se muestran los ultimos 5 gastos o la informacion que contiene */}
+          {lasFiveEgress && (
+            <div
+              className='animate__animated  animate__flipInX'
+              style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {lastFiveExpenses?.map((item, index) => (
+                <TransacCardEgress
+                  key={index}
+                  amount={`-$${item.amount} `}
+                  categoryName={item.categoryName}
+                  description={item.description}
+                  date={item.date}
+                  setLastFiveEgress={setLastFiveEgress}
+                  info={item}
+                  setInfoCard={setInfoCardExpenses}
+                />
+              ))}
+            </div>
+          )}
+
+          {!lasFiveEgress && (
+            <div className='animate__animated animate__flipInX'>
+              <CardInfoExpenses
+                setLastFiveExpenses={setLastFiveEgress}
+                amount={infoCardExpenses?.amount}
+                date={infoCardExpenses?.date}
+                description={infoCardExpenses?.description}
+                categoryName={infoCardExpenses?.categoryName}
+              />
+            </div>
+          )}
         </Box>
       </Paper>
     </Box>

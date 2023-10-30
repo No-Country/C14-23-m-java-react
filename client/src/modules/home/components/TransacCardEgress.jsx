@@ -21,17 +21,12 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import SavingsIcon from '@mui/icons-material/Savings';
 import { NumericFormat } from 'react-number-format';
 
-function TransactionCard({ categoryName, amount, date, setLastFiveIncom, info, setInfoCard }) {
+function TransacCardEgress({ categoryName, amount, date, setLastFiveEgress, info, setInfoCard }) {
   
 
   const iconsByTitle = {
-    OTROS: <HelpOutLineIcon />,
-    SUELDO: <MonetizationOnIcon />,
-    OTROS: <HelpOutLineIcon />,
-    SUELDO_MENSUAL: <MonetizationOnIcon />,
-    PRESTAMO: <AccountBalanceIcon />,
-    CLIENTES: <AccountCircleIcon />,
-    BONO_EXTRA: <AttachMoneyIcon />,
+   
+    
     ALIMENTACION: <FastfoodIcon />,
     VIVIENDA: <HomeIcon />,
     TRANSPORTE: <CommuteIcon />,
@@ -68,7 +63,7 @@ function TransactionCard({ categoryName, amount, date, setLastFiveIncom, info, s
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: '2%',
+      padding :'2%',
 
       // border: '1px solid #ccc',
       // borderRadius: '4px',
@@ -82,6 +77,7 @@ function TransactionCard({ categoryName, amount, date, setLastFiveIncom, info, s
       flex: 1,
       flexDirection: 'row',
       
+      
     },
     amount: {
       fontWeight: 'bold',
@@ -89,6 +85,7 @@ function TransactionCard({ categoryName, amount, date, setLastFiveIncom, info, s
       color: 'white',
       marginRight: '1rem',
       display: 'flex',
+      
      
      
     },
@@ -96,7 +93,7 @@ function TransactionCard({ categoryName, amount, date, setLastFiveIncom, info, s
 
   const handlerBtn = (e) => {
     e.preventDefault()
-    setLastFiveIncom(false)
+    setLastFiveEgress(false)
     setInfoCard(info)
     console.log(info)
   }
@@ -154,4 +151,4 @@ function TransactionCard({ categoryName, amount, date, setLastFiveIncom, info, s
   );
 }
 
-export default TransactionCard;
+export default TransacCardEgress;
