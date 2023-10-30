@@ -49,7 +49,7 @@ public class SecurityConfig {
     private RequestMatcher publicEndpoints() {
 
         return new OrRequestMatcher(
-                new AntPathRequestMatcher("/api/auth/**")
+                new AntPathRequestMatcher("/**")
         );
     }
 
