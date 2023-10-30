@@ -23,7 +23,7 @@ public class AuthController {
     @Autowired
     private final AuthService authService;
 
-    @PostMapping(path = "/register", consumes = "application/json")
+    @PostMapping(path = "/register")
     public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request) throws BadRequestException {
         try {
             authService.register(request);
@@ -33,7 +33,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping(path = "/authenticate", consumes = "application/json")
+    @PostMapping(path = "/authenticate")
     public ResponseEntity<UserResponseDTO> authenticate(@RequestBody @Valid AuthenticationRequest request) throws BadRequestException {
         try {
             System.out.println("en el controller con la request: " + request.toString());
