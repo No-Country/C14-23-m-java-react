@@ -18,7 +18,7 @@ import java.util.Collections;
 @EnableWebMvc
 public class CorsConfig implements WebMvcConfigurer {
 
-   /* @Override
+    @Override
     @Bean
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -27,7 +27,7 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
                 .allowCredentials(true);
     }
-
+/*
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
@@ -51,7 +51,7 @@ public class CorsConfig implements WebMvcConfigurer {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
-*/
+
     @Bean
     public FilterRegistrationBean<CorsFilter> corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -64,4 +64,5 @@ public class CorsConfig implements WebMvcConfigurer {
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return bean;
     }
+    */
 }
