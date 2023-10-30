@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useEgress } from '../../../context/EgressContext';
+import CardExpenses from './CardExpenses';
 
 function EgressDetails() {
   const [isHovered, setIsHovered] = useState(false);
@@ -34,10 +35,12 @@ function EgressDetails() {
   const styles = {
     paper: {
       margin: '1rem',
-      padding: '1rem',
-
+      padding: '2rem',
+      width: '100%',
       transition: 'box-shadow 0.3s',
       cursor: 'pointer',
+      display: 'flex',
+   
     },
     paperHover: {
       boxShadow: '0 0 10px rgba(255, 0, 0, 0.5)',
@@ -58,21 +61,7 @@ function EgressDetails() {
         <List>
           {expensesData?.map((egreso, index) => {
             return (
-              <ListItem key={index}>
-                <ListItemText
-                  primary={egreso.description}
-                  secondary={`Monto: ${egreso.amount}, Fecha: ${egreso.date} Categoria : ${egreso.categoryName}`}
-                />
-                <ListItemSecondaryAction>
-                  <IconButton
-                    edge='end'
-                    aria-label='delete'
-                    onClick={(item) => delExpense(egreso.idEgress)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
+              <CardExpenses key={index} id={egreso.idEgress} delExpenses={delExpense} date={egreso.date} amount={egreso.amount} categoryName={egreso.categoryName}  description={egreso.description}/>
             );
           })}
         </List>

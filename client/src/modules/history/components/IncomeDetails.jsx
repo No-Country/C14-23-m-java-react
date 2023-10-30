@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useIncome } from '../../../context/IncomeContext';
+import CardIncomes from './CardIncomes';
 
 function IncomeDetails() {
   const [isHovered, setIsHovered] = useState(false);
@@ -22,6 +23,7 @@ function IncomeDetails() {
       padding: '2rem',
       transition: 'box-shadow 0.3s',
       cursor: 'pointer',
+      
     },
     paperHover: {
       boxShadow: '0 0 10px rgba(0, 255, 0, 0.5)',
@@ -42,21 +44,8 @@ function IncomeDetails() {
         <List>
           {incomes?.map((income, index) => {
             return (
-              <ListItem key={index}>
-                <ListItemText
-                  primary={income.description}
-                  secondary={`Monto: ${income.amount} Fecha: ${income.date}  Categoria: ${income.categoryName}`}
-                />
-                <ListItemSecondaryAction>
-                  <IconButton
-                    edge='end'
-                    aria-label='delete'
-                    onClick={() => delIncome(income.idIncome)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
+              <CardIncomes  key ={index} id={income.idIncome} delIncome={delIncome} date={income.date} amount={income.amount} categoryName={income.categoryName}  description={income.description}/>
+              
             );
           })}
         </List>
