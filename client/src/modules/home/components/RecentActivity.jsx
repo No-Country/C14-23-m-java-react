@@ -12,6 +12,7 @@ function RecentActivity() {
   const { incomes } = useIncome();
 
   const [lastFiveIncom, setLastFiveIncom] = useState(true); //Estado para mostrar los ultimos ingresos
+  const [infoCard, setInfoCard] = useState( null)
   const lastFiveIncomes = incomes.slice(-5).reverse();
   const lastFiveExpenses = expenses.slice(-5).reverse();
 
@@ -53,7 +54,7 @@ function RecentActivity() {
       flexDirection='column'
       alignItems='center'
       padding='0.78rem'
-    >
+    >{console.log( 'aca', infoCard)}
       <Typography variant='h5' textAlign={'center'} color={'white'}>
         Ultimos movimientos
       </Typography>
@@ -72,7 +73,7 @@ function RecentActivity() {
 
           {lastFiveIncom && (
             <div
-              className='animate__animated animate__bounceInRight'
+              className='animate__animated  animate__flipInX'
               style={{
                 width: '100%',
                 display: 'flex',
@@ -89,6 +90,8 @@ function RecentActivity() {
                   description={item.description}
                   date={item.date}
                   setLastFiveIncom={setLastFiveIncom}
+                  info = { item }
+                  setInfoCard = {setInfoCard}
                   //estado del boton aca
                 />
               ))}
@@ -97,7 +100,7 @@ function RecentActivity() {
 
           {!lastFiveIncom && (
             <div className='animate__animated animate__flipInX'>
-              <CardInfo setLastFiveIncom={setLastFiveIncom} />
+              <CardInfo setLastFiveIncom={setLastFiveIncom} amount={infoCard?.amount} date={infoCard?.date} description={infoCard?.description} categoryName={infoCard?.categoryName}/>
             </div>
           )}
         </Box>

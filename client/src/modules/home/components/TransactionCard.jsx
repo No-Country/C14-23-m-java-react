@@ -16,11 +16,17 @@ import WcIcon from '@mui/icons-material/Wc';
 import FlightIcon from '@mui/icons-material/Flight';
 import HelpOutLineIcon from '@mui/icons-material/HelpOutline';
 import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
+import Info from '@mui/icons-material/Info';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import SavingsIcon from '@mui/icons-material/Savings';
+import { NumericFormat } from 'react-number-format';
 
-function TransactionCard({ categoryName, description, amount, date, setLastFiveIncom }) {
+function TransactionCard({ categoryName, amount, date, setLastFiveIncom, info, setInfoCard }) {
+  
+
   const iconsByTitle = {
+    OTROS: <HelpOutLineIcon />,
+    SUELDO: <MonetizationOnIcon />,
     OTROS: <HelpOutLineIcon />,
     SUELDO_MENSUAL: <MonetizationOnIcon />,
     PRESTAMO: <AccountBalanceIcon />,
@@ -62,7 +68,8 @@ function TransactionCard({ categoryName, description, amount, date, setLastFiveI
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: '8px',
+      padding: '2%',
+
       // border: '1px solid #ccc',
       // borderRadius: '4px',
       borderBottom: '1px solid #ccc',
@@ -73,19 +80,29 @@ function TransactionCard({ categoryName, description, amount, date, setLastFiveI
       display: 'flex',
       flexDirection: 'column',
       flex: 1,
-      marginRight: '8px',
+      flexDirection: 'row',
+      
     },
     amount: {
       fontWeight: 'bold',
       flex: '0 0 30%',
       color: 'white',
       marginRight: '1rem',
+      display: 'flex',
+     
+     
     },
   };
 
+  const handlerBtn = (e) => {
+    e.preventDefault()
+    setLastFiveIncom(false)
+    setInfoCard(info)
+    console.log(info)
+  }
   return (
     <Box sx={styles.container}>
-      <div sx={styles.infoContainer}>
+      <Box sx={styles.infoContainer}>
         <Typography
           variant='h6'
           sx={{
@@ -96,31 +113,41 @@ function TransactionCard({ categoryName, description, amount, date, setLastFiveI
             fontSize: '80%',
           }}
         >
-          <Typography sx={{ color: 'white', marginRight: '1rem' }}>
-            {icon}
-          </Typography>
-          {separateWord(categoryName)}
+          {' '}
+          {icon} 
         </Typography>
-      </div>
 
-      <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-        {' '}
-        <Typography variant='h6' sx={styles.amount}>
-          {amount}
-        </Typography>
+        <Typography sx={{ color: 'white', marginLeft: '1rem'}}  >{separateWord(categoryName)}</Typography>
+
+     
+      </Box>
+      <Box variant='h6' sx={styles.amount}>
+        <NumericFormat
+          value={amount}
+          thousandSeparator=','
+          displayType='text'
+          decimalScale={2}
+          fixedDecimalScale={true}
+          prefix='$'
+          renderText={(value) => <Typography variant='h6'>{value}</Typography>}
+        />
+
         <Button
           variant='contained'
-          onClick={ () => setLastFiveIncom(false)}
+          onClick={(e) => handlerBtn(e)}
           sx={{
             background: '#0a574e',
             color: 'white',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            height: '1.5rem',
+            marginLeft: '1rem',
+
             '&:hover': { background: '#006666' },
           }}
         >
-          <InfoIcon sx={{ color: 'white' }} />{' '}
+        <Info  color='white'/>
         </Button>
       </Box>
     </Box>
