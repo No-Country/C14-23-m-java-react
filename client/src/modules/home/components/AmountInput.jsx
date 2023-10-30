@@ -34,7 +34,7 @@ NumberFormatCustom.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const AmountInput = ({ sx, name = 'amount', label = 'Monto', rules }) => {
+const AmountInput = ({ sx, name = 'amount', label = 'Monto', validations }) => {
   const { control } = useFormContext();
 
   return (
@@ -44,10 +44,12 @@ const AmountInput = ({ sx, name = 'amount', label = 'Monto', rules }) => {
       defaultValue=''
       rules={{
         required: `El ${label} es requerido`,
-        validate: (value) =>
-          parseFloat(value) >= 0.01 ||
-          `El ${label} debe ser mayor o igual a 0.01`,
-        ...rules,
+        validate: {
+          minValue: (value) =>
+            parseFloat(value) >= 0.01 ||
+            `El ${label} debe ser mayor o igual a 0.01`,
+          ...validations,
+        },
       }}
       render={({ field, fieldState: { error } }) => (
         <TextField
@@ -68,7 +70,7 @@ const AmountInput = ({ sx, name = 'amount', label = 'Monto', rules }) => {
 
 AmountInput.propTypes = {
   sx: PropTypes.object,
-  rules: PropTypes.object,
+  validations: PropTypes.object,
   name: PropTypes.string,
   label: PropTypes.string,
 };

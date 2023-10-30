@@ -18,7 +18,7 @@ import logo from '../../assets/logos/logoCashFlow.png';
 const navLinks = [
   { title: 'Inicio', path: '/home' },
   { title: 'Estadísticas', path: '/statistics' },
-  { title: 'Usuario', path: '/user' },
+  { title: 'Ahorro', path: '/savings' },
   { title: 'Historial', path: '/financialHistory' },
   { title: 'Iniciar sesión', path: '/login' },
   { title: 'Registrarse', path: '/register' },

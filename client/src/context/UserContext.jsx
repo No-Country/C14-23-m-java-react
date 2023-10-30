@@ -61,11 +61,10 @@ export function UserProvider({ children }) {
     // console.log('id:' + idUser + 'valor' + toSaving);
     try {
       const res = await updateUserSavings(idUser, toSaving);
-      console.log(res);
       setUserData(res.data);
       return res;
     } catch (error) {
-      console.log(error.message);
+      return error;
     }
   };
 
@@ -73,8 +72,9 @@ export function UserProvider({ children }) {
     try {
       const res = await savingsToZero(id);
       setUserData(res.data);
+      return res;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
