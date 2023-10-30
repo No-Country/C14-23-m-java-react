@@ -41,5 +41,5 @@ Iniciar el proyecto
 
 ## Dependencias
 |Front-End|Back-End|
-| :-------- || :-------- |
+| :-------- | :-------- |
 |a|a|
