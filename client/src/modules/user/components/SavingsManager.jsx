@@ -12,9 +12,12 @@ import Box from '@mui/material/Box';
 import { Collapse } from '@mui/material';
 import { useUser } from '../../../context/UserContext';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import { NumericFormat } from 'react-number-format';
+import { FormProvider, useForm } from 'react-hook-form';
+import AmountInput from '../../home/components/AmountInput';
 
 function SavingsManager(props) {
-  const [auxSavings, setAuxSavings] = useState(0)
+  const [auxSavings, setAuxSavings] = useState(0);
   const [savings, setSavings] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const [inputAlert, setInputAlert] = useState(false); // Estado para mostrar alerta si el input excede el total del saldo del usuario
@@ -23,10 +26,21 @@ function SavingsManager(props) {
   const [infoUser, setInfoUser] = useState(); // estado que guarda toda la informnacion del usuario
   const [restMoney, setRestMoney] = useState(null);
 
+  const methods = useForm();
+
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = methods;
+
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
+
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const { getDataUser, updateSaving, delSaving } = useUser(); //traigo el contexto user
+  const { getDataUser, updateSaving, delSaving, userData } = useUser(); //traigo el contexto user
 
   useEffect(() => {
     async function fetchData() {
@@ -35,8 +49,8 @@ function SavingsManager(props) {
         if (res) {
           // Verifica que res no sea undefined
           setInfoUser(res);
-          setSavings(res.accumulatedSavings)
-          setAuxSavings(res.accumulatedSavings.toFixed(2))
+          setSavings(res.accumulatedSavings);
+          setAuxSavings(res.accumulatedSavings.toFixed(2));
           setRestMoney(res.totalIncome.toFixed(2));
         }
       } catch (error) {
@@ -64,7 +78,7 @@ function SavingsManager(props) {
       if (inputValueAsNumber <= restMoney) {
         setSavings(savings + inputValueAsNumber);
         let dato = savings + inputValueAsNumber;
-        setAuxSavings(dato.toFixed(2))
+        setAuxSavings(dato.toFixed(2));
         const res = await updateSaving(1, dato);
         console.log(res);
         setSavedSavings(true);
@@ -83,7 +97,7 @@ function SavingsManager(props) {
 
   const handleResetClick = async () => {
     setAuxSavings(0);
-    setSavings(0)
+    setSavings(0);
     await delSaving(1);
     setInputValue('');
     setRestMoney(infoUser.totalIncome);
@@ -178,6 +192,31 @@ function SavingsManager(props) {
             </Button>
           </Box>
         </Box>
+
+        <FormProvider {...methods}>
+          <Box component='form' onSubmit={onSubmit}>
+            <AmountInput name='amount' label='Monto de Ahorro' />
+
+            <Button
+              variant='contained'
+              color='primary'
+              type='submit'
+              startIcon={<AddIcon />}
+              sx={{
+                backgroundColor: '#00796B',
+                border: '1px solid #00796B',
+                '&:hover': {
+                  backgroundColor: 'white',
+                  border: '1px solid #00796B',
+                  color: '#00796B',
+                },
+                margin: '0.5rem',
+              }}
+            >
+              Agregar
+            </Button>
+          </Box>
+        </FormProvider>
       </Paper>
       <Paper
         sx={{
@@ -217,10 +256,47 @@ function SavingsManager(props) {
             Reiniciar Ahorros
           </Button>
         </Typography>
+
         <Typography variant='h6' sx={{ marginTop: '2rem' }}>
           Saldo disponible:{' '}
           <span style={{ color: '#00796B' }}>{`$${restMoney}`}</span>
         </Typography>
+
+        {userData ? (
+          <NumericFormat
+            value={userData.accumulatedSavings}
+            thousandSeparator=','
+            displayType='text'
+            decimalScale={2}
+            fixedDecimalScale={true}
+            prefix='$'
+            renderText={(value) => (
+              <Typography variant='h6' style={{ color: '#00796B' }}>
+                {value}
+              </Typography>
+            )}
+          />
+        ) : (
+          <div>loading ...</div>
+        )}
+
+        {userData ? (
+          <NumericFormat
+            value={userData.totalIncome - userData.accumulatedSavings}
+            thousandSeparator=','
+            displayType='text'
+            decimalScale={2}
+            fixedDecimalScale={true}
+            prefix='$'
+            renderText={(value) => (
+              <Typography variant='h6' style={{ color: '#00796B' }}>
+                {value}
+              </Typography>
+            )}
+          />
+        ) : (
+          <div>loading ...</div>
+        )}
       </Paper>
     </Box>
   );
