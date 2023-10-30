@@ -56,12 +56,13 @@ public class IncomeController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    
+ /*
     @GetMapping(path = "/list/income")
 
 
 
-    /*
+
       @GetMapping(path = "{idUser}/list/egress/")
     public ResponseEntity<List<EgressDTO>> getEgressByUser(@PathVariable Long idUser) {
         try {
