@@ -19,12 +19,11 @@ import java.util.Collections;
 public class CorsConfig implements WebMvcConfigurer {
 
     @Override
-    @Bean
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOriginPatterns("*")
                 .allowedHeaders("Authorization", "*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowCredentials(true);
     }
 /*
