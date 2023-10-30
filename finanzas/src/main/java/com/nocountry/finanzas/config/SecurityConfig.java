@@ -44,4 +44,5 @@ public class SecurityConfig {
                 new AntPathRequestMatcher("/api/auth/**")
         );
     }
+
 }
