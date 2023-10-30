@@ -3,7 +3,7 @@ import React from 'react';
 import SectionInfo from './components/SectionInfo';
 import SavingsManager from './components/SavingsManager';
 
-function UserContainer(props) {
+function SavingsContainer() {
   return (
     <Box>
       <Box>
@@ -17,4 +17,4 @@ function UserContainer(props) {
   );
 }
 
-export default UserContainer;
+export default SavingsContainer;
