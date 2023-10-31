@@ -60,7 +60,7 @@ public class IncomeController {
     }
 
     //Guardar Income
-    @PostMapping(path = "/income", consumes = "application/json")
+    @PostMapping(path = "/income")
     public ResponseEntity<IncomeDTO> createIncome(@RequestBody @Valid CreateIncomeDTO requestDTO) throws BadRequestException  {
         try {
             IncomeDTO responseDTO = incomeService.save(requestDTO);
@@ -74,7 +74,7 @@ public class IncomeController {
     }
 
     //Actualizar Income
-    @PutMapping(path = "/income", consumes = "application/json")
+    @PutMapping(path = "/income")
     public ResponseEntity<IncomeDTO> updateIncome(@RequestBody IncomeDTO requestDTO){
         try {
             IncomeDTO updatedIncome = incomeService.updateIncome(requestDTO);
@@ -96,7 +96,7 @@ public class IncomeController {
         }
     }
 
-    @PostMapping(path = "/income/category", consumes = "application/json")
+    @PostMapping(path = "/income/category")
     public ResponseEntity<IncomeCategory> createCategory(@RequestBody CategoryIncomeDTO category) {
         try {
             IncomeCategory incomeCategory = incomeCategoryService.createIncomeCategory(category);
@@ -106,7 +106,7 @@ public class IncomeController {
         }
     }
 
-    @PatchMapping(path = "/income/month/{id}",consumes = "application/json")
+    @PatchMapping(path = "/income/month/{id}")
     public ResponseEntity<List<IncomeDTO>> incomeByMonthAndCategory(@PathVariable Long id,
                                                                     @RequestBody CustomSearchDTO customSearchDTO){
         try {
