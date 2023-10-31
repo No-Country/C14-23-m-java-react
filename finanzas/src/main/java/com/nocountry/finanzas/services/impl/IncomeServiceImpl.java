@@ -33,14 +33,17 @@ public class IncomeServiceImpl implements IncomeService {
 
     private final UserRepository userRepository;
 
+    private final UserServiceImpl userService;
+
     @Autowired
     public IncomeServiceImpl(IncomeRepository repository, MapperIncome mapperIncome, IncomeCategoryService incomeCategoryService,
-                             UserRepository userRepository, IncomeCategoryRepository incomeCategoryRepository) {
+                             UserRepository userRepository, IncomeCategoryRepository incomeCategoryRepository, UserServiceImpl userService) {
         this.repository = repository;
         this.mapperIncome = mapperIncome;
         this.incomeCategoryService = incomeCategoryService;
         this.userRepository = userRepository;
         this.incomeCategoryRepository = incomeCategoryRepository;
+        this.userService = userService;
     }
 
     @Transactional(readOnly = true)

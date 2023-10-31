@@ -22,13 +22,13 @@ public interface UserService {
 
     public UserResponseDTO updatePasswordUser(Long id, UserPasswordUpdateDTO passwordUpdateDTO) throws BadRequestException, NotFoundException;
 
-    public void deleteUser(Long id);
+    public void deleteUser(Long id) throws NotFoundException;
 
     public UserResponseDTO loggingUser(UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException;
 
     UserResponseDTO addSavings(SavingsDTO toSaving) throws NotFoundException;
 
-    UserResponseDTO revertSavings(Long id);
+    UserResponseDTO revertSavings(Long id) throws NotFoundException;
 
     public void logOut(Long id) throws NotFoundException;
 

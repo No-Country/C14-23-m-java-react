@@ -86,10 +86,13 @@ public class UserServiceImpl implements UserService {
         user.setIsLogging(0);
     }
 
+
     @Override
     public User getUserById(Long id) throws NotFoundException {
         Optional<User> userOptional = userRepository.findById(id);
         isPresentUser(userOptional);
+
+        isUserLogin(id);
 
         return userOptional.get();
     }
@@ -102,6 +105,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserResponseDTO updateUser(Long id, UserUpdateRequestDTO userRequestDTO) throws NotFoundException, EmailAlreadyExistsException, InvalidEmailType {
+        isUserLogin(id);
         User userToEdit = getUserById(id);
 
         if (userRequestDTO.getName() != null && userRequestDTO.getLast_name() != null) {
@@ -125,6 +129,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserResponseDTO updatePasswordUser(Long id, UserPasswordUpdateDTO passwordUpdateDTO) throws BadRequestException, NotFoundException {
+        isUserLogin(id);
         User userToEdit = getUserById(id);
 
         if (passwordUpdateDTO.getCurrentPassword().equals(userToEdit.getPassword())) {
@@ -140,13 +145,14 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUser(Long id) throws NotFoundException {
+        isUserLogin(id);
         userRepository.deleteById(id);
     }
 
     @Override
     public UserResponseDTO addSavings(SavingsDTO toSaving) throws NotFoundException {
-
+        isUserLogin(toSaving.getIdUser());
         User user = userRepository.findById(toSaving.getIdUser()).get();
 
         if (toSaving.getToSaving() > user.getTotalIncome()) {
@@ -160,7 +166,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDTO revertSavings(Long id) {
+    public UserResponseDTO revertSavings(Long id) throws NotFoundException {
+        isUserLogin(id);
         User user = userRepository.findById(id).get();
 
         user.setTotalIncome(user.getTotalIncome() + user.getAccumulatedSavings());
@@ -203,11 +210,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public boolean isUserLogin(Long id) throws NotFoundException {
+    public void isUserLogin(Long id) throws NotFoundException {
         Optional<User> user = userRepository.findById(id);
         isPresentUser(user);
 
-        return (user.get().getIsLogging() == 1);
+        if (user.get().getIsLogging() != 1) {
+            throw new NotFoundException("El usuario no esta logueado.");
+        }
     }
 
     public Long getIdOfEmail(String email) throws NotFoundException {
