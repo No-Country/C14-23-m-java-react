@@ -118,8 +118,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserLoggingResponse loggingUser(UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException {
-        Optional<User> userOptional = userRepository.findById(userLoggingDTO.getIdUser());
+    public UserResponseDTO loggingUser(UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException {
+        /*Optional<User> userOptional = userRepository.findById(userLoggingDTO.getIdUser());
 
         if (userOptional.isEmpty()){
             throw new NotFoundException("Could not found user");
@@ -131,15 +131,15 @@ public class UserServiceImpl implements UserService {
         UserLoggingResponse response = Mapper.userToUserLoggingResponseDto(userOptional.get());
 
         if (isEmailCorrect && isPasswordCorrect) {
-            userOptional.get().setCountLogging(userOptional.get().getCountLogging() + 1);
+            userOptional.get().setIsLogging(userOptional.get().getIsLogging() + 1);
             userRepository.save(userOptional.get());
 
             response.setErrorMessage(null);
         } else {
             response.setErrorMessage("Credenciales incorrectas. Verifica tu correo electrónico y contraseña.");
         }
-
-        return response;
+*/
+        return null;
     }
 
     @Override

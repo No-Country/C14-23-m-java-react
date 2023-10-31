@@ -14,14 +14,12 @@ import com.nocountry.finanzas.repositories.EgressRepository;
 import com.nocountry.finanzas.repositories.UserRepository;
 import com.nocountry.finanzas.services.EgressCategoryService;
 import com.nocountry.finanzas.services.EgressService;
-import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EgressServiceImpl implements EgressService {

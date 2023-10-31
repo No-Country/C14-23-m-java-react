@@ -1,6 +1,8 @@
 package com.nocountry.finanzas.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nocountry.finanzas.entities.Egress;
+import com.nocountry.finanzas.entities.Income;
 import com.nocountry.finanzas.entities.enums.Countries;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
@@ -48,7 +50,7 @@ public class User {
     @Digits(integer = Integer.MAX_VALUE, fraction = 2)
     private Double totalIncome;
 
-    private Integer countLogging;
+    private Boolean isLogging;
 
     @Column(name = "accumulated_savings")
     private Double accumulatedSavings;

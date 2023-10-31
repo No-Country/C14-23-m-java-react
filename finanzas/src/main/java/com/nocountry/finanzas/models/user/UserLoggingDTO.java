@@ -8,9 +8,6 @@ import lombok.Data;
 @Data
 public class UserLoggingDTO {
 
-    @NotNull(message = "El id del usuario no debe ser null")
-    private Long idUser;
-
     @NotEmpty(message = "Este campo email es obligatorio")
     @Email(message = "El mail ingresado no es valido")
     private String email;

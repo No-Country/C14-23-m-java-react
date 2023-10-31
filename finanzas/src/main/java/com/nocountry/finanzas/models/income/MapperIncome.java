@@ -1,8 +1,6 @@
 package com.nocountry.finanzas.models.income;
 
-import com.nocountry.finanzas.entities.enums.CategoryIncomeEnum;
 import com.nocountry.finanzas.entities.Income;
-import com.nocountry.finanzas.entities.IncomeCategory;
 import com.nocountry.finanzas.entities.User;
 import com.nocountry.finanzas.validators.NullListException;
 import org.springframework.stereotype.Component;
