@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
 import AssuredWorkloadIcon from '@mui/icons-material/AssuredWorkload';
 import Box from '@mui/material/Box';
+import { NumericFormat } from 'react-number-format';
 
 const SavingsTotal = ({ totalSavings }) => {
   return (
@@ -26,10 +27,20 @@ const SavingsTotal = ({ totalSavings }) => {
         />
         <Typography variant='h6'>Total de Ahorros</Typography>
       </Box>
-      <Typography variant='h5' color='green'>
-        {`$${totalSavings?.toFixed(2)}`}
-      </Typography>
-      <Link to={'/user'}>
+      <NumericFormat
+        value={totalSavings}
+        thousandSeparator=','
+        displayType='text'
+        decimalScale={2}
+        fixedDecimalScale={true}
+        prefix='$'
+        renderText={(value) => (
+          <Typography color='green' variant='h5'>
+            {value}
+          </Typography>
+        )}
+      />
+      <Link to={'/savings'}>
         <Button
           variant='contained'
           startIcon={<EditIcon />}
