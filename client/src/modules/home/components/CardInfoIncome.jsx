@@ -117,7 +117,7 @@ const stylesIcon = {display: 'flex',fontSize: 48, color: 'green', justifyContent
         >
           <Box
             sx={{
-              flex: 'none !important',
+              
               border: '6px solid green',
               borderRadius: '50%',
             }}
@@ -127,7 +127,7 @@ const stylesIcon = {display: 'flex',fontSize: 48, color: 'green', justifyContent
         </Box>
       </Box>
 
-      <Box sx={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+      <Box sx={{display: 'flex', flexDirection: 'column', width: '80%'}}>
         <Box
           sx={{
             display: 'flex',
@@ -149,11 +149,12 @@ const stylesIcon = {display: 'flex',fontSize: 48, color: 'green', justifyContent
         /></Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '80%'}}>
+        <Box sx={{ display: 'flex', flexDirection: 'column'}}>
           <Typography  sx={{marginTop:'1rem', fontWeight : 'bold'}}>{`Fecha: ${formatDate}`}</Typography>
-          <Box>
+          <Box sx={{width: '100%'}} >
             <Typography>Descripcion: </Typography>
-          <Typography>
+          <Typography  variant='body2'
+              sx={{ whiteSpace: 'normal', wordWrap: 'break-word', textAlign: 'justify' }}>
             {description}
           </Typography>
           </Box>

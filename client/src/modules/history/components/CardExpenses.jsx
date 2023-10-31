@@ -69,15 +69,38 @@ function CardExpenses({
       border: '1px solid red',
       padding: '1rem',
       height: '17%',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      '@media (max-width: 899px)': {
+        width: '80vw',
+      },'@media (max-width: 1366px)': {
+        width:'45vw',
+     },'@media (max-width: 500px)':{
+      width: '85vw'
+     },'@media (max-width: 390px)':{
+      marginLeft: '2rem'
+     }
+      
     },
     button: {
       background: 'transparent', // Fondo transparente
       border: 'none',
       cursor: 'pointer',
+     
       '&:hover': {
         color: 'red', // Cambia el color al hacer hover
+      }, justifyContent: 'center',
+      '@media (max-width: 899px)': {
+         marginLeft: '-1rem',
       },
+      '@media (min-width: 750px)': {
+         marginLeft: '-4rem',
+      },'@media (min-width: 899px)': {
+        marginLeft: '-2rem',
+     },'@media (min-width: 1366px)': {
+      marginLeft: '-5rem',
+   },
+     
+      
     },
     contBtnIcon: {
       display: 'flex',
@@ -88,8 +111,9 @@ function CardExpenses({
       display: 'flex',
       width: '100%',
       justifyContent: 'flex-start',
-      marginTop: '-1rem',
+      marginBottom: '-1rem',
       marginLeft: '-2rem',
+      
     },
     contInfo: {},
   };
@@ -113,14 +137,6 @@ function CardExpenses({
   return (
     <Paper sx={styles.paper}>
       <Box sx={styles.contBtnIcon}>
-        <Box sx={styles.contBtn}>
-          <Button onClick={() => delExpenses(id)}>
-            {' '}
-            <IconButton sx={styles.button}>
-              <DeleteIcon />
-            </IconButton>
-          </Button>
-        </Box>
         <Box
           sx={{
             display: 'flex',
@@ -140,9 +156,17 @@ function CardExpenses({
             {icon}
           </Box>
         </Box>
+        <Box sx={styles.contBtn}>
+          <Button onClick={() => delExpenses(id)}>
+            {' '}
+            <IconButton sx={styles.button}>
+              <DeleteIcon />
+            </IconButton>
+          </Button>
+        </Box>
       </Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', width: '80%' }}>
         <Box
           sx={{
             display: 'flex',
@@ -150,34 +174,38 @@ function CardExpenses({
             alignItems: 'center',
           }}
         >
-          <Typography sx={{ display: 'flex', flex: 1 }} variant='h6'>
+          <Typography sx={{ display: 'flex', flex: 1, fontWeight: 'bold', fontSize: '-1rem' }} >
             {separateWord(categoryName)}
-          </Typography>
-         
-            {' '}
-            <NumericFormat
-              value={amount}
-              thousandSeparator=','
-              displayType='text'
-              decimalScale={2}
-              fixedDecimalScale={true}
-              prefix='$'
-              renderText={(value) => (
-                <Typography variant='h6'>{value}</Typography>
-              )}
-            />
-        
+          </Typography>{' '}
+          <NumericFormat
+            value={amount}
+            thousandSeparator=','
+            displayType='text'
+            decimalScale={2}
+            fixedDecimalScale={true}
+            prefix='$'
+            renderText={(value) => (
+              <Typography sx={{fontWeight:'bold'}} >{`-${value}`}</Typography>
+            )}
+          />
         </Box>
 
-        <Box
-          sx={{ display: 'flex', flexDirection: 'column', minHeight: '80%' }}
-        >
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Typography
             sx={{ marginTop: '1rem', fontWeight: 'bold' }}
           >{`Fecha: ${formatDate}`}</Typography>
           <Box>
             <Typography>Descripcion: </Typography>
-            <Typography>{description}</Typography>
+            <Typography
+              variant='body2'
+              sx={{
+                whiteSpace: 'normal',
+                wordWrap: 'break-word',
+                textAlign: 'justify',
+              }}
+            >
+              {description}
+            </Typography>
           </Box>
         </Box>
       </Box>

@@ -15,33 +15,44 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import SavingsIcon from '@mui/icons-material/Savings';
 import { NumericFormat } from 'react-number-format';
 
-
-function CardInfoExpenses({setLastFiveExpenses,categoryName, amount, description, date}) {
+function CardInfoExpenses({
+  setLastFiveExpenses,
+  categoryName,
+  amount,
+  description,
+  date,
+}) {
   const formatDate = date.join('/');
   //funcion para separa palabras
-  
-const stylesIcon = {display: 'flex',fontSize: 48, color: 'red', justifyContent: 'center', alignItems: 'center',}
+
+  const stylesIcon = {
+    display: 'flex',
+    fontSize: 48,
+    color: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
   const iconsByTitle = {
     OTROS: <HelpOutLineIcon sx={stylesIcon} />,
-    ALIMENTACION: <FastfoodIcon  />,
-    ALIMENTACION: <FastfoodIcon  sx={stylesIcon} />,
+    ALIMENTACION: <FastfoodIcon />,
+    ALIMENTACION: <FastfoodIcon sx={stylesIcon} />,
     VIVIENDA: <HomeIcon sx={stylesIcon} />,
     TRANSPORTE: <CommuteIcon sx={stylesIcon} />,
     ENTRETENIMIENTO: <TheaterComedyIcon sx={stylesIcon} />,
     SALUD_CUIDADO_PERSONAL: <LocalHospitalIcon sx={stylesIcon} />,
     EDUCACION: <SchoolIcon sx={stylesIcon} />,
-    VESTIMENTA: <WcIcon  sx={stylesIcon}/>,
+    VESTIMENTA: <WcIcon sx={stylesIcon} />,
     SERVICIOS: <ReceiptIcon sx={stylesIcon} />,
     AHORRO_INVERSION: <SavingsIcon sx={stylesIcon} />,
     VIAJE_VACACIONES: <FlightIcon sx={stylesIcon} />,
   };
   const icon = iconsByTitle[categoryName];
-  
+
   const styles = {
     paper: {
       display: 'flex',
       flexDirection: 'row', // Cambia la dirección a horizontal
-      
+
       width: '28rem',
       border: '1px solid red',
       padding: '1.5rem',
@@ -67,9 +78,7 @@ const stylesIcon = {display: 'flex',fontSize: 48, color: 'red', justifyContent: 
       marginTop: '-1rem',
       marginLeft: '-2rem',
     },
-    contInfo:{
-
-    }
+    contInfo: {},
   };
   //funcion para separa palabras
   const separateWord = (word) => {
@@ -88,12 +97,14 @@ const stylesIcon = {display: 'flex',fontSize: 48, color: 'red', justifyContent: 
     }
   };
 
-
   return (
     <Paper sx={styles.paper}>
       <Box sx={styles.contBtnIcon}>
         <Box sx={styles.contBtn}>
-         <Button onClick={() => setLastFiveExpenses(true)} > <IconButton sx={styles.button}>X</IconButton></Button>
+          <Button onClick={() => setLastFiveExpenses(true)}>
+            {' '}
+            <IconButton sx={styles.button}>X</IconButton>
+          </Button>
         </Box>
         <Box
           sx={{
@@ -102,7 +113,6 @@ const stylesIcon = {display: 'flex',fontSize: 48, color: 'red', justifyContent: 
             alignItems: 'center',
             height: '80%',
             marginRight: '1rem',
-          
           }}
         >
           <Box
@@ -117,7 +127,7 @@ const stylesIcon = {display: 'flex',fontSize: 48, color: 'red', justifyContent: 
         </Box>
       </Box>
 
-      <Box sx={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', width: '80%' }}>
         <Box
           sx={{
             display: 'flex',
@@ -128,24 +138,34 @@ const stylesIcon = {display: 'flex',fontSize: 48, color: 'red', justifyContent: 
           <Typography sx={{ display: 'flex', flex: 1 }} variant='h6'>
             {separateWord(categoryName)}
           </Typography>
-          <Typography sx={{color: 'red'}} variant='h5'> <NumericFormat
-          value={amount}
-          thousandSeparator=','
-          displayType='text'
-          decimalScale={2}
-          fixedDecimalScale={true}
-          prefix='-$'
-          renderText={(value) => <Typography variant='h6'>{value}</Typography>}
-        /></Typography>
+          <Typography sx={{ color: 'red' }} variant='h5'>
+            {' '}
+            <NumericFormat
+              value={amount}
+              thousandSeparator=','
+              displayType='text'
+              decimalScale={2}
+              fixedDecimalScale={true}
+              prefix='-$'
+              renderText={(value) => (
+                <Typography variant='h6'>{value}</Typography>
+              )}
+            />
+          </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '80%'}}>
-          <Typography  sx={{marginTop:'1rem', fontWeight : 'bold'}}>{`Fecha: ${formatDate}`}</Typography>
-          <Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography
+            sx={{ marginTop: '1rem', fontWeight: 'bold' }}
+          >{`Fecha: ${formatDate}`}</Typography>
+          <Box sx={{width:'100%'}} >
             <Typography>Descripcion: </Typography>
-          <Typography>
-            {description}
-          </Typography>
+            <Typography
+              variant='body2'
+              sx={{ whiteSpace: 'normal', wordWrap: 'break-word' , textAlign: 'justify'}}
+            >
+              {description}
+            </Typography>
           </Box>
         </Box>
       </Box>

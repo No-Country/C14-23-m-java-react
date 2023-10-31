@@ -10,8 +10,8 @@ function HistoryContainer() {
     flexDirection: 'row',
     width: '100%',
     // Establece flexDirection como "column" en pantallas pequeñas
-    '@media (max-width: 767px)': {
-      flexDirection: 'column',
+    '@media (max-width: 899px)': {
+      flexDirection: 'column'
     },
   };
 
@@ -19,7 +19,9 @@ function HistoryContainer() {
     display: 'flex',
     flex: '1',
     justyfyConten:' center',
-    width: '100vw'
+    width: '100vw',
+    
+   
   };
 
   

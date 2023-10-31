@@ -13,6 +13,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useEgress } from '../../../context/EgressContext';
 import CardExpenses from './CardExpenses';
+import FilterComponent from './FilterComponent';
 
 function EgressDetails() {
   const [isHovered, setIsHovered] = useState(false);
@@ -36,11 +37,15 @@ function EgressDetails() {
     paper: {
       margin: '1rem',
       padding: '2rem',
-      width: '100%',
+     display: 'flex',
+     justifyContent: 'center',
       transition: 'box-shadow 0.3s',
       cursor: 'pointer',
       display: 'flex',
-   
+      width: '45vw',
+      '@media (max-width: 899px)': {
+        width: '90vw',
+      },
     },
     paperHover: {
       boxShadow: '0 0 10px rgba(255, 0, 0, 0.5)',
@@ -54,14 +59,36 @@ function EgressDetails() {
       sx={{ ...styles.paper, ...(isHovered && styles.paperHover) }}
     >
       <Box>
-        <Typography variant='h5' display={'flex'} justifyContent={'center'}>
-          Tus gastos
-        </Typography>
+        <Box>
+          <Typography variant='h5' display={'flex'} justifyContent={'center'}>
+            Tus gastos
+          </Typography>
+          <FilterComponent />
+        </Box>
 
-        <List>
+        <List
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+
+            '@media (max-width: 599px)': {
+              width: '80vw',
+            },
+          }}
+        >
           {expensesData?.map((egreso, index) => {
             return (
-              <CardExpenses key={index} id={egreso.idEgress} delExpenses={delExpense} date={egreso.date} amount={egreso.amount} categoryName={egreso.categoryName}  description={egreso.description}/>
+              <CardExpenses
+                key={index}
+                id={egreso.idEgress}
+                delExpenses={delExpense}
+                date={egreso.date}
+                amount={egreso.amount}
+                categoryName={egreso.categoryName}
+                description={egreso.description}
+              />
             );
           })}
         </List>
