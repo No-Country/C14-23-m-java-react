@@ -1,4 +1,4 @@
-package com.nocountry.finanzas.services.impl;
+/* package com.nocountry.finanzas.services.impl;
 
 import com.nocountry.finanzas.entities.User;
 import com.nocountry.finanzas.entities.enums.Countries;
@@ -6,7 +6,6 @@ import com.nocountry.finanzas.entities.enums.Role;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.EmailAlreadyExistsException;
 import com.nocountry.finanzas.exceptions.InvalidEmailType;
-import com.nocountry.finanzas.models.auth.AuthResponse;
 import com.nocountry.finanzas.models.auth.AuthenticationRequest;
 import com.nocountry.finanzas.models.auth.RegisterRequest;
 import com.nocountry.finanzas.models.user.Mapper;
@@ -104,3 +103,4 @@ public class AuthServiceImpl implements AuthService {
     }
 
 }
+*/

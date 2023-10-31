@@ -1,4 +1,4 @@
-package com.nocountry.finanzas.models.auth;
+/*package com.nocountry.finanzas.models.auth;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -45,3 +45,4 @@ public class RegisterRequest {
     private String country;
 
 }
+*/

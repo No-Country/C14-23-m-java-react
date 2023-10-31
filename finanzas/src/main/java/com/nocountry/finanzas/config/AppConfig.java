@@ -1,4 +1,4 @@
-package com.nocountry.finanzas.config;
+/* package com.nocountry.finanzas.config;
 
 import com.nocountry.finanzas.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -45,3 +45,4 @@ public class AppConfig {
         return config.getAuthenticationManager();
     }
 }
+*/

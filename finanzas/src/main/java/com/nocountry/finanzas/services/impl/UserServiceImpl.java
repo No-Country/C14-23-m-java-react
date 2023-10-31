@@ -5,6 +5,7 @@ import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.EmailAlreadyExistsException;
 import com.nocountry.finanzas.exceptions.InvalidEmailType;
 import com.nocountry.finanzas.exceptions.NotFoundException;
+import com.nocountry.finanzas.models.auth.AuthenticationRequest;
 import com.nocountry.finanzas.models.egress.SavingsDTO;
 import com.nocountry.finanzas.models.user.Mapper;
 import com.nocountry.finanzas.models.user.UserRequestDTO;
@@ -15,6 +16,7 @@ import com.nocountry.finanzas.validators.BirthdayValidator;
 import com.nocountry.finanzas.validators.EmailValidatorLocal;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -29,17 +31,22 @@ public class UserServiceImpl implements UserService {
 
     private final BirthdayValidator birthdayValidator;
 
+
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, EmailValidatorLocal emailValidator, BirthdayValidator birthdayValidator) {
+    public UserServiceImpl(UserRepository userRepository, EmailValidatorLocal emailValidator,
+                           BirthdayValidator birthdayValidator, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.emailValidator = emailValidator;
         this.birthdayValidator = birthdayValidator;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
     @Transactional
     @Override
-    public UserResponseDTO saveUser(UserRequestDTO userRequestDTO) throws EmailAlreadyExistsException, InvalidEmailType, BadRequestException {
+    public void saveUser(UserRequestDTO userRequestDTO) throws EmailAlreadyExistsException, InvalidEmailType, BadRequestException {
         doEmailValidation(userRequestDTO.getEmail());
         doBirthdayValidation(userRequestDTO.getBirthday_date());
 
@@ -51,9 +58,26 @@ public class UserServiceImpl implements UserService {
             throw new EmailAlreadyExistsException("El email ya está registrado.");
         }
 
-        userRepository.save(user);
+        String passwordEncriptada = passwordEncoder.encode(userRequestDTO.getPassword());
+        user.setPassword(passwordEncriptada);
 
-        return Mapper.userToUserResponseDto(user);
+        userRepository.save(user);
+    }
+
+    @Transactional
+    @Override
+    public UserResponseDTO authenticateUser(AuthenticationRequest request) throws BadRequestException {
+        Optional<User> existingUser = userRepository.findUserByEmail(request.getEmail());
+
+        if (existingUser.isEmpty()) {
+            throw new BadRequestException("El email ingresado no esta registrado.");
+        }
+
+        if (!passwordEncoder.matches(request.getPassword1(), existingUser.get().getPassword())) {
+            throw new BadRequestException("La contraseña ngresada es incorrecta.");
+        }
+
+        return Mapper.userToUserResponseDto(existingUser.get());
     }
 
     @Override

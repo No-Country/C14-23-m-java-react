@@ -1,9 +1,11 @@
 package com.nocountry.finanzas.controller;
 
 import com.nocountry.finanzas.exceptions.BadRequestException;
+import com.nocountry.finanzas.exceptions.EmailAlreadyExistsException;
 import com.nocountry.finanzas.exceptions.InvalidEmailType;
 import com.nocountry.finanzas.exceptions.NotFoundException;
 
+import com.nocountry.finanzas.models.auth.AuthenticationRequest;
 import com.nocountry.finanzas.models.egress.SavingsDTO;
 import com.nocountry.finanzas.models.user.Mapper;
 import com.nocountry.finanzas.models.user.UserRequestDTO;
@@ -30,17 +32,32 @@ public class UserController {
         this.authenticationManager = authenticationManager;
     }
 
+    @PostMapping(path = "/auth/register")
+    public ResponseEntity<?> registerUser(@RequestBody @Valid UserRequestDTO request) throws BadRequestException {
+        try {
+            userService.saveUser(request);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (BadRequestException | InvalidEmailType | EmailAlreadyExistsException e) {
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    @PostMapping(path = "/auth/authenticate")
+    public ResponseEntity<?> authenticate(@RequestBody @Valid AuthenticationRequest request) throws BadRequestException {
+        try {
+            userService.authenticateUser(request);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (BadRequestException | EmailAlreadyExistsException e) {
+            throw new BadRequestException(e.getMessage());
+        }
+    }
 
     @GetMapping(path = "/user/{id}")
     public ResponseEntity<?> getUser(@PathVariable Long id) throws NotFoundException, BadRequestException {
 
         try {
-            System.out.println("En el controller ");
-            System.out.println("El id es: " + id);
-
             UserResponseDTO userResponseDTO = Mapper.userToUserResponseDto(userService.getUserById(id));
 
-            System.out.println("en el controller ya con el response " + userResponseDTO);
             return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
         }catch (DataAccessException  e){
             throw new BadRequestException(e.getMessage());
