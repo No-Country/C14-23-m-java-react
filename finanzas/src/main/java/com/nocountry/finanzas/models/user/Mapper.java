@@ -20,6 +20,7 @@ public class Mapper {
         user.setCountry(searchCountry(userRequestDTO.getCountry()));
         user.setTotalIncome(0.0);
         user.setAccumulatedSavings(0.0);
+        user.setIsLogging(false);
 
         return user;
     }

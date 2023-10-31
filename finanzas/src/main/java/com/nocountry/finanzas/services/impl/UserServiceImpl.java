@@ -57,12 +57,32 @@ public class UserServiceImpl implements UserService {
         return Mapper.userToUserResponseDto(user);
     }
 
+    @Transactional
+    @Override
+    public UserResponseDTO loggingUser(UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException {
+        Optional<User> userOptional = userRepository.findByEmail(userLoggingDTO.getEmail());
+        isPresentUser(userOptional);
+
+        User user = userOptional.get();
+
+        boolean isEmailCorrect = user.getEmail().equalsIgnoreCase(userLoggingDTO.getEmail());
+        boolean isPasswordCorrect = checkPassword(userLoggingDTO.getPassword(), user.getPassword());
+
+        if (!isEmailCorrect && !isPasswordCorrect) {
+            throw new BadRequestException("El usuario o contraseña no son correctos");
+        }
+
+        userOptional.get().setIsLogging(true);
+        userRepository.save(user);
+
+        return Mapper.userToUserResponseDto(user);
+    }
+
     @Override
     public User getUserById(Long id) throws NotFoundException {
         Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isEmpty()){
-            throw new NotFoundException("Could not found user");
-        }
+        isPresentUser(userOptional);
+
         return userOptional.get();
     }
 
@@ -84,10 +104,7 @@ public class UserServiceImpl implements UserService {
         if (userRequestDTO.getEmail() != null) {
             doEmailValidation(userRequestDTO.getEmail());
             Optional<User> existingUser = userRepository.findByEmail(userRequestDTO.getEmail());
-
-            if (existingUser.isPresent()) {
-                throw new EmailAlreadyExistsException("El email ya está registrado.");
-            }
+            isPresentUser(existingUser);
 
             userToEdit.setEmail(userRequestDTO.getEmail());
         }
@@ -117,32 +134,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
-    }
-
-    @Transactional
-    @Override
-    public UserResponseDTO loggingUser(UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException {
-        /*Optional<User> userOptional = userRepository.findById(userLoggingDTO.getIdUser());
-
-        if (userOptional.isEmpty()){
-            throw new NotFoundException("Could not found user");
-        }
-
-        boolean isEmailCorrect = userOptional.get().getEmail().equalsIgnoreCase(userLoggingDTO.getEmail());
-        boolean isPasswordCorrect = userOptional.get().getPassword().equals(userLoggingDTO.getPassword());
-
-        UserLoggingResponse response = Mapper.userToUserLoggingResponseDto(userOptional.get());
-
-        if (isEmailCorrect && isPasswordCorrect) {
-            userOptional.get().setIsLogging(userOptional.get().getIsLogging() + 1);
-            userRepository.save(userOptional.get());
-
-            response.setErrorMessage(null);
-        } else {
-            response.setErrorMessage("Credenciales incorrectas. Verifica tu correo electrónico y contraseña.");
-        }
-*/
-        return null;
     }
 
     @Override
@@ -194,5 +185,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public boolean checkPassword(String rawPassword, String encodedPassword) {
+        return passwordConfig.passwordEncoder().matches(rawPassword, encodedPassword);
+    }
+
+    public void isPresentUser(Optional<User> user) throws NotFoundException {
+        if (user.isEmpty()){
+            throw new NotFoundException("Could not found user");
+        }
+    }
 
 }
