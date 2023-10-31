@@ -47,6 +47,16 @@ public class UserController {
         }
     }
 
+    @PostMapping(path = "/auth/logOut/{idUser}")
+    public ResponseEntity<?> logOutUser(@PathVariable Long idUser) throws NotFoundException {
+        try {
+            userService.logOut(idUser);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NotFoundException e) {
+            throw new NotFoundException(e.getMessage());
+        }
+    }
+
 
     @GetMapping(path = "/user/{id}")
     public ResponseEntity<?> getUser(@PathVariable Long id) throws NotFoundException, BadRequestException {

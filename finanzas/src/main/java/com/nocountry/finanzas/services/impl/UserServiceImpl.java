@@ -78,6 +78,14 @@ public class UserServiceImpl implements UserService {
         return Mapper.userToUserResponseDto(user);
     }
 
+    @Transactional
+    @Override
+    public void logOut(Long id) throws NotFoundException {
+        User user = getUserById(id);
+
+        user.setIsLogging(0);
+    }
+
     @Override
     public User getUserById(Long id) throws NotFoundException {
         Optional<User> userOptional = userRepository.findById(id);
@@ -195,4 +203,17 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public boolean isUserLogin(Long id) throws NotFoundException {
+        Optional<User> user = userRepository.findById(id);
+        isPresentUser(user);
+
+        return (user.get().getIsLogging() == 1);
+    }
+
+    public Long getIdOfEmail(String email) throws NotFoundException {
+        Optional<User> user = userRepository.findByEmail(email);
+        isPresentUser(user);
+
+        return user.get().getId();
+    }
 }

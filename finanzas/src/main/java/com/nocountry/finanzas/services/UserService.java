@@ -30,4 +30,6 @@ public interface UserService {
 
     UserResponseDTO revertSavings(Long id);
 
+    public void logOut(Long id) throws NotFoundException;
+
 }
