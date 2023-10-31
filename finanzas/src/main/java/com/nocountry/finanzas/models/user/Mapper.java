@@ -47,18 +47,6 @@ public class Mapper {
         return userResponseDTOList;
     }
 
-    public static UserLoggingResponse userToUserLoggingResponseDto(User user) {
-        UserLoggingResponse userLoggingResponse = new UserLoggingResponse();
-
-        userLoggingResponse.setIdUser(user.getId());
-        userLoggingResponse.setName(user.getName());
-        userLoggingResponse.setLast_name(user.getLast_name());
-        userLoggingResponse.setEmail(user.getEmail());
-        userLoggingResponse.setBirthday_date(user.getBirthday_date());
-
-        return userLoggingResponse;
-    }
-
     public static Countries searchCountry(String country) {
 
         for (Countries element : Countries.values()) {
@@ -66,7 +54,6 @@ public class Mapper {
                 return element;
             }
         }
-
         return Countries.ARGENTINA;
     }
 
