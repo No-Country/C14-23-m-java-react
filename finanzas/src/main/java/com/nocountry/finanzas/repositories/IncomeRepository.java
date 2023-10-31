@@ -24,4 +24,7 @@ public interface IncomeRepository extends JpaRepository<Income,Long> {
     @Query("SELECT i FROM Income i WHERE i.user.id = :id AND MONTH(i.date) = MONTH(:mes) AND i.categoryIncome.id = :categoryIncome")
     List<Income> findByMonthAndCategory(@Param("id") Long id,@Param("mes") LocalDate mes, @Param("categoryIncome") Long categoryIncome);
 
+    @Query("SELECT e.user.id FROM Income e WHERE e.id = :incomeId")
+    Long findUserIdByIncomeId(@Param("incomeId") Long incomeId);
+
 }

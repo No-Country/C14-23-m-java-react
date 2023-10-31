@@ -5,7 +5,9 @@ import com.nocountry.finanzas.entities.IncomeCategory;
 import com.nocountry.finanzas.entities.User;
 import com.nocountry.finanzas.entities.enums.CategoryIncomeEnum;
 import com.nocountry.finanzas.exceptions.BadRequestException;
+import com.nocountry.finanzas.exceptions.NotFoundException;
 import com.nocountry.finanzas.models.egress.CustomSearchDTO;
+import com.nocountry.finanzas.models.income.CreateIncomeDTO;
 import com.nocountry.finanzas.models.income.IncomeDTO;
 import com.nocountry.finanzas.models.income.MapperIncome;
 import com.nocountry.finanzas.repositories.IncomeCategoryRepository;
@@ -54,16 +56,29 @@ public class IncomeServiceImpl implements IncomeService {
         return mapperIncome.incomeDTOList(repository.findAll());
     }
 
+    @Transactional
+    @Override
+    public List<IncomeDTO> getIncomeByUser(Long idUser) throws NotFoundException {
+        userService.isUserLogin(idUser);
+
+        User user = userRepository.findById(idUser).get();
+
+        return mapperIncome.incomeDTOList(user.getIncomes());
+    }
+
     @Transactional(readOnly = true)
     @Override
-    public IncomeDTO findById(Long id) {
+    public IncomeDTO findById(Long id) throws NotFoundException {
+        isUserLoginInIncome(id);
 
         return mapperIncome.toIncomeDTO(repository.findById(id).get());
     }
 
     @Transactional
     @Override
-    public IncomeDTO save(IncomeDTO incomeDTO) throws BadRequestException {
+    public IncomeDTO save(CreateIncomeDTO incomeDTO) throws BadRequestException, NotFoundException {
+        userService.isUserLogin(incomeDTO.getIdUser());
+
         Income income = mapperIncome.toIncome(incomeDTO);
         User user = userRepository.findById(income.getUser().getId()).get();
 
@@ -86,7 +101,9 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Transactional
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws NotFoundException {
+        isUserLoginInIncome(id);
+
         Income income = repository.findById(id).get();
         User user = userRepository.findById(income.getUser().getId()).get();
 
@@ -98,7 +115,9 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Transactional
     @Override
-    public IncomeDTO updateIncome(IncomeDTO requestDTO) {
+    public IncomeDTO updateIncome(IncomeDTO requestDTO) throws NotFoundException {
+        isUserLoginInIncome(requestDTO.getIdIncome());
+
         Income income = mapperIncome.toIncome(requestDTO);
         incomeCategoryService.updateIncomeCategory(income.getCategoryIncome());
         repository.save(income);
@@ -107,7 +126,8 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public List<IncomeDTO> findByMonthAndCategory(Long id, CustomSearchDTO customSearchDTO) {
+    public List<IncomeDTO> findByMonthAndCategory(Long id, CustomSearchDTO customSearchDTO) throws NotFoundException {
+        isUserLoginInIncome(id);
 
         int year = LocalDate.now().getYear();
 
@@ -132,6 +152,10 @@ public class IncomeServiceImpl implements IncomeService {
         }
 
         return CategoryIncomeEnum.OTROS;
+    }
+
+    public void isUserLoginInIncome(Long idIncome) throws NotFoundException {
+        userService.isUserLogin(repository.findUserIdByIncomeId(idIncome));
     }
 
 }
