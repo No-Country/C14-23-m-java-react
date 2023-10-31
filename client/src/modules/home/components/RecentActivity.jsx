@@ -1,14 +1,22 @@
 import { React, useEffect, useState } from 'react';
-import { Box, Typography, Paper } from '@mui/material';
-import TransactionCard from './TransactionCard';
+import { Box, Typography, Paper, Collapse } from '@mui/material';
+import TransactionCardIncomes from './TransactionCardIncomes';
+import TransacCardEgress from './TransacCardEgress';
+import CardInfoIncome from './CardInfoIncome';
+import 'animate.css';
 
 import { useIncome } from '../../../context/IncomeContext';
 import { useEgress } from '../../../context/EgressContext';
+import CardInfoExpenses from './CardInfoExpenses';
 
 function RecentActivity() {
   const { expenses } = useEgress();
   const { incomes } = useIncome();
 
+  const [lastFiveIncom, setLastFiveIncom] = useState(true); //Estado para mostrar los ultimos ingresos
+  const [infoCardIncomes, setInfoCardIncomes] = useState(null);
+  const [infoCardExpenses, setInfoCardExpenses] = useState(null);
+  const [lasFiveEgress, setLastFiveEgress] = useState(true);
   const lastFiveIncomes = incomes.slice(-5).reverse();
   const lastFiveExpenses = expenses.slice(-5).reverse();
 
@@ -20,8 +28,7 @@ function RecentActivity() {
       height: '45%',
       margin: '1rem',
       justifyContent: 'center',
-      // backgroundColor: '#BDBDBD',
-      backgroundColor: '#EAF6F4',
+      backgroundColor: '#0f887a', //'#BDBDBD',
       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
       transition: 'box-shadow 0.3s',
     },
@@ -46,15 +53,15 @@ function RecentActivity() {
     <Box
       width='100%'
       height='100%'
-      // bgcolor='#BDBDBD'
-      bgcolor='#EAF6F4'
+      bgcolor='#00796b'
       display='flex'
       flexDirection='column'
       alignItems='center'
-      padding='16px'
+      padding='0.78rem'
     >
-      <Typography variant='h5' textAlign={'center'}>
-        Ultimos Movimientos
+      {console.log('aca', infoCardIncomes)}
+      <Typography variant='h5' textAlign={'center'} color={'white'}>
+        Ultimos movimientos
       </Typography>
 
       <Paper
@@ -63,24 +70,49 @@ function RecentActivity() {
         onMouseLeave={handleMouseLeave}
       >
         <Box sx={styles.contentContainer}>
-          <Typography variant='h6' textAlign={'center'}>
-            INGRESOS
+          <Typography variant='h6' textAlign={'center'} sx={{ color: 'white' }}>
+            Ingresos
           </Typography>
-          {lastFiveIncomes.length < 1 ? (
-            <Typography component='em' mt={3}>
-              No hay ingresos
-            </Typography>
-          ) : (
-            lastFiveIncomes?.map((item, index) => (
-              <TransactionCard
-                key={index}
-                amount={` $${item.amount} `}
-                categoryName={item.categoryName}
-                description={item.description}
-                date={item.date}
-                type='INGRESO'
+
+          {/**Muestra ingresos o la card */}
+
+          {lastFiveIncom && (
+            <div
+              className='animate__animated  animate__flipInX'
+              style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {lastFiveIncomes?.map((item, index) => (
+                <TransactionCardIncomes
+                  key={index}
+                  amount={` $${item.amount} `}
+                  categoryName={item.categoryName}
+                  description={item.description}
+                  date={item.date}
+                  setLastFiveIncom={setLastFiveIncom}
+                  info={item}
+                  setInfoCard={setInfoCardIncomes}
+                  //estado del boton aca
+                />
+              ))}
+            </div>
+          )}
+
+          {!lastFiveIncom && (
+            <div className='animate__animated animate__flipInX'>
+              <CardInfoIncome
+                setLastFiveIncom={setLastFiveIncom}
+                amount={infoCardIncomes?.amount}
+                date={infoCardIncomes?.date}
+                description={infoCardIncomes?.description}
+                categoryName={infoCardIncomes?.categoryName}
               />
-            ))
+            </div>
           )}
         </Box>
       </Paper>
@@ -91,25 +123,47 @@ function RecentActivity() {
         onMouseLeave={handleMouseLeave}
       >
         <Box sx={styles.contentContainer}>
-          <Typography variant='h6' textAlign={'center'}>
-            GASTOS
+          <Typography variant='h6' textAlign={'center'} sx={{ color: 'white' }}>
+            Gastos
           </Typography>
 
-          {lastFiveExpenses.length < 1 ? (
-            <Typography component='em' mt={3}>
-              No hay gastos
-            </Typography>
-          ) : (
-            lastFiveExpenses?.map((item, index) => (
-              <TransactionCard
-                key={index}
-                amount={`-  $${item.amount} `}
-                categoryName={item.categoryName}
-                description={item.description}
-                date={item.date}
-                type='GASTO'
+          {/**se muestran los ultimos 5 gastos o la informacion que contiene */}
+          {lasFiveEgress && (
+            <div
+              className='animate__animated  animate__flipInX'
+              style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {lastFiveExpenses?.map((item, index) => (
+                <TransacCardEgress
+                  key={index}
+                  amount={`-$${item.amount} `}
+                  categoryName={item.categoryName}
+                  description={item.description}
+                  date={item.date}
+                  setLastFiveEgress={setLastFiveEgress}
+                  info={item}
+                  setInfoCard={setInfoCardExpenses}
+                />
+              ))}
+            </div>
+          )}
+
+          {!lasFiveEgress && (
+            <div className='animate__animated animate__flipInX'>
+              <CardInfoExpenses
+                setLastFiveExpenses={setLastFiveEgress}
+                amount={infoCardExpenses?.amount}
+                date={infoCardExpenses?.date}
+                description={infoCardExpenses?.description}
+                categoryName={infoCardExpenses?.categoryName}
               />
-            ))
+            </div>
           )}
         </Box>
       </Paper>
