@@ -95,7 +95,13 @@ const HomeContainer = () => {
           <Alert
             variant={error ? 'standard' : 'filled'}
             severity={error ? 'error' : 'success'}
-            color={error ? 'error' : type === 'GASTO' ? 'error' : 'success'}
+            sx={{
+              bgcolor: error
+                ? 'error'
+                : type === 'GASTO'
+                ? '#e35d79'
+                : 'success',
+            }}
             action={
               <IconButton
                 aria-label='close'
