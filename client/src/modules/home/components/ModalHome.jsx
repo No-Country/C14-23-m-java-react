@@ -23,7 +23,7 @@ const ModalHome = ({
     { option: 'Sueldo Mensual', value: 'SUELDO_MENSUAL' },
     { option: 'Préstamo', value: 'PRESTAMO' },
     { option: 'Clientes', value: 'CLIENTES' },
-    { option: 'Bono Extra', value: 'BONO_EXTRA' },
+    { option: 'Bono - Extra', value: 'BONO_EXTRA' },
     { option: 'Otros', value: 'OTROS' },
   ];
 

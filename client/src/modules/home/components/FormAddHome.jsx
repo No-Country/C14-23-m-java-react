@@ -16,6 +16,7 @@ import { PropTypes } from 'prop-types';
 import { useEgress } from '../../../context/EgressContext';
 import { useIncome } from '../../../context/IncomeContext';
 import AmountInput from './AmountInput';
+import { useUser } from '../../../context/UserContext';
 
 const FormAddHome = ({
   formType,
@@ -54,6 +55,9 @@ const FormAddHome = ({
   const { addNewGasto } = useEgress();
   const { addNewIncome } = useIncome();
 
+  const { userData } = useUser();
+  const { accumulatedSavings, totalIncome } = userData;
+
   const onSubmit = handleSubmit(async (data) => {
     let amount = parseFloat(data.amount.split(',').join(''));
     amount = amount % 1 !== 0 ? amount.toFixed(2) : amount.toFixed();
@@ -67,6 +71,7 @@ const FormAddHome = ({
 
     handleClose();
     setLoading(true);
+
     try {
       if (formType === 'GASTO') {
         const res = await addNewGasto(newData);
@@ -95,7 +100,18 @@ const FormAddHome = ({
 
         <FormProvider {...methods}>
           <Box component='form' sx={{ mt: 2 }} onSubmit={onSubmit}>
-            <AmountInput sx={{ mb: 2, width: '100%' }} />
+            <AmountInput
+              sx={{ mb: 2, width: '100%' }}
+              validations={
+                formType === 'GASTO'
+                  ? {
+                      maxAmount: (value) =>
+                        parseFloat(value) <= totalIncome - accumulatedSavings ||
+                        'El monto no puede ser mayor al Saldo Disponible',
+                    }
+                  : {}
+              }
+            />
             <FormControl
               fullWidth
               error={errors.categoryName ? true : false}
