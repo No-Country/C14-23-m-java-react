@@ -33,7 +33,7 @@ function CardExpenses({
 
   const stylesIcon = {
     display: 'flex',
-    fontSize: 48,
+    fontSize: 49,
     color: 'yellow',
     justifyContent: 'center',
     alignItems: 'center',
