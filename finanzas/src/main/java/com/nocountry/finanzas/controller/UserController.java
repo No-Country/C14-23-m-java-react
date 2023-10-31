@@ -109,6 +109,8 @@ public class UserController {
             return new ResponseEntity<>("El usuario se elimino correctamente", HttpStatus.OK);
         } catch (DataAccessException e){
             throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -131,6 +133,8 @@ public class UserController {
             return new ResponseEntity<>(userResponseDTO,HttpStatus.OK);
         } catch (DataAccessException e){
             throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
