@@ -67,7 +67,7 @@ public class EgressController {
         }
     }
 
-    @PostMapping(path = "/egress", consumes = "application/json")
+    @PostMapping(path = "/egress")
     public ResponseEntity<EgressDTO> createEgress(@RequestBody @Valid CreateEgressDTO egressDTO) throws BadRequestException {
         try {
             EgressDTO responseDTO = egressService.createdEgress(egressDTO);
@@ -79,7 +79,7 @@ public class EgressController {
         }
     }
 
-    @PutMapping(path = "/egress", consumes = "application/json")
+    @PutMapping(path = "/egress")
     public ResponseEntity<EgressDTO> updateEgress(@RequestBody @Valid EgressDTO egressDTO){
         try {
             EgressDTO responseDTO = egressService.updateEgress(egressDTO);
@@ -99,7 +99,7 @@ public class EgressController {
         }
     }
 
-    @PostMapping(path = "/egress/category", consumes = "application/json")
+    @PostMapping(path = "/egress/category")
     public ResponseEntity<EgressCategory> createCategory(@RequestBody CategoryEgressDTO name) {
         try {
             EgressCategory egressCategory = egressCategoryService.createEgressCategory(name);
@@ -109,7 +109,7 @@ public class EgressController {
         }
     }
 
-    @PatchMapping(path = "/egress/month/{id}",consumes = "application/json")
+    @PatchMapping(path = "/egress/month/{id}")
     public ResponseEntity<List<EgressDTO>> egressByMonthAndCategory(@PathVariable Long id,
                                                          @RequestBody CustomSearchDTO customSearch){
 
