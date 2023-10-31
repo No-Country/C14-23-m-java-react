@@ -139,7 +139,7 @@ const HomeContainer = () => {
             <ExpenseByCategory handleOpen={handleOpen} />
           </Grid>
         </Grid>
-        <Grid item container xs={4}>
+        <Grid item container xs={12} lg={4}>
           <RecentActivity />
         </Grid>
       </Grid>
