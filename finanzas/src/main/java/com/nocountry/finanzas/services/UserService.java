@@ -32,4 +32,6 @@ public interface UserService {
 
     public void logOut(Long id) throws NotFoundException;
 
+    public void isUserLogin(Long id) throws NotFoundException;
+
 }

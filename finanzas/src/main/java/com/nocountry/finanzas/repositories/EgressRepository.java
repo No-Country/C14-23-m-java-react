@@ -22,4 +22,8 @@ public interface EgressRepository extends JpaRepository<Egress, Long> {
 
     @Query("SELECT e FROM Egress e WHERE e.user.id = :id AND MONTH(e.date) = MONTH(:mes) AND e.egressCategory.id = :egressCategory")
     List<Egress> findByMonthAndCategory(@Param("id") Long id,@Param("mes") LocalDate mes, @Param("egressCategory") Long egressCategory);
+
+    @Query("SELECT e.user.id FROM Egress e WHERE e.id = :egressId")
+    Long findUserIdByEgressId(@Param("egressId") Long egressId);
+
 }

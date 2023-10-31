@@ -13,6 +13,7 @@ import com.nocountry.finanzas.repositories.IncomeRepository;
 import com.nocountry.finanzas.repositories.UserRepository;
 import com.nocountry.finanzas.services.IncomeCategoryService;
 import com.nocountry.finanzas.services.IncomeService;
+import com.nocountry.finanzas.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class IncomeServiceImpl implements IncomeService {
 
     private final UserRepository userRepository;
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @Autowired
     public IncomeServiceImpl(IncomeRepository repository, MapperIncome mapperIncome, IncomeCategoryService incomeCategoryService,
