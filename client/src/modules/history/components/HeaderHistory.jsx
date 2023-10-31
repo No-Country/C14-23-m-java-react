@@ -11,6 +11,8 @@ function HeaderHistory() {
       alignItems='center'
       padding='1rem'
       bgcolor='#dcdcdc'
+      width='99.12vw'
+      
     >
       <Box flex={{ xs: 'none', sm: '1' }} maxWidth={{ lg: '14%' }}>
         <Lottie animationData={womenPayment} />
