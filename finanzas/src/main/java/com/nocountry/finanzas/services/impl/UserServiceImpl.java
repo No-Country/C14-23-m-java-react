@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("El usuario o contraseña no son correctos");
         }
 
-        userOptional.get().setIsLogging(true);
+        userOptional.get().setIsLogging(1);
         userRepository.save(user);
 
         return Mapper.userToUserResponseDto(user);

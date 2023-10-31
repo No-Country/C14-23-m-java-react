@@ -50,7 +50,7 @@ public class User {
     @Digits(integer = Integer.MAX_VALUE, fraction = 2)
     private Double totalIncome;
 
-    private Boolean isLogging;
+    private Integer isLogging;
 
     @Column(name = "accumulated_savings")
     private Double accumulatedSavings;
