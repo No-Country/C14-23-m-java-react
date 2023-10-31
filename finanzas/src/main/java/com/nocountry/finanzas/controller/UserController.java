@@ -24,12 +24,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public UserController(UserService userService, AuthenticationManager authenticationManager) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.authenticationManager = authenticationManager;
+
     }
 
     @PostMapping(path = "/auth/register")
