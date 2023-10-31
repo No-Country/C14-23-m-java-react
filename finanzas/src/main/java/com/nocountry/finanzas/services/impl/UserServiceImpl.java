@@ -1,5 +1,6 @@
 package com.nocountry.finanzas.services.impl;
 
+import com.nocountry.finanzas.config.PasswordConfig;
 import com.nocountry.finanzas.entities.User;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.EmailAlreadyExistsException;
@@ -27,11 +28,15 @@ public class UserServiceImpl implements UserService {
 
     private final BirthdayValidator birthdayValidator;
 
+    private final PasswordConfig passwordConfig;
+
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, EmailValidatorLocal emailValidator, BirthdayValidator birthdayValidator) {
+    public UserServiceImpl(UserRepository userRepository, EmailValidatorLocal emailValidator,
+                           BirthdayValidator birthdayValidator, PasswordConfig passwordConfig) {
         this.userRepository = userRepository;
         this.emailValidator = emailValidator;
         this.birthdayValidator = birthdayValidator;
+        this.passwordConfig = passwordConfig;
     }
 
 
@@ -40,14 +45,12 @@ public class UserServiceImpl implements UserService {
     public UserResponseDTO saveUser(UserRequestDTO userRequestDTO) throws EmailAlreadyExistsException, InvalidEmailType, BadRequestException {
         doEmailValidation(userRequestDTO.getEmail());
         doBirthdayValidation(userRequestDTO.getBirthday_date());
+        doEmailAlreadyExits(userRequestDTO.getEmail());
 
         User user = Mapper.userRequestDTOToUser(userRequestDTO);
 
-        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
-
-        if (existingUser.isPresent()) {
-            throw new EmailAlreadyExistsException("El email ya está registrado.");
-        }
+        String passwordEncode  = passwordConfig.passwordEncoder().encode(userRequestDTO.getPassword());
+        user.setPassword(passwordEncode);
 
         userRepository.save(user);
 
@@ -168,18 +171,28 @@ public class UserServiceImpl implements UserService {
         return Mapper.userToUserResponseDto(user);
     }
 
-    private void doEmailValidation(String email) throws InvalidEmailType {
+    public void doEmailValidation(String email) throws InvalidEmailType {
 
         if (!emailValidator.isEmailValid(email)) {
             throw new InvalidEmailType("El email ingresa no posee una estructura valida.");
         }
+
     }
 
-    private void doBirthdayValidation(LocalDate birthday) throws BadRequestException {
+    public void doEmailAlreadyExits(String email) throws EmailAlreadyExistsException {
+        Optional<User> existingUser = userRepository.findByEmail(email);
+
+        if (existingUser.isPresent()) {
+            throw new EmailAlreadyExistsException("El email ya está registrado.");
+        }
+    }
+
+    public void doBirthdayValidation(LocalDate birthday) throws BadRequestException {
 
         if (!birthdayValidator.isOldest18Years(birthday)) {
             throw new BadRequestException("La fecha ingresada no es mayor de 18 años.");
         }
     }
+
 
 }
