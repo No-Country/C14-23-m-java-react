@@ -56,6 +56,14 @@ const RegisterContainer = () => {
   const handleOpenAlert = () => setAlert(true);
   const [showMessage, setShowMessage] = useState(false);
 
+  /*   useEffect(() => {
+    const exist = Cookies.get('token');
+
+    if (exist) {
+      navigate('/home');
+    }
+  }, []); */
+
   const onSubmit = handleSubmit(async (data) => {
     if (data.country === 'select') {
       setError('country', {
@@ -65,7 +73,13 @@ const RegisterContainer = () => {
     }
     const res = await userRegister(data);
 
-    if (res.status === 201) {
+    if (res?.response?.status === 500) {
+      setError('email', {
+        message: res?.response?.data?.message,
+      });
+    }
+
+    if (res?.status === 201) {
       handleOpenAlert();
       setTimeout(() => navigate('/login'), 3000);
     }

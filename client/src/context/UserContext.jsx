@@ -1,8 +1,8 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import {
   registerRequest,
-  dataUserRequest,
+  loginUserRequest,
   updateUserSavings,
   savingsToZero,
   partialUpdateUserRequest,
@@ -27,38 +27,26 @@ export function UserProvider({ children }) {
 
   const [userData, setUserData] = useState(null);
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const res = await dataUserRequest(1);
-        setUserData(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getUser();
-  }, []);
-
   const userRegister = async (user) => {
     try {
       const res = await registerRequest(user);
       return res;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
-  const getDataUser = async (id) => {
+  const getLoginUser = async (user) => {
     try {
-      const res = await dataUserRequest(id);
-      return res?.data;
+      const res = await loginUserRequest(user);
+      console.log(res);
+      return res;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
   const updateSaving = async (idUser, toSaving) => {
-    // console.log('id:' + idUser + 'valor' + toSaving);
     try {
       const res = await updateUserSavings(idUser, toSaving);
       setUserData(res.data);
@@ -122,7 +110,7 @@ export function UserProvider({ children }) {
         userData,
         setUserData,
         userRegister,
-        getDataUser,
+        getLoginUser,
         updateUser,
         partialUpdateUser,
         updateUserPassword,

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -10,6 +11,9 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
+import Cookies from 'js-cookie';
+import { useEffect } from 'react';
 
 const theme = createTheme({
   palette: {
@@ -26,7 +30,35 @@ const LoginContainer = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const { getLoginUser, setUserData } = useUser();
+  const navigate = useNavigate();
+
+  /*   useEffect(() => {
+    const exist = Cookies.get('token');
+
+    if (exist) {
+      navigate('/home');
+    }
+  }, []); */
+
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      const res = await getLoginUser(data);
+      if (res?.status === 200) {
+        // Obtén la fecha actual
+        const now = new Date();
+
+        // Calcula la fecha y hora exactamente 10 segundos en el futuro
+        const in24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+        Cookies.set('token', res.data.email, { expires: in24Hours });
+
+        setUserData(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
   return (
     <ThemeProvider theme={theme}>
