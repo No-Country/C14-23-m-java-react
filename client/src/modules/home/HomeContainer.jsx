@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   Alert,
   Backdrop,
@@ -12,10 +13,11 @@ import IncomeExpenseComponent from './components/IncomeExpenseComponent';
 import ExpenseByCategory from './components/ExpenseByCategory';
 import RecentActivity from './components/RecentActivity';
 import ModalHome from './components/ModalHome';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUser } from '../../context/UserContext';
 import SavingsTotal from './components/SavingsTotal';
 import BalanceInfo from './components/BalanceInfo';
+import Cookies from 'js-cookie';
 
 const HomeContainer = () => {
   const [modal, setModal] = useState(false);
@@ -23,6 +25,15 @@ const HomeContainer = () => {
   const [alert, setAlert] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userData) {
+      Cookies.remove('token');
+      navigate('/login');
+    }
+  }, [userData]);
 
   const handleCloseAlert = () => setAlert(false);
   const handleOpenAlert = (error = false) => {
@@ -41,7 +52,7 @@ const HomeContainer = () => {
   return (
     <Box
       component='main'
-      sx={{ width: 'calc(100vw )', margin: 0, height: 'calc(70vh )', }}
+      sx={{ width: 'calc(100vw )', margin: 0, height: 'calc(70vh )' }}
     >
       {loading && (
         <Backdrop

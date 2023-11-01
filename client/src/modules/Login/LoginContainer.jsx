@@ -33,13 +33,13 @@ const LoginContainer = () => {
   const { getLoginUser, setUserData } = useUser();
   const navigate = useNavigate();
 
-  /*   useEffect(() => {
+  useEffect(() => {
     const exist = Cookies.get('token');
 
     if (exist) {
       navigate('/home');
     }
-  }, []); */
+  }, []);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
