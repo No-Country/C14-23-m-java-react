@@ -3,6 +3,7 @@ import FormAddHome from './FormAddHome';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { PropTypes } from 'prop-types';
 import { expenseCategories } from '../../../helpers/egressCategory';
+import { incomeCategories } from '../../../helpers/incomeCategory';
 
 const ModalHome = ({
   open,
@@ -18,14 +19,6 @@ const ModalHome = ({
     formType: PropTypes.string.isRequired,
     setLoading: PropTypes.func.isRequired,
   };
-
-  const incomeCategories = [
-    { option: 'Sueldo Mensual', value: 'SUELDO_MENSUAL' },
-    { option: 'Préstamo', value: 'PRESTAMO' },
-    { option: 'Clientes', value: 'CLIENTES' },
-    { option: 'Bono - Extra', value: 'BONO_EXTRA' },
-    { option: 'Otros', value: 'OTROS' },
-  ];
 
   const categories =
     formType === 'GASTO' ? expenseCategories : incomeCategories;

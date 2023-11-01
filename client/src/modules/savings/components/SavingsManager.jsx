@@ -220,7 +220,9 @@ function SavingsManager() {
           }}
         >
           <Box p={2}>
-            <Typography>¿Estás seguro de reiniciar?</Typography>
+            <Typography>
+              ¿Estás seguro que deseas reiniciar este monto?
+            </Typography>
             <Button color='error' onClick={handleClosePopover}>
               Cancelar
             </Button>
@@ -304,7 +306,7 @@ function SavingsManager() {
           prefix='$'
           renderText={(value) => (
             <Typography variant='h6'>
-              Saldo disponible:{' '}
+              Saldo Disponible:{' '}
               <span style={{ color: '#00796B' }}>{value}</span>
             </Typography>
           )}

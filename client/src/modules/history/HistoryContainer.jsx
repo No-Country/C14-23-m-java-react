@@ -1,8 +1,7 @@
 import EgressDetails from './components/EgressDetails';
 import IncomeDetails from './components/IncomeDetails';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import HeaderHistory from './components/HeaderHistory';
-
 
 function HistoryContainer() {
   const containerStyle = {
@@ -11,25 +10,20 @@ function HistoryContainer() {
     width: '100%',
     // Establece flexDirection como "column" en pantallas pequeñas
     '@media (max-width: 899px)': {
-      flexDirection: 'column'
+      flexDirection: 'column',
     },
   };
 
   const detailsStyle = {
     display: 'flex',
     flex: '1',
-    justyfyConten:' center',
+    justyfyConten: ' center',
     width: '100vw',
-    
-   
   };
-
-  
 
   return (
     <>
-    <HeaderHistory />
-     
+      <HeaderHistory />
 
       <Box sx={containerStyle}>
         <Box sx={detailsStyle}>

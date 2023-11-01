@@ -59,7 +59,6 @@ function RecentActivity() {
       alignItems='center'
       padding='0.78rem'
     >
-      {console.log('aca', infoCardIncomes)}
       <Typography variant='h5' textAlign={'center'} color={'white'}>
         Ultimos movimientos
       </Typography>

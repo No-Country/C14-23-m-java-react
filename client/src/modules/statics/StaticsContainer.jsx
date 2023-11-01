@@ -129,7 +129,7 @@ const StaticsContainer = () => {
   };
 
   return (
-    <Box component={'main'} sx={{}}>
+    <Box component={'main'} sx={{ pb: '3rem' }}>
       <HeaderStatics />
       <Box
         sx={{

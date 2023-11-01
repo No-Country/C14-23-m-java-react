@@ -1,5 +1,12 @@
-import React from 'react';
-import { Box, Paper, Typography, IconButton, Button } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Box,
+  Paper,
+  Typography,
+  IconButton,
+  Button,
+  Popover,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FlightIcon from '@mui/icons-material/Flight';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
@@ -21,7 +28,7 @@ import HelpOutLineIcon from '@mui/icons-material/HelpOutline';
 import { NumericFormat } from 'react-number-format';
 
 function CardIncomes({
-  delExpenses,
+  delIncome,
   categoryName,
   amount,
   description,
@@ -41,12 +48,10 @@ function CardIncomes({
   const iconsByTitle = {
     OTROS: <HelpOutLineIcon sx={stylesIcon} />,
     SUELDO: <MonetizationOnIcon sx={stylesIcon} />,
-    OTROS: <HelpOutLineIcon sx={stylesIcon} />,
     SUELDO_MENSUAL: <MonetizationOnIcon sx={stylesIcon} />,
     PRESTAMO: <AccountBalanceIcon sx={stylesIcon} />,
     CLIENTES: <AccountCircleIcon sx={stylesIcon} />,
     BONO_EXTRA: <AttachMoneyIcon sx={stylesIcon} />,
-    ALIMENTACION: <FastfoodIcon />,
     ALIMENTACION: <FastfoodIcon sx={stylesIcon} />,
     VIVIENDA: <HomeIcon sx={stylesIcon} />,
     TRANSPORTE: <CommuteIcon sx={stylesIcon} />,
@@ -70,38 +75,41 @@ function CardIncomes({
       padding: '1rem',
       height: '17%',
       justifyContent: 'center',
-      
+
       '@media (max-width: 899px)': {
         width: '80vw',
-      },'@media (max-width: 1366px)': {
-        width:'45vw',
-     },'@media (max-width: 500px)':{
-      width: '85vw'
-     },'@media (max-width: 390px)':{
-      marginLeft: '2rem'
-     }
-      
+      },
+      '@media (max-width: 1366px)': {
+        width: '45vw',
+      },
+      '@media (max-width: 500px)': {
+        width: '85vw',
+      },
+      '@media (max-width: 390px)': {
+        marginLeft: '2rem',
+      },
     },
     button: {
       background: 'transparent', // Fondo transparente
       border: 'none',
       cursor: 'pointer',
-     
+
       '&:hover': {
         color: 'red', // Cambia el color al hacer hover
-      }, justifyContent: 'center',
+      },
+      justifyContent: 'center',
       '@media (max-width: 899px)': {
-         marginLeft: '-1rem',
+        marginLeft: '-1rem',
       },
       '@media (min-width: 750px)': {
-         marginLeft: '-4rem',
-      },'@media (min-width: 899px)': {
+        marginLeft: '-4rem',
+      },
+      '@media (min-width: 899px)': {
         marginLeft: '-2rem',
-     },'@media (min-width: 1366px)': {
-      marginLeft: '-5rem',
-   },
-     
-      
+      },
+      '@media (min-width: 1366px)': {
+        marginLeft: '-5rem',
+      },
     },
     contBtnIcon: {
       display: 'flex',
@@ -114,7 +122,6 @@ function CardIncomes({
       justifyContent: 'flex-start',
       marginBottom: '-1rem',
       marginLeft: '-2rem',
-      
     },
     contInfo: {},
   };
@@ -135,8 +142,76 @@ function CardIncomes({
     }
   };
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleOpenPopover = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClosePopover = () => {
+    setAnchorEl(null);
+  };
+
+  const popoverIsOpen = Boolean(anchorEl);
+  const idPopover = popoverIsOpen ? 'simple-popover' : undefined;
+
+  const handleConfirmPopover = () => {
+    delIncome(id);
+    setAnchorEl(null);
+  };
+
   return (
     <Paper sx={styles.paper}>
+      <Popover
+        id={idPopover}
+        open={popoverIsOpen}
+        anchorEl={anchorEl}
+        onClose={handleClosePopover}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        slotProps={{
+          paper: {
+            sx(theme) {
+              return {
+                [theme.breakpoints.only('xs')]: {
+                  maxWidth: '90%',
+                },
+                [theme.breakpoints.only('sm')]: {
+                  maxWidth: '60%',
+                },
+                [theme.breakpoints.only('md')]: {
+                  maxWidth: '400px',
+                },
+                [theme.breakpoints.up('lg')]: {
+                  maxWidth: '500px',
+                },
+              };
+            },
+          },
+        }}
+      >
+        <Box p={2} textAlign={'center'}>
+          <Typography textAlign={'left'}>
+            Este Ingreso se eliminará y el monto se restará de tu Saldo
+            Disponible.{' '}
+          </Typography>
+          <Typography>¿Deseas continuar con la operación?</Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <Button color='error' onClick={handleClosePopover}>
+              Cancelar
+            </Button>
+            <Button color='success' onClick={handleConfirmPopover}>
+              Aceptar
+            </Button>
+          </Box>
+        </Box>
+      </Popover>
+
       <Box sx={styles.contBtnIcon}>
         <Box
           sx={{
@@ -158,7 +233,7 @@ function CardIncomes({
           </Box>
         </Box>
         <Box sx={styles.contBtn}>
-          <Button onClick={() => delExpenses(id)}>
+          <Button onClick={handleOpenPopover}>
             {' '}
             <IconButton sx={styles.button}>
               <DeleteIcon />
@@ -175,7 +250,14 @@ function CardIncomes({
             alignItems: 'center',
           }}
         >
-          <Typography sx={{ display: 'flex', flex: 1, fontWeight: 'bold', fontSize: '-1rem' }} >
+          <Typography
+            sx={{
+              display: 'flex',
+              flex: 1,
+              fontWeight: 'bold',
+              fontSize: '-1rem',
+            }}
+          >
             {separateWord(categoryName)}
           </Typography>{' '}
           <NumericFormat
@@ -186,7 +268,7 @@ function CardIncomes({
             fixedDecimalScale={true}
             prefix='$'
             renderText={(value) => (
-              <Typography sx={{fontWeight:'bold'}} >{`-${value}`}</Typography>
+              <Typography sx={{ fontWeight: 'bold' }}>{`-${value}`}</Typography>
             )}
           />
         </Box>
@@ -205,7 +287,11 @@ function CardIncomes({
                 textAlign: 'justify',
               }}
             >
-              {description}
+              {description === '' ? (
+                <em>Ingreso sin descripción</em>
+              ) : (
+                description
+              )}
             </Typography>
           </Box>
         </Box>

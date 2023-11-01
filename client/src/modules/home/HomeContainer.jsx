@@ -41,7 +41,7 @@ const HomeContainer = () => {
   return (
     <Box
       component='main'
-      sx={{ width: 'calc(100vw )', margin: 0, height: 'calc(70vh )', }}
+      sx={{ width: 'calc(100vw )', margin: 0, height: 'calc(70vh )' }}
     >
       {loading && (
         <Backdrop
