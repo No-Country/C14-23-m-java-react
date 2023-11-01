@@ -3,6 +3,7 @@ package com.nocountry.finanzas.controller;
 import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.entities.IncomeCategory;
 import com.nocountry.finanzas.exceptions.BadRequestException;
+import com.nocountry.finanzas.exceptions.NotFoundException;
 import com.nocountry.finanzas.models.egress.CustomSearchDTO;
 import com.nocountry.finanzas.models.income.CategoryIncomeDTO;
 import com.nocountry.finanzas.models.income.CreateIncomeDTO;
@@ -34,6 +35,9 @@ public class IncomeController {
     }
 
     //Listar
+    /*
+    NO DEBERIAMOS DE USAR ESE ENDPOINT, PORQ DA TOOODOS LOS INGRESOS, NO IMPORTA EL USUARIO
+
     @GetMapping("/income")
     public ResponseEntity<List<IncomeDTO>> getAllIncome(){
         try{
@@ -44,8 +48,8 @@ public class IncomeController {
         catch (NoSuchElementException e){
             return ResponseEntity.notFound().build();
         }
-
     }
+    */
 
     //Busqueda por Id
     @GetMapping(path = "/income/{id}")
@@ -54,8 +58,18 @@ public class IncomeController {
             IncomeDTO getIncomeById = incomeService.findById(id);
 
             return ResponseEntity.ok(getIncomeById);
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | NotFoundException e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping(path = "/{idUser}/list/income")
+    public ResponseEntity<List<IncomeDTO>> getIncomeByUser(@PathVariable Long idUser) {
+        try {
+            List<IncomeDTO> incomeDto = incomeService.getIncomeByUser(idUser);
+            return new ResponseEntity<>(incomeDto, HttpStatus.OK);
+        } catch (NoSuchElementException | NotFoundException e) {
+            throw new NoSuchElementException(e.getMessage());
         }
     }
 
@@ -66,7 +80,7 @@ public class IncomeController {
             IncomeDTO responseDTO = incomeService.save(requestDTO);
 
             return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | NotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (BadRequestException e) {
             return ResponseEntity.badRequest().build();
@@ -80,7 +94,7 @@ public class IncomeController {
             IncomeDTO updatedIncome = incomeService.updateIncome(requestDTO);
 
             return new ResponseEntity<>(updatedIncome, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | NotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -91,7 +105,7 @@ public class IncomeController {
         try {
             incomeService.delete(id);
             return ResponseEntity.ok().build();
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | NotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -111,7 +125,7 @@ public class IncomeController {
                                                                     @RequestBody CustomSearchDTO customSearchDTO){
         try {
             return ResponseEntity.ok().body(incomeService.findByMonthAndCategory(id,customSearchDTO));
-        }catch (DataAccessException e){
+        }catch (DataAccessException | NotFoundException e){
             return ResponseEntity.badRequest().build();
         }
 

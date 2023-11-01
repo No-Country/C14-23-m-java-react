@@ -1,5 +1,6 @@
 package com.nocountry.finanzas.services.impl;
 
+import com.nocountry.finanzas.config.PasswordConfig;
 import com.nocountry.finanzas.entities.User;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.EmailAlreadyExistsException;
@@ -27,11 +28,15 @@ public class UserServiceImpl implements UserService {
 
     private final BirthdayValidator birthdayValidator;
 
+    private final PasswordConfig passwordConfig;
+
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, EmailValidatorLocal emailValidator, BirthdayValidator birthdayValidator) {
+    public UserServiceImpl(UserRepository userRepository, EmailValidatorLocal emailValidator,
+                           BirthdayValidator birthdayValidator, PasswordConfig passwordConfig) {
         this.userRepository = userRepository;
         this.emailValidator = emailValidator;
         this.birthdayValidator = birthdayValidator;
+        this.passwordConfig = passwordConfig;
     }
 
 
@@ -40,32 +45,66 @@ public class UserServiceImpl implements UserService {
     public UserResponseDTO saveUser(UserRequestDTO userRequestDTO) throws EmailAlreadyExistsException, InvalidEmailType, BadRequestException {
         doEmailValidation(userRequestDTO.getEmail());
         doBirthdayValidation(userRequestDTO.getBirthday_date());
+        doEmailAlreadyExits(userRequestDTO.getEmail());
 
         User user = Mapper.userRequestDTOToUser(userRequestDTO);
 
-        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
-
-        if (existingUser.isPresent()) {
-            throw new EmailAlreadyExistsException("El email ya está registrado.");
-        }
+        String passwordEncode  = passwordConfig.passwordEncoder().encode(userRequestDTO.getPassword());
+        user.setPassword(passwordEncode);
 
         userRepository.save(user);
 
         return Mapper.userToUserResponseDto(user);
     }
 
+    @Transactional
+    @Override
+    public UserResponseDTO loggingUser(UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException {
+        Optional<User> userOptional = userRepository.findByEmail(userLoggingDTO.getEmail());
+        isPresentUser(userOptional);
+
+        User user = userOptional.get();
+
+        boolean isEmailCorrect = user.getEmail().equalsIgnoreCase(userLoggingDTO.getEmail());
+        boolean isPasswordCorrect = checkPassword(userLoggingDTO.getPassword(), user.getPassword());
+
+        if (!isEmailCorrect) {
+            throw new BadRequestException("El usuario no es correcto.");
+        }
+
+        if (!isPasswordCorrect) {
+            throw new BadRequestException("La contraseña no es correcta.");
+        }
+
+        user.setIsLogging(1);
+        userRepository.save(user);
+
+        return Mapper.userToUserResponseDto(user);
+    }
+
+    @Transactional
+    @Override
+    public void logOut(Long id) throws NotFoundException {
+        User user = getUserById(id);
+
+        user.setIsLogging(0);
+    }
+
+
     @Override
     public User getUserById(Long id) throws NotFoundException {
         Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isEmpty()){
-            throw new NotFoundException("Could not found user");
-        }
+        isPresentUser(userOptional);
+
+        isUserLogin(id);
+
         return userOptional.get();
     }
 
     @Transactional
     @Override
     public UserResponseDTO updateUser(Long id, UserUpdateRequestDTO userRequestDTO) throws NotFoundException, EmailAlreadyExistsException, InvalidEmailType {
+        isUserLogin(id);
         User userToEdit = getUserById(id);
 
         if (userRequestDTO.getName() != null && userRequestDTO.getLast_name() != null) {
@@ -75,15 +114,13 @@ public class UserServiceImpl implements UserService {
 
         if (userRequestDTO.getEmail() != null) {
             doEmailValidation(userRequestDTO.getEmail());
+
             Optional<User> existingUser = userRepository.findByEmail(userRequestDTO.getEmail());
 
-            if (existingUser.isPresent()) {
-                throw new EmailAlreadyExistsException("El email ya está registrado.");
+            if (existingUser.isEmpty()) {
+                userToEdit.setEmail(userRequestDTO.getEmail());
             }
-
-            userToEdit.setEmail(userRequestDTO.getEmail());
         }
-
         userRepository.save(userToEdit);
 
         return Mapper.userToUserResponseDto(userToEdit);
@@ -92,15 +129,18 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserResponseDTO updatePasswordUser(Long id, UserPasswordUpdateDTO passwordUpdateDTO) throws BadRequestException, NotFoundException {
+        isUserLogin(id);
         User userToEdit = getUserById(id);
 
-        if (passwordUpdateDTO.getCurrentPassword().equals(userToEdit.getPassword())) {
-            userToEdit.setPassword(passwordUpdateDTO.getNewPassword());
-            userRepository.save(userToEdit);
+        boolean isPasswordCorrect = checkPassword(passwordUpdateDTO.getCurrentPassword(), userToEdit.getPassword());
 
-        } else {
-            throw new BadRequestException("La contraseña original ingresada es incorrecta.");
+        if (!isPasswordCorrect) {
+            throw new BadRequestException("La contraseña original ingresada no es correcta.");
         }
+
+        String passwordEncode  = passwordConfig.passwordEncoder().encode(passwordUpdateDTO.getNewPassword());
+        userToEdit.setPassword(passwordEncode);
+        userRepository.save(userToEdit);
 
         return Mapper.userToUserResponseDto(userToEdit);
     }
@@ -108,10 +148,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void deleteUser(Long id) throws NotFoundException {
+        isUserLogin(id);
 
-        if(userRepository.findById(id).isPresent()){
+        if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
-        }else {
+        } else {
             throw new NotFoundException("No se encuentra para eliminar el usuario con el id "+id);
         }
     }
@@ -144,7 +185,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO addSavings(SavingsDTO toSaving) throws NotFoundException {
-
+        isUserLogin(toSaving.getIdUser());
         User user = userRepository.findById(toSaving.getIdUser()).get();
 
         if (toSaving.getToSaving() > user.getTotalIncome()) {
@@ -157,7 +198,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDTO revertSavings(Long id) {
+    public UserResponseDTO revertSavings(Long id) throws NotFoundException {
+        isUserLogin(id);
         User user = userRepository.findById(id).get();
 
         user.setAccumulatedSavings(0.0);
@@ -166,18 +208,49 @@ public class UserServiceImpl implements UserService {
         return Mapper.userToUserResponseDto(user);
     }
 
-    private void doEmailValidation(String email) throws InvalidEmailType {
-
+    public void doEmailValidation(String email) throws InvalidEmailType {
         if (!emailValidator.isEmailValid(email)) {
             throw new InvalidEmailType("El email ingresado no posee una estructura valida.");
         }
     }
 
-    private void doBirthdayValidation(LocalDate birthday) throws BadRequestException {
+    public void doEmailAlreadyExits(String email) throws EmailAlreadyExistsException {
+        Optional<User> existingUser = userRepository.findByEmail(email);
 
+        if (existingUser.isPresent()) {
+            throw new EmailAlreadyExistsException("El email ya está registrado.");
+        }
+    }
+
+    public void doBirthdayValidation(LocalDate birthday) throws BadRequestException {
         if (!birthdayValidator.isOldest18Years(birthday)) {
             throw new BadRequestException("La fecha ingresada no es mayor de 18 años.");
         }
     }
 
+    public boolean checkPassword(String rawPassword, String encodedPassword) {
+        return passwordConfig.passwordEncoder().matches(rawPassword, encodedPassword);
+    }
+
+    public void isPresentUser(Optional<User> user) throws NotFoundException {
+        if (user.isEmpty()){
+            throw new NotFoundException("Could not found user");
+        }
+    }
+
+    public void isUserLogin(Long id) throws NotFoundException {
+        Optional<User> user = userRepository.findById(id);
+        isPresentUser(user);
+
+        if (user.get().getIsLogging() != 1) {
+            throw new NotFoundException("El usuario no esta logueado.");
+        }
+    }
+
+    public Long getIdOfEmail(String email) throws NotFoundException {
+        Optional<User> user = userRepository.findByEmail(email);
+        isPresentUser(user);
+
+        return user.get().getId();
+    }
 }

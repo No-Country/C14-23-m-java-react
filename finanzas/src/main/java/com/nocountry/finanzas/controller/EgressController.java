@@ -3,6 +3,7 @@ package com.nocountry.finanzas.controller;
 import com.nocountry.finanzas.entities.Egress;
 import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.exceptions.BadRequestException;
+import com.nocountry.finanzas.exceptions.NotFoundException;
 import com.nocountry.finanzas.models.egress.CategoryEgressDTO;
 import com.nocountry.finanzas.models.egress.CreateEgressDTO;
 import com.nocountry.finanzas.models.egress.CustomSearchDTO;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-
 
 @RestController
 @RequestMapping("/user")
@@ -39,11 +39,12 @@ public class EgressController {
         try {
             EgressDTO responseDTO = egressService.getEgressById(id);
             return ResponseEntity.ok(responseDTO);
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | NotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
+    /*
     @GetMapping(path = "/egress")
     public ResponseEntity<List<EgressDTO>> getAllEgress() {
         try {
@@ -53,26 +54,28 @@ public class EgressController {
             return ResponseEntity.notFound().build();
         }
     }
+    NO DEBERIAMOS DE USAR ESE ENDPOINT, PORQ DA TOOODOS LOS EGRESOS, NO IMPORTA EL USUARIO
+     */
 
-    @GetMapping(path = "{idUser}/list/egress/")
+    @GetMapping(path = "/{idUser}/list/egress")
     public ResponseEntity<List<EgressDTO>> getEgressByUser(@PathVariable Long idUser) {
         try {
             List<EgressDTO> egressDTO = egressService.getEgressByUser(idUser);
             return ResponseEntity.ok(egressDTO);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
+        } catch (NoSuchElementException | NotFoundException e) {
+            throw new NoSuchElementException(e.getMessage());
         }
     }
 
     @PostMapping(path = "/egress")
-    public ResponseEntity<EgressDTO> createEgress(@RequestBody @Valid CreateEgressDTO egressDTO) {
+    public ResponseEntity<EgressDTO> createEgress(@RequestBody @Valid CreateEgressDTO egressDTO) throws BadRequestException {
         try {
             EgressDTO responseDTO = egressService.createdEgress(egressDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
+        } catch (NoSuchElementException | NotFoundException e) {
+            throw new NoSuchElementException(e.getMessage());
         } catch (BadRequestException e) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequestException(e.getMessage());
         }
     }
 
@@ -81,8 +84,8 @@ public class EgressController {
         try {
             EgressDTO responseDTO = egressService.updateEgress(egressDTO);
             return new ResponseEntity<>(responseDTO, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
+        } catch (NoSuchElementException | NotFoundException e) {
+            throw new NoSuchElementException(e.getMessage());
         }
     }
 
@@ -91,8 +94,8 @@ public class EgressController {
         try {
             egressService.deleteEgressById(id);
             return ResponseEntity.ok().build();
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
+        } catch (NoSuchElementException | NotFoundException e) {
+            throw new NoSuchElementException(e.getMessage());
         }
     }
 
@@ -102,7 +105,7 @@ public class EgressController {
             EgressCategory egressCategory = egressCategoryService.createEgressCategory(name);
             return new ResponseEntity<>(egressCategory, HttpStatus.OK);
         } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
+            throw new NoSuchElementException(e.getMessage());
         }
     }
 
@@ -110,9 +113,9 @@ public class EgressController {
     public ResponseEntity<List<EgressDTO>> egressByMonthAndCategory(@PathVariable Long id,
                                                                     @RequestBody CustomSearchDTO customSearch){
 
-        try{
+        try {
             return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,customSearch));
-        }catch (DataAccessException e){
+        } catch (DataAccessException | NotFoundException e) {
             return ResponseEntity.badRequest().build();
         }
     }

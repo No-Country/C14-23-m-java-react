@@ -18,7 +18,7 @@ public class IncomeDTO {
     @NotNull(message = "La fecha en la que se realiza el gasto no puede estar vacio")
     private LocalDate date;
 
-    @Size(min = 0, max = 255, message = "La descripción no debe superar los 255 caracteres.")
+    @Size(min = 0, max = 100, message = "La descripción no debe superar los 100 caracteres.")
     private String description;
 
     @NotBlank(message = "El nombre de la categoria del gasto no debe estar vacio")

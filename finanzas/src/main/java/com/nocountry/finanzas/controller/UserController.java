@@ -25,7 +25,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(path = "/register")
+    @PostMapping(path = "/auth/register")
     public ResponseEntity<?> saveUser(@RequestBody @Valid UserRequestDTO userRequestDTO) throws BadRequestException, InvalidEmailType, EmailAlreadyExistsException {
         try {
             UserResponseDTO userResponseDTO = userService.saveUser(userRequestDTO);
@@ -34,6 +34,30 @@ public class UserController {
             throw new BadRequestException(e.getMessage());
         }
     }
+
+    @PostMapping(path = "/auth/authenticate")
+    public ResponseEntity<?> loggingUser(@RequestBody @Valid UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException {
+        try {
+            UserResponseDTO userResponseDTO = userService.loggingUser(userLoggingDTO);
+            return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
+        } catch (DataAccessException e){
+            throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e){
+            throw new NotFoundException(e.getMessage());
+        }
+    }
+
+    @PostMapping(path = "/auth/logOut/{idUser}")
+    public ResponseEntity<?> logOutUser(@PathVariable Long idUser) throws NotFoundException {
+        try {
+            userService.logOut(idUser);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NotFoundException e) {
+            throw new NotFoundException(e.getMessage());
+        }
+    }
+
+
     @GetMapping(path = "/user/{id}")
     public ResponseEntity<?> getUser(@PathVariable Long id) throws NotFoundException, BadRequestException {
 
@@ -55,10 +79,8 @@ public class UserController {
             throw new NotFoundException(e.getMessage());
         } catch (DataAccessException e){
             throw new BadRequestException(e.getMessage());
-        } catch (EmailAlreadyExistsException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidEmailType e) {
-            throw new RuntimeException(e);
+        } catch (EmailAlreadyExistsException | InvalidEmailType e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -76,7 +98,6 @@ public class UserController {
         }
 
     }
-
 
 
     @DeleteMapping(path = "/user/delete/{id}")
@@ -127,6 +148,8 @@ public class UserController {
             return new ResponseEntity<>(userResponseDTO,HttpStatus.OK);
         } catch (DataAccessException e){
             throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
