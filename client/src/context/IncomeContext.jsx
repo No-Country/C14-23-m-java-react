@@ -29,7 +29,7 @@ export function IncomeProvider({ children }) {
   useEffect(() => {
     const getAllIncomes = async () => {
       try {
-        const res = await getIncomes();
+        const res = await getIncomes(1);
         setIncomes(res.data);
       } catch (error) {
         console.log(error);
@@ -40,7 +40,7 @@ export function IncomeProvider({ children }) {
 
   const allIncomes = async () => {
     try {
-      const res = await getIncomes();
+      const res = await getIncomes(1);
       return res.data;
     } catch (error) {
       console.log(error);

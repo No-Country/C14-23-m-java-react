@@ -1,7 +1,7 @@
 import axios from './axios';
 
 //Obtener todos los ingresos
-export const getIncomes = async () => axios.get('/user/income');
+export const getIncomes = async (idUser) => axios.get(`/user/${idUser}/list/income `);
 
 //Agregar un nuevo ingreso
 export const addIncome = async (income) => axios.post('/user/income', income);

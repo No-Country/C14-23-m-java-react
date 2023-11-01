@@ -28,7 +28,7 @@ export function EgressProvider({ children }) {
   useEffect(() => {
     const getAllExpenses = async () => {
       try {
-        const res = await getExpenses();
+        const res = await getExpenses(1);
         setExpenses(res.data);
       } catch (error) {
         console.log(error);
@@ -39,7 +39,7 @@ export function EgressProvider({ children }) {
 
   const allExpenses = async () => {
     try {
-      const res = await getExpenses();
+      const res = await getExpenses(1);
       return res.data;
     } catch (error) {
       console.log(error);
