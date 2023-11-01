@@ -68,11 +68,15 @@ public class UserServiceImpl implements UserService {
         boolean isEmailCorrect = user.getEmail().equalsIgnoreCase(userLoggingDTO.getEmail());
         boolean isPasswordCorrect = checkPassword(userLoggingDTO.getPassword(), user.getPassword());
 
-        if (!isEmailCorrect && !isPasswordCorrect) {
-            throw new BadRequestException("El usuario o contraseña no son correctos");
+        if (!isEmailCorrect) {
+            throw new BadRequestException("El usuario no es correcto");
         }
 
-        userOptional.get().setIsLogging(1);
+        if (!isPasswordCorrect) {
+            throw new BadRequestException("La contraseña no es correcta");
+        }
+
+        user.setIsLogging(1);
         userRepository.save(user);
 
         return Mapper.userToUserResponseDto(user);
@@ -201,6 +205,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean checkPassword(String rawPassword, String encodedPassword) {
+        System.out.println("Password que paso: " + rawPassword);
+        System.out.println("Password registrado: " + encodedPassword);
         return passwordConfig.passwordEncoder().matches(rawPassword, encodedPassword);
     }
 
