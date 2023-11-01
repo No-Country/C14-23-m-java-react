@@ -18,41 +18,81 @@ const SavingsTotal = ({ totalSavings }) => {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        width: '49%',
+       
+        width: '100%',
+        marginTop: '80px',
+        height: '60%',
+
+        '@media (max-width: 700px)': {
+          flexDirection: 'column',
+          width: '90%', // Ajusta el ancho en pantallas pequeñas
+          alignItems: 'center',
+          marginTop: '100px', // Ajusta el margen superior
+        },'@media (min-width: 1700px)': {
+          marginTop: '60px',
+        }
       }}
     >
-      <Box display='flex' alignItems='center'>
-        <AssuredWorkloadIcon
-          sx={{ fontSize: 48, color: '#00796B', marginRight: 2 }}
-        />
-        <Typography variant='h6'>Total de Ahorros</Typography>
-      </Box>
-      <NumericFormat
-        value={totalSavings}
-        thousandSeparator=','
-        displayType='text'
-        decimalScale={2}
-        fixedDecimalScale={true}
-        prefix='$'
-        renderText={(value) => (
-          <Typography color='green' variant='h5'>
-            {value}
+      <Box>
+        <Box
+          display='flex'
+          alignItems='center'
+          sx={{
+            flexDirection: 'row',
+            '@media (max-width: 700px)': {
+              flexDirection: 'column',
+              alignItems: 'center',
+            },
+          }}
+        >
+          <AssuredWorkloadIcon
+            sx={{
+              fontSize: 48,
+              color: '#00796B',
+              marginRight: 2,
+              '@media (max-width: 700px)': {
+               fontSize: 20,
+              },
+            }}
+          />
+          <Typography sx={{fontWeight:'bold',
+            '@media (max-width: 700px)': {
+              fontSize:'15px'
+            },}}>
+            Total de Ahorros
           </Typography>
-        )}
-      />
+        </Box>
+        <NumericFormat
+          value={totalSavings}
+          thousandSeparator=','
+          displayType='text'
+          decimalScale={2}
+          fixedDecimalScale={true}
+          prefix='$'
+          renderText={(value) => (
+            <Typography color='green' fontWeight={'bold'} sx={{
+              '@media (max-width: 700px)': {
+                fontSize:'15px'
+              }}}>
+              {value}
+            </Typography>
+          )}
+        />
+      </Box>
       <Link to={'/savings'}>
         <Button
           variant='contained'
           startIcon={<EditIcon />}
           sx={{
             bgcolor: '#00796B',
-            border: '1px solid  #00796B',
+            border: '1px solid #00796B',
             '&:hover': {
               bgcolor: 'white',
-              border: '1px solid  #00796B',
+              border: '1px solid #00796B',
               color: '#00796B',
             },
           }}
+          className='small-button'
         >
           Editar
         </Button>

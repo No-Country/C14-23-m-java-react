@@ -21,7 +21,7 @@ import HelpOutLineIcon from '@mui/icons-material/HelpOutline';
 import { NumericFormat } from 'react-number-format';
 
 function CardIncomes({
-  delExpenses,
+  delIncome,
   categoryName,
   amount,
   description,
@@ -158,7 +158,7 @@ function CardIncomes({
           </Box>
         </Box>
         <Box sx={styles.contBtn}>
-          <Button onClick={() => delExpenses(id)}>
+          <Button onClick={() =>delIncome(id)}>
             {' '}
             <IconButton sx={styles.button}>
               <DeleteIcon />
@@ -186,7 +186,7 @@ function CardIncomes({
             fixedDecimalScale={true}
             prefix='$'
             renderText={(value) => (
-              <Typography sx={{fontWeight:'bold'}} >{`-${value}`}</Typography>
+              <Typography sx={{fontWeight:'bold'}} >{`${value}`}</Typography>
             )}
           />
         </Box>

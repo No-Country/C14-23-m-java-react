@@ -157,8 +157,14 @@ const ExpenseByCategory = ({ handleOpen }) => {
   }
 
   return (
-    <Paper sx={{ my: 2, width: '300px', p: 2 }}>
-      <Grid container spacing={1}>
+    <Paper sx={{ my: 2, width: '80%', p: 2,marginLeft:'2rem',height:'70vh',
+       '@media (max-width: 400px)': {
+        display: 'flex',
+        
+       width:'85vw',
+       marginLeft: '1.8rem'
+       },}}>
+      <Grid container spacing={1}  >
         <Grid item xs={12}>
           <Button
             onClick={() => handleOpen('INGRESO')}
@@ -174,7 +180,7 @@ const ExpenseByCategory = ({ handleOpen }) => {
             Añadir
           </Button>
         </Grid>
-        <Grid item container xs={12} spacing={1}>
+        <Grid item container xs={12} spacing={1}  sx={{display: 'flex', height: '60vh'} }>
           <Grid item xs={12}>
             <Pie
               data={data}
