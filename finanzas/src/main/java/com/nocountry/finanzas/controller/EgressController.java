@@ -57,7 +57,7 @@ public class EgressController {
     NO DEBERIAMOS DE USAR ESE ENDPOINT, PORQ DA TOOODOS LOS EGRESOS, NO IMPORTA EL USUARIO
      */
 
-    @GetMapping(path = "{idUser}/list/egress")
+    @GetMapping(path = "/{idUser}/list/egress")
     public ResponseEntity<List<EgressDTO>> getEgressByUser(@PathVariable Long idUser) {
         try {
             List<EgressDTO> egressDTO = egressService.getEgressByUser(idUser);

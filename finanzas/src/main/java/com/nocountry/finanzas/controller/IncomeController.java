@@ -63,7 +63,7 @@ public class IncomeController {
         }
     }
 
-    @GetMapping(path = "{idUser}/list/income")
+    @GetMapping(path = "/{idUser}/list/income")
     public ResponseEntity<List<IncomeDTO>> getIncomeByUser(@PathVariable Long idUser) {
         try {
             List<IncomeDTO> incomeDto = incomeService.getIncomeByUser(idUser);
