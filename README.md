@@ -31,7 +31,7 @@ Iniciar el proyecto
 ```
 
 ## Autores
-|Product Manager|Front-End|Back-End|QA|
+|Project Manager|Front-End|Back-End|QA|
 | :-------- | :------- | :------------------ | :-------------------------------- |
 |[Victoria Chaile](https://www.linkedin.com/in/victoria-agustina-chaile/)|[Favian Flores](#)|[Agustin Gomez](#)|[Kimberly Pinto](https://www.linkedin.com/in/kimberly-pinto-perales/)|
 |-|[Hernan Varela](#)|[Melisa Yunis](https://www.linkedin.com/in/melisa-yunis-a536a8254/)|-|
