@@ -10,6 +10,7 @@ public class CustomSearchDTO {
 
     @Nullable
     private Long categoryId;
+
     @Nullable
     private Integer month;
 }

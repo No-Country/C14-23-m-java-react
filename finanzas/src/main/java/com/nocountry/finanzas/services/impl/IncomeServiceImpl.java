@@ -127,7 +127,7 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Override
     public List<IncomeDTO> findByMonthAndCategory(Long id, CustomSearchDTO customSearchDTO) throws NotFoundException {
-        isUserLoginInIncome(id);
+        userService.isUserLogin(id);
 
         int year = LocalDate.now().getYear();
 
