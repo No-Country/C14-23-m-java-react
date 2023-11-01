@@ -27,4 +27,7 @@ public interface EgressService {
 
     public List<EgressDTO> findByMontAndCategory(Long id, CustomSearchDTO customSearchDTO) throws NotFoundException;
 
+    /*public List<EgressDTO> getAllEgressPageable(Long userId, Integer page );*/
+
+
 }

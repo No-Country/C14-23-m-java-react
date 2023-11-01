@@ -101,11 +101,6 @@ public class UserServiceImpl implements UserService {
         return userOptional.get();
     }
 
-    @Override
-    public UserResponseDTO getUserDtoById(Long id) {
-        return null;
-    }
-
     @Transactional
     @Override
     public UserResponseDTO updateUser(Long id, UserUpdateRequestDTO userRequestDTO) throws NotFoundException, EmailAlreadyExistsException, InvalidEmailType {
@@ -154,7 +149,38 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) throws NotFoundException {
         isUserLogin(id);
-        userRepository.deleteById(id);
+
+        if (userRepository.findById(id).isPresent()) {
+            userRepository.deleteById(id);
+        } else {
+            throw new NotFoundException("No se encuentra para eliminar el usuario con el id "+id);
+        }
+    }
+
+    @Transactional
+    @Override
+    public UserLoggingResponse loggingUser(UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException {
+        Optional<User> userOptional = userRepository.findById(userLoggingDTO.getIdUser());
+
+        if (userOptional.isEmpty()){
+            throw new NotFoundException("No se pudo encontrar el usuario");
+        }
+
+        boolean isEmailCorrect = userOptional.get().getEmail().equalsIgnoreCase(userLoggingDTO.getEmail());
+        boolean isPasswordCorrect = userOptional.get().getPassword().equals(userLoggingDTO.getPassword());
+
+        UserLoggingResponse response = Mapper.userToUserLoggingResponseDto(userOptional.get());
+
+        if (isEmailCorrect && isPasswordCorrect) {
+            userOptional.get().setCountLogging(userOptional.get().getCountLogging() + 1);
+            userRepository.save(userOptional.get());
+
+            response.setErrorMessage(null);
+        } else {
+            response.setErrorMessage("Credenciales incorrectas. Verifica tu correo electrónico y contraseña.");
+        }
+
+        return response;
     }
 
     @Override
@@ -165,8 +191,7 @@ public class UserServiceImpl implements UserService {
         if (toSaving.getToSaving() > user.getTotalIncome()) {
             throw new NotFoundException("No hay fondos suficientes para invertir en ahorros.");
         }
-        user.setAccumulatedSavings(user.getAccumulatedSavings() + toSaving.getToSaving());
-        user.setTotalIncome(user.getTotalIncome() - toSaving.getToSaving());
+        user.setAccumulatedSavings(toSaving.getToSaving());
 
         userRepository.save(user);
         return Mapper.userToUserResponseDto(user);
@@ -177,7 +202,6 @@ public class UserServiceImpl implements UserService {
         isUserLogin(id);
         User user = userRepository.findById(id).get();
 
-        user.setTotalIncome(user.getTotalIncome() + user.getAccumulatedSavings());
         user.setAccumulatedSavings(0.0);
 
         userRepository.save(user);
@@ -186,7 +210,7 @@ public class UserServiceImpl implements UserService {
 
     public void doEmailValidation(String email) throws InvalidEmailType {
         if (!emailValidator.isEmailValid(email)) {
-            throw new InvalidEmailType("El email ingresa no posee una estructura valida.");
+            throw new InvalidEmailType("El email ingresado no posee una estructura valida.");
         }
     }
 

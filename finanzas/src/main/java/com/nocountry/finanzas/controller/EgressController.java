@@ -111,7 +111,7 @@ public class EgressController {
 
     @PatchMapping(path = "/egress/month/{id}")
     public ResponseEntity<List<EgressDTO>> egressByMonthAndCategory(@PathVariable Long id,
-                                                         @RequestBody CustomSearchDTO customSearch){
+                                                                    @RequestBody CustomSearchDTO customSearch){
 
         try {
             return ResponseEntity.ok().body(egressService.findByMontAndCategory(id,customSearch));
@@ -119,5 +119,20 @@ public class EgressController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    //Funciona pero debe recibir por defecto el id y la pagina 0 como primera medida
+/*
+    @GetMapping(path = "/egressPageable/{userId}/{page}")
+    public ResponseEntity<List<EgressDTO>> egressPageable(@PathVariable Long userId,
+                                                          @PathVariable Integer page){
+        try {
+            return ResponseEntity.ok().body(egressService.getAllEgressPageable(userId,page)) ;
+
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+*/
+
 
 }

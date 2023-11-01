@@ -16,7 +16,11 @@ import com.nocountry.finanzas.repositories.UserRepository;
 import com.nocountry.finanzas.services.EgressCategoryService;
 import com.nocountry.finanzas.services.EgressService;
 import com.nocountry.finanzas.services.UserService;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -150,6 +154,19 @@ public class EgressServiceImpl implements EgressService {
         }
         return egressMapper.egressDTOList(egressRepository.findAllByUserId(id));
     }
+
+
+/*
+    @Override
+    public List<EgressDTO> getAllEgressPageable(Long userId, Integer page ){
+
+        Pageable egressPageable = PageRequest.of(page, 10);
+        List<Egress> egressList = egressRepository.findAll(egressPageable).getContent();
+
+        return egressMapper.egressDTOList(egressList);
+
+    }
+*/
 
     private CategoryEnum searchCategoryEnum(String name) {
         for (CategoryEnum element: CategoryEnum.values()) {
