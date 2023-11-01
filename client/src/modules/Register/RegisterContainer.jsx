@@ -18,12 +18,13 @@ import {
   Typography,
   createTheme,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUser } from '../../context/UserContext';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import { TbPointFilled } from 'react-icons/tb';
+import Cookies from 'js-cookie';
 
 const theme = createTheme({
   palette: {
@@ -56,6 +57,14 @@ const RegisterContainer = () => {
   const handleOpenAlert = () => setAlert(true);
   const [showMessage, setShowMessage] = useState(false);
 
+  useEffect(() => {
+    const exist = Cookies.get('token');
+
+    if (exist) {
+      navigate('/home');
+    }
+  }, []);
+
   const onSubmit = handleSubmit(async (data) => {
     if (data.country === 'select') {
       setError('country', {
@@ -65,7 +74,13 @@ const RegisterContainer = () => {
     }
     const res = await userRegister(data);
 
-    if (res.status === 201) {
+    if (res?.response?.status === 500) {
+      setError('email', {
+        message: res?.response?.data?.message,
+      });
+    }
+
+    if (res?.status === 201) {
       handleOpenAlert();
       setTimeout(() => navigate('/login'), 3000);
     }

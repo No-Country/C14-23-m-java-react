@@ -3,10 +3,6 @@ import { Box, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import { Button } from '@mui/material';
 
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import HomeIcon from '@mui/icons-material/Home';
 import CommuteIcon from '@mui/icons-material/Commute';
@@ -21,12 +17,15 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import SavingsIcon from '@mui/icons-material/Savings';
 import { NumericFormat } from 'react-number-format';
 
-function TransacCardEgress({ categoryName, amount, date, setLastFiveEgress, info, setInfoCard }) {
-  
-
+function TransacCardEgress({
+  categoryName,
+  amount,
+  date,
+  setLastFiveEgress,
+  info,
+  setInfoCard,
+}) {
   const iconsByTitle = {
-   
-    
     ALIMENTACION: <FastfoodIcon />,
     VIVIENDA: <HomeIcon />,
     TRANSPORTE: <CommuteIcon />,
@@ -37,6 +36,7 @@ function TransacCardEgress({ categoryName, amount, date, setLastFiveEgress, info
     SERVICIOS: <ReceiptIcon />,
     AHORRO_INVERSION: <SavingsIcon />,
     VIAJE_VACACIONES: <FlightIcon />,
+    OTROS: <HelpOutLineIcon />,
   };
   const icon = iconsByTitle[categoryName];
 
@@ -63,7 +63,7 @@ function TransacCardEgress({ categoryName, amount, date, setLastFiveEgress, info
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding :'2%',
+      padding: '2%',
 
       // border: '1px solid #ccc',
       // borderRadius: '4px',
@@ -76,8 +76,6 @@ function TransacCardEgress({ categoryName, amount, date, setLastFiveEgress, info
       flexDirection: 'column',
       flex: 1,
       flexDirection: 'row',
-      
-      
     },
     amount: {
       fontWeight: 'bold',
@@ -85,18 +83,14 @@ function TransacCardEgress({ categoryName, amount, date, setLastFiveEgress, info
       color: 'white',
       marginRight: '1rem',
       display: 'flex',
-      
-     
-     
     },
   };
 
   const handlerBtn = (e) => {
-    e.preventDefault()
-    setLastFiveEgress(false)
-    setInfoCard(info)
-    console.log(info)
-  }
+    e.preventDefault();
+    setLastFiveEgress(false);
+    setInfoCard(info);
+  };
   return (
     <Box sx={styles.container}>
       <Box sx={styles.infoContainer}>
@@ -111,12 +105,33 @@ function TransacCardEgress({ categoryName, amount, date, setLastFiveEgress, info
           }}
         >
           {' '}
-          {icon} 
+          {icon}
         </Typography>
 
-        <Typography sx={{ color: 'white', marginLeft: '1rem'}}  >{separateWord(categoryName)}</Typography>
-
-     
+        <Typography
+          sx={{
+            color: 'white',
+            marginLeft: '1rem',
+            '@media (max-width: 400px)': {
+              fontSize: '8px',
+            },
+            '@media (max-width: 470px)': {
+              fontSize: '12px',
+            },
+            '@media (max-width: 570px)': {
+              fontSize: '13px',
+            },
+            '@media (max-width: 1600px)': {
+              fontSize: '10px',
+            },'@media (max-width: 1800px)': {
+              fontSize: '12px',
+            },'@media (max-width: 1380px)': {
+              fontSize: '10px',
+            },
+          }}
+        >
+          {separateWord(categoryName)}
+        </Typography>
       </Box>
       <Box variant='h6' sx={styles.amount}>
         <NumericFormat
@@ -126,7 +141,31 @@ function TransacCardEgress({ categoryName, amount, date, setLastFiveEgress, info
           decimalScale={2}
           fixedDecimalScale={true}
           prefix='$'
-          renderText={(value) => <Typography variant='h6'>{value}</Typography>}
+          renderText={(value) => (
+            <Typography
+              sx={{
+                '@media (max-width: 400px)': {
+                  fontSize: '8px',
+                },
+                '@media (max-width: 470px)': {
+                  fontSize: '12px',
+                },
+                '@media (max-width: 570px)': {
+                  fontSize: '13px',
+                },
+                '@media (max-width: 1600px)': {
+                  fontSize: '10px',
+                },'@media (max-width: 1800px)': {
+                  fontSize: '12px',
+                },'@media (max-width: 1380px)': {
+                  fontSize: '10px',
+                },
+              }}
+              variant='h6'
+            >
+              {value}
+            </Typography>
+          )}
         />
 
         <Button
@@ -144,7 +183,7 @@ function TransacCardEgress({ categoryName, amount, date, setLastFiveEgress, info
             '&:hover': { background: '#006666' },
           }}
         >
-        <Info  color='white'/>
+          <Info color='white' />
         </Button>
       </Box>
     </Box>

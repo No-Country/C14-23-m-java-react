@@ -52,14 +52,23 @@ function RecentActivity() {
   return (
     <Box
       width='100%'
-      height='100%'
+      height='85vh'
       bgcolor='#00796b'
       display='flex'
       flexDirection='column'
       alignItems='center'
       padding='0.78rem'
     >
-      <Typography variant='h5' textAlign={'center'} color={'white'}>
+      <Typography
+        variant='h5'
+        textAlign={'center'}
+        color={'white'}
+        sx={{
+          '@media (max-width: 400px)': {
+            fontSize: '16px',
+          },
+        }}
+      >
         Ultimos movimientos
       </Typography>
 
@@ -69,7 +78,16 @@ function RecentActivity() {
         onMouseLeave={handleMouseLeave}
       >
         <Box sx={styles.contentContainer}>
-          <Typography variant='h6' textAlign={'center'} sx={{ color: 'white' }}>
+          <Typography
+            variant='h6'
+            textAlign={'center'}
+            sx={{
+              color: 'white',
+              '@media (max-width: 400px)': {
+                fontSize: '16px',
+              },
+            }}
+          >
             Ingresos
           </Typography>
 
@@ -122,7 +140,16 @@ function RecentActivity() {
         onMouseLeave={handleMouseLeave}
       >
         <Box sx={styles.contentContainer}>
-          <Typography variant='h6' textAlign={'center'} sx={{ color: 'white' }}>
+          <Typography
+            variant='h6'
+            textAlign={'center'}
+            sx={{
+              color: 'white',
+              '@media (max-width: 400px)': {
+                fontSize: '16px',
+              },
+            }}
+          >
             Gastos
           </Typography>
 
