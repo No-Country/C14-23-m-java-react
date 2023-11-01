@@ -1,10 +1,11 @@
 import axios from './axios';
 
 //Registrar un nuevo usuario
-export const registerRequest = (user) => axios.post('/api/register', user);
+export const registerRequest = (user) => axios.post('/api/auth/register', user);
 
-//Obtener datos de un usuario
-export const dataUserRequest = (id) => axios.get(`/api/user/${id}`);
+//Obtener datos de un usuario (login)
+export const loginUserRequest = (user) =>
+  axios.post(`/api/auth/authenticate`, user);
 
 //Actualizar datos de un usuario
 export const updateUserRequest = (id, userInfo) =>
@@ -22,11 +23,9 @@ export const updateUserPasswordRequest = (id, data) =>
 export const deleteUserRequest = (id) => axios.delete(`/api/user/${id}`);
 
 //actualizar los ahorros de un usuario
-export const updateUserSavings = ( idUser, toSaving ) =>
-  axios.put('/api/savings',{idUser,toSaving})
+export const updateUserSavings = (idUser, toSaving) =>
+  axios.put('/api/savings', { idUser, toSaving });
 
 //volver los ahorros del usuario a 0
-export const savingsToZero = (id) => 
-  axios.put(`/api/savings/revertState/user/${id}`)
-
-
+export const savingsToZero = (id) =>
+  axios.put(`/api/savings/revertState/user/${id}`);

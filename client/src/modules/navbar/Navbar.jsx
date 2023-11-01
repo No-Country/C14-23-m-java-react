@@ -12,24 +12,26 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useUser } from '../../context/UserContext';
-import logo from '../../assets/logos/logoCashFlow.png';
 
-const navLinks = [
-  { title: 'Inicio', path: '/home' },
-  { title: 'Estadísticas', path: '/statistics' },
-  { title: 'Ahorro', path: '/savings' },
-  { title: 'Historial', path: '/financialHistory' },
-  { title: 'Iniciar sesión', path: '/login' },
-  { title: 'Registrarse', path: '/register' },
-  { title: 'Cuenta', path: '/account' },
-];
+import logo from '../../assets/logos/logoCashFlow.png';
+import Cookies from 'js-cookie';
 
 function NavBar() {
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const { logout } = useUser();
   const navigate = useNavigate();
+
+  const cookie = Cookies.get('token');
+
+  const navLinks = cookie
+    ? [
+        { title: 'Inicio', path: '/home' },
+        { title: 'Estadísticas', path: '/statistics' },
+        { title: 'Ahorro', path: '/savings' },
+        { title: 'Historial', path: '/financialHistory' },
+        { title: 'Cuenta', path: '/account' },
+      ]
+    : [{ title: 'Inicio', path: '/' }];
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -40,7 +42,7 @@ function NavBar() {
   };
 
   const handleLogOut = () => {
-    logout();
+    Cookies.remove('token');
     navigate('/');
     setModalOpen(false);
   };
@@ -93,9 +95,11 @@ function NavBar() {
                 {item.title}
               </Button>
             ))}
-            <Button color='inherit' onClick={handleModalOpen}>
-              Cerrar sesión
-            </Button>
+            {cookie && (
+              <Button color='inherit' onClick={handleModalOpen}>
+                Cerrar sesión
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

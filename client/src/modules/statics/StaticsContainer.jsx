@@ -14,6 +14,9 @@ import { Line } from 'react-chartjs-2';
 import { useEgress } from '../../context/EgressContext';
 import { useIncome } from '../../context/IncomeContext';
 import HeaderStatics from './components/HeaderStatics';
+import { useUser } from '../../context/UserContext';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 ChartJS.register(
   CategoryScale,
@@ -43,6 +46,15 @@ const StaticsContainer = () => {
   const [expenses, setExpenses] = useState([]);
   const { allIncomes, newIncome } = useIncome();
   const [income, setIncome] = useState([]);
+  const { userData } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userData) {
+      Cookies.remove('token');
+      navigate('/login');
+    }
+  }, [userData]);
 
   //gastos
   useEffect(() => {
