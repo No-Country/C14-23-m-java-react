@@ -157,32 +157,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Transactional
-    @Override
-    public UserLoggingResponse loggingUser(UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException {
-        Optional<User> userOptional = userRepository.findById(userLoggingDTO.getIdUser());
-
-        if (userOptional.isEmpty()){
-            throw new NotFoundException("No se pudo encontrar el usuario");
-        }
-
-        boolean isEmailCorrect = userOptional.get().getEmail().equalsIgnoreCase(userLoggingDTO.getEmail());
-        boolean isPasswordCorrect = userOptional.get().getPassword().equals(userLoggingDTO.getPassword());
-
-        UserLoggingResponse response = Mapper.userToUserLoggingResponseDto(userOptional.get());
-
-        if (isEmailCorrect && isPasswordCorrect) {
-            userOptional.get().setCountLogging(userOptional.get().getCountLogging() + 1);
-            userRepository.save(userOptional.get());
-
-            response.setErrorMessage(null);
-        } else {
-            response.setErrorMessage("Credenciales incorrectas. Verifica tu correo electrónico y contraseña.");
-        }
-
-        return response;
-    }
-
     @Override
     public UserResponseDTO addSavings(SavingsDTO toSaving) throws NotFoundException {
         isUserLogin(toSaving.getIdUser());

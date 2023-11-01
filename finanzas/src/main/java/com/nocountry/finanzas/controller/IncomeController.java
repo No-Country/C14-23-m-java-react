@@ -1,6 +1,5 @@
 package com.nocountry.finanzas.controller;
 
-import com.nocountry.finanzas.entities.EgressCategory;
 import com.nocountry.finanzas.entities.IncomeCategory;
 import com.nocountry.finanzas.exceptions.BadRequestException;
 import com.nocountry.finanzas.exceptions.NotFoundException;

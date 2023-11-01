@@ -112,23 +112,6 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "/user/login")
-    public ResponseEntity<?> loggingUser(@RequestBody @Valid UserLoggingDTO userLoggingDTO) throws BadRequestException, NotFoundException {
-        try {
-            UserLoggingResponse userResponseDTO = userService.loggingUser(userLoggingDTO);
-
-            if (userResponseDTO.getErrorMessage() != null) {
-                return new ResponseEntity<>(userResponseDTO, HttpStatus.BAD_REQUEST);
-            }
-
-            return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
-        } catch (DataAccessException e){
-            throw new BadRequestException(e.getMessage());
-        } catch (NotFoundException e){
-            throw new NotFoundException(e.getMessage());
-        }
-    }
-
     @PutMapping(path = "/savings")
     public ResponseEntity<UserResponseDTO> savingsMoney(@RequestBody @Valid SavingsDTO savings) throws BadRequestException, NotFoundException {
         try {
