@@ -17,7 +17,7 @@ function SectionInfo() {
       </Box>
       <Box flex='1'>
         <Typography variant='h5' margin='1rem'>
-          Tus ahorros
+        Gestiona Tus Ahorros
         </Typography>
         <Typography textAlign='justify' margin='1rem'>
           Aquí podrás establecer tus metas de ahorro mensuales. Además, tendrás

@@ -2,8 +2,13 @@ import { Button, CircularProgress, Grid, Paper } from '@mui/material';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
+import IconButton from '@mui/material/IconButton';
+import SettingsIcon from '@mui/icons-material/Settings'; // Icono de configuración
+import InfoIcon from '@mui/icons-material/Info'; // Icono de información
 import TotalAmountHome from './TotalAmountHome';
 import { PropTypes } from 'prop-types';
+import CardInfoAditional from './CardInfoAditional';
+import 'animate.css';
 
 import { useIncome } from '../../../context/IncomeContext';
 
@@ -19,6 +24,7 @@ const ExpenseByCategory = ({ handleOpen }) => {
   const [incomes, setIncomes] = useState([]);
   const [incomeCategories, setIncomeCategories] = useState([]);
   const [loading, setLoading] = useState(true); // Estado de carga
+  const [viewInfo, setViewInfo] = useState(true);
 
   useEffect(() => {
     const getIncomes = async () => {
@@ -81,34 +87,32 @@ const ExpenseByCategory = ({ handleOpen }) => {
 
   const colors = [
     {
-      color: 'rgba(255, 0, 0)',
+      color: '#e35db6',
     },
     {
-      color: 'rgba(0, 255, 0)',
+      color: '#3e5eb0',
+    },
+
+    {
+      color: '#c4b24d',
     },
     {
-      color: 'rgba(0, 0, 255)',
+      color: ' #9749c4',
     },
     {
-      color: 'rgba(255, 255, 0)',
+      color: '#b06c38',
     },
     {
-      color: 'rgba(128, 0, 128)',
+      color: ' #47baba',
     },
     {
-      color: 'rgba(255, 140, 0)',
+      color: ' #7666d4',
     },
     {
-      color: 'rgba(0, 128, 128)',
+      color: ' #858282',
     },
     {
-      color: 'rgba(128, 128, 0)',
-    },
-    {
-      color: 'rgba(255, 0, 255)',
-    },
-    {
-      color: 'rgba(128, 128, 128)',
+      color: '#a13232',
     },
   ];
 
@@ -123,8 +127,8 @@ const ExpenseByCategory = ({ handleOpen }) => {
         label: '%',
         data: calculatePorcentajes(),
         backgroundColor: colors.map((color) => color.color),
-        borderColor: 'white',
-        borderWidth: 1,
+        borderColor: 'black',
+        borderWidth: 2,
       },
     ],
   });
@@ -157,9 +161,28 @@ const ExpenseByCategory = ({ handleOpen }) => {
   }
 
   return (
-    <Paper sx={{ my: 2, width: '300px', p: 2 }}>
+    <Paper
+      sx={{
+        my: 2,
+        width: '80%',
+        p: 2,
+        marginLeft: '2rem',
+        height: '70vh',
+
+        transition: 'box-shadow 0.3s',
+        '&:hover': {
+          boxShadow: '0 0 10px rgba(0, 255, 0, 0.5)',
+        },
+        '@media (max-width: 400px)': {
+          display: 'flex',
+
+          width: '85vw',
+          marginLeft: '1.8rem',
+        },
+      }}
+    >
       <Grid container spacing={1}>
-        <Grid item xs={12}>
+        <Grid item xs={11}>
           <Button
             onClick={() => handleOpen('INGRESO')}
             type='button'
@@ -171,18 +194,46 @@ const ExpenseByCategory = ({ handleOpen }) => {
               '&:hover': { bgcolor: '#006B5B' },
             }}
           >
-            Añadir
+            Añadir Ingreso
           </Button>
         </Grid>
-        <Grid item container xs={12} spacing={1}>
-          <Grid item xs={12}>
-            <Pie
-              data={data}
-              options={{
-                plugins: { legend: { display: true, position: 'bottom' } },
-              }}
-            />
-          </Grid>
+        <Grid xs={1}>
+          <IconButton
+            variant='contained'
+            color='primary'
+            onClick={() => setViewInfo(false)}
+          >
+            <InfoIcon />
+          </IconButton>
+        </Grid>
+
+        <Grid
+          item
+          container
+          xs={12}
+          spacing={1}
+          sx={{ display: 'flex', height: '60vh' }}
+        >
+          {viewInfo ? (
+            <Grid item xs={12}>
+              <Pie
+                data={data}
+                options={{
+                  plugins: { legend: { display: true, position: 'bottom' } },
+                }}
+              />
+            </Grid>
+          ) : (
+            <Grid className='animate__animated  animate__backInDown' item xs={12}>
+              <CardInfoAditional
+                text={
+                  'Estás viendo un  gráfico de tarta que representa el porcentaje de ingresos que has tenido en los últimos 6 meses. Cada ingreso se agrupa en categorías, y los segmentos del gráfico se basan en estas categorías y en la cantidad de ingresos acumulados en cada una. Además, si seleccionas una categoría específica, se eliminará de los cálculos, lo que significa que el gráfico no la tendrá en cuenta al realizar sus totales.'
+                }
+                setView={setViewInfo}
+              />
+            </Grid>
+          )}
+
           <Grid item xs={12}>
             <TotalAmountHome
               text={'Total Ingresos'}

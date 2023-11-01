@@ -1,7 +1,7 @@
 import axios from './axios';
 
 //Obtener todos los gastos
-export const getExpenses = async () => axios.get('/user/egress');
+export const getExpenses = async (id) => axios.get(`/user/${id}/list/egress`);
 
 //Agregar un gasto
 export const addExpenses = async (Expenses) =>

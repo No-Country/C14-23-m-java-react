@@ -1,4 +1,7 @@
 import { Button, CircularProgress, Grid, Paper } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+
+import InfoIcon from '@mui/icons-material/Info'; // Icono de información
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
@@ -80,34 +83,36 @@ const ExpenseByCategory = ({ handleOpen }) => {
 
   const colors = [
     {
-      color: 'rgba(255, 0, 0)',
+      color: '#e35db6',
     },
     {
-      color: 'rgba(0, 255, 0)',
+      color: '#3e5eb0',
     },
     {
-      color: 'rgba(0, 0, 255)',
+      color: '#216e27',
     },
     {
-      color: 'rgba(255, 255, 0)',
+      color: '#c4b24d',
     },
     {
-      color: 'rgba(128, 0, 128)',
+      color: ' #9749c4',
     },
     {
-      color: 'rgba(255, 140, 0)',
+      color: '#b06c38',
     },
     {
-      color: 'rgba(0, 128, 128)',
+      color: ' #47baba',
     },
     {
-      color: 'rgba(128, 128, 0)',
+      color: '#4bbd6d',
     },
     {
-      color: 'rgba(255, 0, 255)',
+      color: ' #7666d4',
     },
     {
-      color: 'rgba(128, 128, 128)',
+      color: ' #858282',
+    }, {
+      color: '#a13232',
     },
   ];
 
@@ -122,8 +127,8 @@ const ExpenseByCategory = ({ handleOpen }) => {
         label: '%',
         data: calculatePorcentajes(),
         backgroundColor: colors.map((color) => color.color),
-        borderColor: 'white',
-        borderWidth: 1,
+        borderColor: 'black',
+        borderWidth: 2,
       },
     ],
   });
@@ -156,9 +161,35 @@ const ExpenseByCategory = ({ handleOpen }) => {
   }
 
   return (
-    <Paper sx={{ my: 2, width: '300px', p: 2 }}>
-      <Grid container spacing={1}>
-        <Grid item xs={12}>
+    <Paper
+      sx={{
+        my: 2,
+        width: '80%',
+        p: 2,
+        height: '70vh',
+        transition: 'box-shadow 0.3s',
+        '&:hover': {
+          boxShadow: '0 0 10px rgba(255, 0, 0, 0.5)',
+        },
+        '@media (max-width: 400px)': {
+          display: 'flex',
+
+          width: '85vw',
+          marginLeft: '1.8rem',
+        },
+      }}
+    >
+      <Grid
+        container
+        spacing={1}
+        sx={{
+          height: '100%',
+          borderRadius: '2%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Grid item xs={11}>
           <Button
             onClick={() => handleOpen('GASTO')}
             type='button'
@@ -170,18 +201,35 @@ const ExpenseByCategory = ({ handleOpen }) => {
               '&:hover': { bgcolor: '#006B5B' },
             }}
           >
-            Añadir
+            Añadir Gasto
           </Button>
         </Grid>
-        <Grid item container xs={12} spacing={1}>
-          <Grid item xs={12}>
+
+        <Grid xs={1}>
+          <IconButton color='primary'>
+            <InfoIcon />
+          </IconButton>
+        </Grid>
+
+        <Grid
+          item
+          container
+          xs={12}
+          spacing={1}
+          sx={{ display: 'flex', height: '60vh',}}
+        >
+          <Grid xs={12} maxHeight={'100%'} >
             <Pie
               data={data}
               options={{
-                plugins: { legend: { display: true, position: 'bottom' } },
+                plugins: {
+                  legend: { display: true, position: 'bottom' },
+                },
+               
               }}
             />
           </Grid>
+
           <Grid item xs={12}>
             <TotalAmountHome
               text={'Total Gastos'}
