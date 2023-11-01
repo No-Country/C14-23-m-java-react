@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
         isUserLogin(id);
         User userToEdit = getUserById(id);
 
-        boolean isPasswordCorrect = checkPassword(passwordUpdateDTO.getNewPassword(), userToEdit.getPassword());
+        boolean isPasswordCorrect = checkPassword(passwordUpdateDTO.getCurrentPassword(), userToEdit.getPassword());
 
         if (!isPasswordCorrect) {
             throw new BadRequestException("La contraseña original ingresada no es correcta.");
