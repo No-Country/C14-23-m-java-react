@@ -138,7 +138,7 @@ public class EgressServiceImpl implements EgressService {
 
     @Override
     public List<EgressDTO> findByMontAndCategory(Long id, CustomSearchDTO customSearchDTO) throws NotFoundException {
-        isUserLoginInEgress(id);
+        userService.isUserLogin(id);
 
         int year = LocalDate.now().getYear();
 
