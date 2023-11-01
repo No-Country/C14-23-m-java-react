@@ -69,11 +69,11 @@ public class UserServiceImpl implements UserService {
         boolean isPasswordCorrect = checkPassword(userLoggingDTO.getPassword(), user.getPassword());
 
         if (!isEmailCorrect) {
-            throw new BadRequestException("El usuario no es correcto");
+            throw new BadRequestException("El usuario no es correcto.");
         }
 
         if (!isPasswordCorrect) {
-            throw new BadRequestException("La contraseña no es correcta");
+            throw new BadRequestException("La contraseña no es correcta.");
         }
 
         user.setIsLogging(1);
@@ -119,12 +119,13 @@ public class UserServiceImpl implements UserService {
 
         if (userRequestDTO.getEmail() != null) {
             doEmailValidation(userRequestDTO.getEmail());
+
             Optional<User> existingUser = userRepository.findByEmail(userRequestDTO.getEmail());
-            isPresentUser(existingUser);
 
-            userToEdit.setEmail(userRequestDTO.getEmail());
+            if (existingUser.isEmpty()) {
+                userToEdit.setEmail(userRequestDTO.getEmail());
+            }
         }
-
         userRepository.save(userToEdit);
 
         return Mapper.userToUserResponseDto(userToEdit);
@@ -136,13 +137,15 @@ public class UserServiceImpl implements UserService {
         isUserLogin(id);
         User userToEdit = getUserById(id);
 
-        if (passwordUpdateDTO.getCurrentPassword().equals(userToEdit.getPassword())) {
-            userToEdit.setPassword(passwordUpdateDTO.getNewPassword());
-            userRepository.save(userToEdit);
+        boolean isPasswordCorrect = checkPassword(passwordUpdateDTO.getNewPassword(), userToEdit.getPassword());
 
-        } else {
-            throw new BadRequestException("La contraseña original ingresada es incorrecta.");
+        if (!isPasswordCorrect) {
+            throw new BadRequestException("La contraseña original ingresada no es correcta.");
         }
+
+        String passwordEncode  = passwordConfig.passwordEncoder().encode(passwordUpdateDTO.getNewPassword());
+        userToEdit.setPassword(passwordEncode);
+        userRepository.save(userToEdit);
 
         return Mapper.userToUserResponseDto(userToEdit);
     }
@@ -182,11 +185,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public void doEmailValidation(String email) throws InvalidEmailType {
-
         if (!emailValidator.isEmailValid(email)) {
             throw new InvalidEmailType("El email ingresa no posee una estructura valida.");
         }
-
     }
 
     public void doEmailAlreadyExits(String email) throws EmailAlreadyExistsException {
@@ -198,15 +199,12 @@ public class UserServiceImpl implements UserService {
     }
 
     public void doBirthdayValidation(LocalDate birthday) throws BadRequestException {
-
         if (!birthdayValidator.isOldest18Years(birthday)) {
             throw new BadRequestException("La fecha ingresada no es mayor de 18 años.");
         }
     }
 
     public boolean checkPassword(String rawPassword, String encodedPassword) {
-        System.out.println("Password que paso: " + rawPassword);
-        System.out.println("Password registrado: " + encodedPassword);
         return passwordConfig.passwordEncoder().matches(rawPassword, encodedPassword);
     }
 
