@@ -1,7 +1,7 @@
 import axios from './axios';
 
 //Obtener todos los gastos
-export const getExpenses = async (userId) => axios.get(`user/${userId}/list/egress/`);
+export const getExpenses = async (userId) => axios.get(`user/${userId}/list/egress`);
 
 //Obtener gastos filtrados
 export const getFilteredExpenses = async (userId, filters) => axios.patch(`/user/egress/month/${userId}`, filters);
