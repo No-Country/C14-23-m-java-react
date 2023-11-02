@@ -38,9 +38,10 @@ const LandingContainer = () => {
           }}
         >
           <Box sx={{ flex: 1 }}>
+            <TextLanding variant='h1' component='h1' text='CASHFLOW' />
             <TextLanding
-              variant='h2'
-              component='h1'
+              variant='h4'
+              component='h2'
               text='Sistema de gestión de finanzas personales'
             />
             <TextLanding
