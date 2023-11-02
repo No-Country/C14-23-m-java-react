@@ -1,43 +1,55 @@
 import React from 'react';
 import { FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
+import PropTypes from 'prop-types';
 
-const FilterComponent = () => {
-  const handleMonthChange = (event) => {
-    const selectedMonth = event.target.value;
-    console.log(`Seleccionaste el mes: ${selectedMonth}`);
-  };
-
-  const handleCategoryChange = (event) => {
-    const selecteCatgory = event.target.value;
-    console.log(`Seleccionaste la categoria: ${selecteCatgory}`);
+const FilterComponent = ({ categories, handleFilters, filters }) => {
+  FilterComponent.propTypes = {
+    categories: PropTypes.array,
+    handleFilters: PropTypes.func,
+    filters: PropTypes.object,
   };
 
   return (
-    <Box  sx={{display: 'flex'}}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
       <FormControl variant='outlined' size='small' sx={{ width: '10rem' }}>
         <InputLabel>Mes</InputLabel>
-        <Select label='Mes' onChange={handleMonthChange}>
-          <MenuItem value=''>Todos</MenuItem>
-          <MenuItem value='enero'>Enero</MenuItem>
-          <MenuItem value='febrero'>Febrero</MenuItem>
-          <MenuItem value='marzo'>Marzo</MenuItem>
-          {/* Agrega más meses según tus necesidades */}
+        <Select
+          name='month'
+          label='Mes'
+          onChange={handleFilters}
+          value={filters.month}
+        >
+          <MenuItem value='all'>Todos</MenuItem>
+          <MenuItem value={1}>Enero</MenuItem>
+          <MenuItem value={2}>Febrero</MenuItem>
+          <MenuItem value={3}>Marzo</MenuItem>
+          <MenuItem value={4}>Abril</MenuItem>
+          <MenuItem value={5}>Mayo</MenuItem>
+          <MenuItem value={6}>Junio</MenuItem>
+          <MenuItem value={7}>Julio</MenuItem>
+          <MenuItem value={8}>Agosto</MenuItem>
+          <MenuItem value={9}>Setiembre</MenuItem>
+          <MenuItem value={10}>Octubre</MenuItem>
+          <MenuItem value={11}>Noviembre</MenuItem>
+          <MenuItem value={12}>Diciembre</MenuItem>
         </Select>
       </FormControl>{' '}
-
-      <FormControl variant="outlined" size="small" sx={{width:'10rem'}}>
-      <InputLabel>Categorias</InputLabel>
-      <Select
-        label="Categorias"
-        onChange={handleCategoryChange}
-      >
-        <MenuItem value="">Todos</MenuItem>
-        <MenuItem value="enero">viajes</MenuItem>
-        <MenuItem value="febrero">vacaciones</MenuItem>
-        <MenuItem value="marzo">Marzo</MenuItem>
-        {/* Agrega más meses según tus necesidades */}
-      </Select>
-    </FormControl>
+      <FormControl variant='outlined' size='small' sx={{ width: '10rem' }}>
+        <InputLabel>Categorias</InputLabel>
+        <Select
+          label='Categorias'
+          name='categoryId'
+          onChange={handleFilters}
+          value={filters.categoryId}
+        >
+          <MenuItem value='all'>Todas</MenuItem>
+          {categories?.map((category) => (
+            <MenuItem key={category.id} value={category.id}>
+              {category.option}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </Box>
   );
 };

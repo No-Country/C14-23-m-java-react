@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
-import { addExpenses, deleteExpenses, getExpenses } from '../API/egress';
+import {
+  addExpenses,
+  deleteExpenses,
+  getExpenses,
+  getFilteredExpenses,
+} from '../API/egress';
 import { useUser } from './UserContext';
 
 const EgressContext = createContext();
@@ -23,26 +28,37 @@ export function EgressProvider({ children }) {
   const [deleteExpense, setDelExpense] = useState([]);
   const [expenses, setExpenses] = useState([]);
 
-  const { setUserData } = useUser();
+  const { setUserData, userData } = useUser();
 
   useEffect(() => {
     const getAllExpenses = async () => {
       try {
-        const res = await getExpenses();
+        const res = await getExpenses(userData.idUser);
         setExpenses(res.data);
       } catch (error) {
         console.log(error);
       }
     };
-    getAllExpenses();
-  }, []);
+    if (userData) {
+      getAllExpenses();
+    }
+  }, [userData]);
 
   const allExpenses = async () => {
     try {
-      const res = await getExpenses();
+      const res = await getExpenses(userData?.idUser);
       return res.data;
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const allFilteredExpenses = async (id, filters) => {
+    try {
+      const res = await getFilteredExpenses(id, filters);
+      return res;
+    } catch (error) {
+      return error;
     }
   };
 
@@ -78,8 +94,9 @@ export function EgressProvider({ children }) {
           totalIncome: prev.totalIncome + amountOfExpenseToDelete,
         }));
       }
+      return res;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -88,6 +105,7 @@ export function EgressProvider({ children }) {
       value={{
         expenses,
         allExpenses,
+        allFilteredExpenses,
         addNewGasto,
         delExpense,
         newExpense,

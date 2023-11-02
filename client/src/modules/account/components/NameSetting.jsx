@@ -45,12 +45,13 @@ const NameSetting = () => {
     return true;
   };
 
-  const { getDataUser } = useUser();
+  const { userData } = useUser();
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const { name, last_name } = await getDataUser(1);
+        // const { name, last_name } = await getDataUser(1);
+        const { name, last_name } = userData;
 
         setValue('name', name);
         setValue('last_name', last_name);
@@ -61,17 +62,19 @@ const NameSetting = () => {
         setResponse({ success: null, loading: false, error: true });
       }
     };
-
-    getUser();
-  }, [getDataUser, setValue]);
+    if (userData) {
+      getUser();
+    }
+  }, [setValue, userData]);
 
   const { partialUpdateUser } = useUser();
 
   const onSubmit = handleSubmit(async (data) => {
     setLoading(true);
     try {
-      const res = await partialUpdateUser(1, data);
+      const res = await partialUpdateUser(userData.idUser, data);
       const { name, last_name } = res.data;
+
       setOriginalData({ name, last_name });
     } catch {
       setError(true);

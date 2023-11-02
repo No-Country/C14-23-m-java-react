@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -9,10 +10,22 @@ import {
 import TextLanding from './components/TextLanding';
 import ImageLanding from './components/ImageLanding';
 import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 const LandingContainer = () => {
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const exist = Cookies.get('token');
+
+    if (exist) {
+      navigate('/home');
+    }
+  }, []);
 
   return (
     <Box>
@@ -25,9 +38,10 @@ const LandingContainer = () => {
           }}
         >
           <Box sx={{ flex: 1 }}>
+            <TextLanding variant='h1' component='h1' text='CASHFLOW' />
             <TextLanding
-              variant='h2'
-              component='h1'
+              variant='h4'
+              component='h2'
               text='Sistema de gestión de finanzas personales'
             />
             <TextLanding

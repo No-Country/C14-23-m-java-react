@@ -12,24 +12,13 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useUser } from '../../context/UserContext';
+
 import logo from '../../assets/logos/logoCashFlow.png';
 import Cookies from 'js-cookie';
-
-/* [
-    { title: 'Inicio', path: '/home' },
-    { title: 'Estadísticas', path: '/statistics' },
-    { title: 'Ahorro', path: '/savings' },
-    { title: 'Historial', path: '/financialHistory' },
-    { title: 'Iniciar sesión', path: '/login' },
-    { title: 'Registrarse', path: '/register' },
-    { title: 'Cuenta', path: '/account' },
-  ]; */
 
 function NavBar() {
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const { logout } = useUser();
   const navigate = useNavigate();
 
   const cookie = Cookies.get('token');

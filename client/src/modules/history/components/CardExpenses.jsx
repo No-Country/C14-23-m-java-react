@@ -1,5 +1,12 @@
-import React from 'react';
-import { Box, Paper, Typography, IconButton, Button } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Box,
+  Paper,
+  Typography,
+  IconButton,
+  Button,
+  Popover,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FlightIcon from '@mui/icons-material/Flight';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
@@ -39,14 +46,12 @@ function CardExpenses({
     alignItems: 'center',
   };
   const iconsByTitle = {
-    OTROS: <HelpOutLineIcon sx={stylesIcon} />,
     SUELDO: <MonetizationOnIcon sx={stylesIcon} />,
     OTROS: <HelpOutLineIcon sx={stylesIcon} />,
     SUELDO_MENSUAL: <MonetizationOnIcon sx={stylesIcon} />,
     PRESTAMO: <AccountBalanceIcon sx={stylesIcon} />,
     CLIENTES: <AccountCircleIcon sx={stylesIcon} />,
     BONO_EXTRA: <AttachMoneyIcon sx={stylesIcon} />,
-    ALIMENTACION: <FastfoodIcon />,
     ALIMENTACION: <FastfoodIcon sx={stylesIcon} />,
     VIVIENDA: <HomeIcon sx={stylesIcon} />,
     TRANSPORTE: <CommuteIcon sx={stylesIcon} />,
@@ -72,35 +77,38 @@ function CardExpenses({
       justifyContent: 'center',
       '@media (max-width: 899px)': {
         width: '80vw',
-      },'@media (max-width: 1366px)': {
-        width:'45vw',
-     },'@media (max-width: 500px)':{
-      width: '85vw'
-     },'@media (max-width: 390px)':{
-      marginLeft: '2rem'
-     }
-      
+      },
+      '@media (max-width: 1366px)': {
+        width: '45vw',
+      },
+      '@media (max-width: 500px)': {
+        width: '85vw',
+      },
+      '@media (max-width: 390px)': {
+        marginLeft: '2rem',
+      },
     },
     button: {
       background: 'transparent', // Fondo transparente
       border: 'none',
       cursor: 'pointer',
-     
+
       '&:hover': {
         color: 'red', // Cambia el color al hacer hover
-      }, justifyContent: 'center',
+      },
+      justifyContent: 'center',
       '@media (max-width: 899px)': {
-         marginLeft: '-1rem',
+        marginLeft: '-1rem',
       },
       '@media (min-width: 750px)': {
-         marginLeft: '-4rem',
-      },'@media (min-width: 899px)': {
+        marginLeft: '-4rem',
+      },
+      '@media (min-width: 899px)': {
         marginLeft: '-2rem',
-     },'@media (min-width: 1366px)': {
-      marginLeft: '-5rem',
-   },
-     
-      
+      },
+      '@media (min-width: 1366px)': {
+        marginLeft: '-5rem',
+      },
     },
     contBtnIcon: {
       display: 'flex',
@@ -113,7 +121,6 @@ function CardExpenses({
       justifyContent: 'flex-start',
       marginBottom: '-1rem',
       marginLeft: '-2rem',
-      
     },
     contInfo: {},
   };
@@ -134,8 +141,75 @@ function CardExpenses({
     }
   };
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleOpenPopover = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClosePopover = () => {
+    setAnchorEl(null);
+  };
+
+  const popoverIsOpen = Boolean(anchorEl);
+  const idPopover = popoverIsOpen ? 'simple-popover' : undefined;
+
+  const handleConfirmPopover = () => {
+    delExpenses(id);
+    setAnchorEl(null);
+  };
+
   return (
     <Paper sx={styles.paper}>
+      <Popover
+        id={idPopover}
+        open={popoverIsOpen}
+        anchorEl={anchorEl}
+        onClose={handleClosePopover}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        slotProps={{
+          paper: {
+            sx(theme) {
+              return {
+                [theme.breakpoints.only('xs')]: {
+                  maxWidth: '90%',
+                },
+                [theme.breakpoints.only('sm')]: {
+                  maxWidth: '60%',
+                },
+                [theme.breakpoints.only('md')]: {
+                  maxWidth: '400px',
+                },
+                [theme.breakpoints.up('lg')]: {
+                  maxWidth: '500px',
+                },
+              };
+            },
+          },
+        }}
+      >
+        <Box p={2} textAlign={'center'}>
+          <Typography textAlign={'left'}>
+            Este Gasto se eliminará y el monto se sumará a tu Saldo Disponible.{' '}
+          </Typography>
+          <Typography>¿Deseas continuar con la operación?</Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <Button color='error' onClick={handleClosePopover}>
+              Cancelar
+            </Button>
+            <Button color='success' onClick={handleConfirmPopover}>
+              Aceptar
+            </Button>
+          </Box>
+        </Box>
+      </Popover>
+
       <Box sx={styles.contBtnIcon}>
         <Box
           sx={{
@@ -157,12 +231,9 @@ function CardExpenses({
           </Box>
         </Box>
         <Box sx={styles.contBtn}>
-          <Button onClick={() => delExpenses(id)}>
-            {' '}
-            <IconButton sx={styles.button}>
-              <DeleteIcon />
-            </IconButton>
-          </Button>
+          <IconButton onClick={handleOpenPopover} sx={styles.button}>
+            <DeleteIcon />
+          </IconButton>
         </Box>
       </Box>
 
@@ -174,7 +245,14 @@ function CardExpenses({
             alignItems: 'center',
           }}
         >
-          <Typography sx={{ display: 'flex', flex: 1, fontWeight: 'bold', fontSize: '-1rem' }} >
+          <Typography
+            sx={{
+              display: 'flex',
+              flex: 1,
+              fontWeight: 'bold',
+              fontSize: '-1rem',
+            }}
+          >
             {separateWord(categoryName)}
           </Typography>{' '}
           <NumericFormat
@@ -185,7 +263,7 @@ function CardExpenses({
             fixedDecimalScale={true}
             prefix='$'
             renderText={(value) => (
-              <Typography sx={{fontWeight:'bold'}} >{`-${value}`}</Typography>
+              <Typography sx={{ fontWeight: 'bold' }}>{`-${value}`}</Typography>
             )}
           />
         </Box>
@@ -204,7 +282,11 @@ function CardExpenses({
                 textAlign: 'justify',
               }}
             >
-              {description}
+              {description === '' ? (
+                <em>Gasto sin descripción</em>
+              ) : (
+                description
+              )}
             </Typography>
           </Box>
         </Box>

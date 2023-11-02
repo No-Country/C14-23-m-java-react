@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react';
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { getIncomes, addIncome, deleteIncome } from '../API/income';
+import {
+  getIncomes,
+  addIncome,
+  deleteIncome,
+  getFilteredIncomes,
+} from '../API/income';
 import { useUser } from './UserContext';
 
 const IncomeContext = createContext();
@@ -24,26 +29,37 @@ export function IncomeProvider({ children }) {
   const [deleteOneIncome, setDeleteOneIncome] = useState();
   const [incomes, setIncomes] = useState([]);
 
-  const { setUserData } = useUser();
+  const { setUserData, userData } = useUser();
 
   useEffect(() => {
     const getAllIncomes = async () => {
       try {
-        const res = await getIncomes();
+        const res = await getIncomes(userData.idUser);
         setIncomes(res.data);
       } catch (error) {
         console.log(error);
       }
     };
-    getAllIncomes();
-  }, []);
+    if (userData) {
+      getAllIncomes();
+    }
+  }, [userData]);
 
   const allIncomes = async () => {
     try {
-      const res = await getIncomes();
+      const res = await getIncomes(userData?.idUser);
       return res.data;
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const allFilteredIncomes = async (id, filters) => {
+    try {
+      const res = await getFilteredIncomes(id, filters);
+      return res;
+    } catch (error) {
+      return error;
     }
   };
 
@@ -80,8 +96,9 @@ export function IncomeProvider({ children }) {
           totalIncome: prev.totalIncome - amountOfIncomeToDelete,
         }));
       }
+      return res;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -89,6 +106,7 @@ export function IncomeProvider({ children }) {
     <IncomeContext.Provider
       value={{
         allIncomes,
+        allFilteredIncomes,
         addNewIncome,
         delIncome,
         newIncome,

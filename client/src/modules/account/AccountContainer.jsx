@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Tab,
@@ -8,11 +9,13 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NameSetting from './components/NameSetting';
 import PasswordSetting from './components/PasswordSetting';
 import EmailSetting from './components/EmailSetting';
 import HeaderAccount from './components/HeaderAccount';
+import { useUser } from '../../context/UserContext';
+import Cookies from 'js-cookie';
 
 const AccountContainer = () => {
   const theme = createTheme({
@@ -22,6 +25,16 @@ const AccountContainer = () => {
       },
     },
   });
+
+  const { userData } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userData) {
+      Cookies.remove('token');
+      navigate('/login');
+    }
+  }, [userData]);
 
   const isMobile = useMediaQuery('(max-width:600px)');
 

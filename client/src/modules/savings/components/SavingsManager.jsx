@@ -62,7 +62,7 @@ function SavingsManager() {
       userData.accumulatedSavings + parseFloat(data.amount)
     ).toFixed(2);
 
-    const res = await updateSaving(1, newAmount);
+    const res = await updateSaving(userData.idUser, newAmount);
 
     if (res.status === 200) {
       setTimeout(() => reset({ amount: '' }), 0);
@@ -79,7 +79,7 @@ function SavingsManager() {
   const handleResetClick = async () => {
     setError(false);
     setLoading(true);
-    const res = await delSaving(1);
+    const res = await delSaving(userData.idUser);
 
     if (res.status === 200) {
       setTimeout(() => handleCloseDeleteAlert(), 3000);
@@ -220,7 +220,9 @@ function SavingsManager() {
           }}
         >
           <Box p={2}>
-            <Typography>¿Estás seguro de reiniciar?</Typography>
+            <Typography>
+              ¿Estás seguro que deseas reiniciar este monto?
+            </Typography>
             <Button color='error' onClick={handleClosePopover}>
               Cancelar
             </Button>
@@ -304,7 +306,7 @@ function SavingsManager() {
           prefix='$'
           renderText={(value) => (
             <Typography variant='h6'>
-              Saldo disponible:{' '}
+              Saldo Disponible:{' '}
               <span style={{ color: '#00796B' }}>{value}</span>
             </Typography>
           )}

@@ -21,17 +21,22 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import SavingsIcon from '@mui/icons-material/Savings';
 import { NumericFormat } from 'react-number-format';
 
-function TransactionCard({ categoryName, amount, date, setLastFiveIncom, info, setInfoCard }) {
-  
-
+function TransactionCard({
+  categoryName,
+  amount,
+  date,
+  setLastFiveIncom,
+  info,
+  setInfoCard,
+}) {
   const iconsByTitle = {
-   
     PRESTAMO: <AccountBalanceIcon />,
     CLIENTES: <AccountCircleIcon />,
     BONO_EXTRA: <AttachMoneyIcon />,
     SUELDO_MENSUAL: <MonetizationOnIcon />,
-    OTROS: <HelpOutLineIcon />,}
-   
+    OTROS: <HelpOutLineIcon />,
+  };
+
   const icon = iconsByTitle[categoryName];
 
   //funcion para separa palabras
@@ -70,7 +75,6 @@ function TransactionCard({ categoryName, amount, date, setLastFiveIncom, info, s
       flexDirection: 'column',
       flex: 1,
       flexDirection: 'row',
-      
     },
     amount: {
       fontWeight: 'bold',
@@ -78,17 +82,17 @@ function TransactionCard({ categoryName, amount, date, setLastFiveIncom, info, s
       color: 'white',
       marginRight: '1rem',
       display: 'flex',
-     
+      width: '50%'
      
     },
   };
 
   const handlerBtn = (e) => {
-    e.preventDefault()
-    setLastFiveIncom(false)
-    setInfoCard(info)
-    console.log(info)
-  }
+    e.preventDefault();
+    setLastFiveIncom(false);
+    setInfoCard(info);
+    console.log(info);
+  };
   return (
     <Box sx={styles.container}>
       <Box sx={styles.infoContainer}>
@@ -103,12 +107,33 @@ function TransactionCard({ categoryName, amount, date, setLastFiveIncom, info, s
           }}
         >
           {' '}
-          {icon} 
+          {icon}
         </Typography>
 
-        <Typography sx={{ color: 'white', marginLeft: '1rem'}}  >{separateWord(categoryName)}</Typography>
-
-     
+        <Typography
+          sx={{
+            color: 'white',
+            marginLeft: '1rem',
+            '@media (max-width: 400px)': {
+              fontSize: '8px',
+            },
+            '@media (max-width: 470px)': {
+              fontSize: '12px',
+            },
+            '@media (max-width: 570px)': {
+              fontSize: '13px',
+            },
+            '@media (max-width: 1600px)': {
+              fontSize: '10px',
+            },'@media (max-width: 1800px)': {
+              fontSize: '12px',
+            },'@media (max-width: 1380px)': {
+              fontSize: '10px',
+            },
+          }}
+        >
+          {separateWord(categoryName)}
+        </Typography>
       </Box>
       <Box variant='h6' sx={styles.amount}>
         <NumericFormat
@@ -118,7 +143,31 @@ function TransactionCard({ categoryName, amount, date, setLastFiveIncom, info, s
           decimalScale={2}
           fixedDecimalScale={true}
           prefix='$'
-          renderText={(value) => <Typography variant='h6'>{value}</Typography>}
+          renderText={(value) => (
+            <Typography
+              sx={{
+                '@media (max-width: 400px)': {
+                  fontSize: '8px',
+                },
+                '@media (max-width: 470px)': {
+                  fontSize: '12px',
+                },
+                '@media (max-width: 570px)': {
+                  fontSize: '13px',
+                },
+                '@media (max-width: 1600px)': {
+                  fontSize: '12px',
+                },'@media (max-width: 1800px)': {
+                  fontSize: '14px',
+                },'@media (max-width: 1380px)': {
+                  fontSize: '10px',
+                },
+              }}
+              variant='h6'
+            >
+              {value}
+            </Typography>
+          )}
         />
 
         <Button
@@ -136,7 +185,7 @@ function TransactionCard({ categoryName, amount, date, setLastFiveIncom, info, s
             '&:hover': { background: '#006666' },
           }}
         >
-        <Info  color='white'/>
+          <Info color='white' />
         </Button>
       </Box>
     </Box>
