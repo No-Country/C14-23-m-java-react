@@ -18,6 +18,7 @@ import CardIncomes from './CardIncomes';
 import FilterComponent from './FilterComponent';
 import { incomeCategories } from '../../../helpers/incomeCategory';
 import { NumericFormat } from 'react-number-format';
+import { useUser } from '../../../context/UserContext';
 
 function IncomeDetails() {
   const [isHovered, setIsHovered] = useState(false);
@@ -42,12 +43,13 @@ function IncomeDetails() {
   };
 
   const { delIncome, allFilteredIncomes } = useIncome(); // uso el contexto
+  const { userData } = useUser();
 
   useEffect(() => {
     async function getFilteredData() {
       setError(false);
       setLoading(true);
-      const res = await allFilteredIncomes(1, {
+      const res = await allFilteredIncomes(userData.idUser, {
         categoryId: filters.categoryId === 'all' ? null : filters.categoryId,
         month: filters.month === 'all' ? null : filters.month,
       });
@@ -59,8 +61,10 @@ function IncomeDetails() {
       }
       setLoading(false);
     }
-    getFilteredData();
-  }, [filters, allFilteredIncomes]);
+    if (userData) {
+      getFilteredData();
+    }
+  }, [filters, allFilteredIncomes, userData]);
 
   const handleDeleteIncome = async (id) => {
     setDelResponse({ loading: true, error: false });

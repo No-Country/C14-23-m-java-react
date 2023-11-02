@@ -42,12 +42,12 @@ const EmailSetting = () => {
     return true;
   };
 
-  const { getDataUser, partialUpdateUser } = useUser();
+  const { getDataUser, partialUpdateUser, userData } = useUser();
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const { email } = await getDataUser(1);
+        const { email } = userData;
 
         setValue('email', email);
 
@@ -59,12 +59,12 @@ const EmailSetting = () => {
     };
 
     getUser();
-  }, [getDataUser, setValue]);
+  }, [getDataUser, setValue, userData]);
 
   const onSubmit = handleSubmit(async (data) => {
     setLoading(true);
     try {
-      const res = await partialUpdateUser(1, data);
+      const res = await partialUpdateUser(userData.idUser, data);
       const { email } = res.data;
       setOriginalData({ email });
     } catch (error) {

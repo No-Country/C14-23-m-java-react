@@ -31,20 +31,17 @@ const PasswordSetting = () => {
     },
   });
 
-  const { updateUserPassword } = useUser();
+  const { updateUserPassword, userData } = useUser();
 
   const { handleSubmit, reset, watch } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     const { currentPassword, newPassword } = data;
     const newData = { currentPassword, newPassword };
-    //Test
-    //password userId 1 : Usuario1111#
-    //password userId 2 : Usuario2222#
 
     setLoading(true);
     setError(false);
-    const res = await updateUserPassword(1, newData);
+    const res = await updateUserPassword(userData.idUser, newData);
     if (res.status === 200) {
       reset();
     } else {

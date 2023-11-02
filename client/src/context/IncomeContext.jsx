@@ -29,23 +29,25 @@ export function IncomeProvider({ children }) {
   const [deleteOneIncome, setDeleteOneIncome] = useState();
   const [incomes, setIncomes] = useState([]);
 
-  const { setUserData } = useUser();
+  const { setUserData, userData } = useUser();
 
   useEffect(() => {
     const getAllIncomes = async () => {
       try {
-        const res = await getIncomes(1);
+        const res = await getIncomes(userData.idUser);
         setIncomes(res.data);
       } catch (error) {
         console.log(error);
       }
     };
-    getAllIncomes();
-  }, []);
+    if (userData) {
+      getAllIncomes();
+    }
+  }, [userData]);
 
   const allIncomes = async () => {
     try {
-      const res = await getIncomes(1);
+      const res = await getIncomes(userData?.idUser);
       return res.data;
     } catch (error) {
       console.log(error);

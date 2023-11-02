@@ -62,7 +62,7 @@ function SavingsManager() {
       userData.accumulatedSavings + parseFloat(data.amount)
     ).toFixed(2);
 
-    const res = await updateSaving(1, newAmount);
+    const res = await updateSaving(userData.idUser, newAmount);
 
     if (res.status === 200) {
       setTimeout(() => reset({ amount: '' }), 0);
@@ -79,7 +79,7 @@ function SavingsManager() {
   const handleResetClick = async () => {
     setError(false);
     setLoading(true);
-    const res = await delSaving(1);
+    const res = await delSaving(userData.idUser);
 
     if (res.status === 200) {
       setTimeout(() => handleCloseDeleteAlert(), 3000);

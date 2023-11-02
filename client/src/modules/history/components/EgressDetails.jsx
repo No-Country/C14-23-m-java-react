@@ -18,6 +18,7 @@ import CardExpenses from './CardExpenses';
 import FilterComponent from './FilterComponent';
 import { expenseCategories } from '../../../helpers/egressCategory';
 import { NumericFormat } from 'react-number-format';
+import { useUser } from '../../../context/UserContext';
 
 function EgressDetails() {
   const [isHovered, setIsHovered] = useState(false);
@@ -42,12 +43,13 @@ function EgressDetails() {
   };
 
   const { delExpense, allFilteredExpenses } = useEgress(); // uso el contexto
+  const { userData } = useUser();
 
   useEffect(() => {
     async function getFilteredData() {
       setError(false);
       setLoading(true);
-      const res = await allFilteredExpenses(1, {
+      const res = await allFilteredExpenses(userData.idUser, {
         categoryId: filters.categoryId === 'all' ? null : filters.categoryId,
         month: filters.month === 'all' ? null : filters.month,
       });
@@ -59,8 +61,10 @@ function EgressDetails() {
       }
       setLoading(false);
     }
-    getFilteredData();
-  }, [filters, allFilteredExpenses]);
+    if (userData) {
+      getFilteredData();
+    }
+  }, [filters, allFilteredExpenses, userData]);
 
   const handleDeleteExpense = async (id) => {
     setDelResponse({ loading: true, error: false });

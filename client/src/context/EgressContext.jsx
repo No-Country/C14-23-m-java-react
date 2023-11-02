@@ -28,23 +28,25 @@ export function EgressProvider({ children }) {
   const [deleteExpense, setDelExpense] = useState([]);
   const [expenses, setExpenses] = useState([]);
 
-  const { setUserData } = useUser();
+  const { setUserData, userData } = useUser();
 
   useEffect(() => {
     const getAllExpenses = async () => {
       try {
-        const res = await getExpenses(1);
+        const res = await getExpenses(userData.idUser);
         setExpenses(res.data);
       } catch (error) {
         console.log(error);
       }
     };
-    getAllExpenses();
-  }, []);
+    if (userData) {
+      getAllExpenses();
+    }
+  }, [userData]);
 
   const allExpenses = async () => {
     try {
-      const res = await getExpenses(1);
+      const res = await getExpenses(userData?.idUser);
       return res.data;
     } catch (error) {
       console.log(error);
