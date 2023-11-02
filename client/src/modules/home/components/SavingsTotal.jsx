@@ -18,19 +18,19 @@ const SavingsTotal = ({ totalSavings }) => {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-       
+
         width: '100%',
-        marginTop: '80px',
+        // marginTop: '80px',
         height: '60%',
 
         '@media (max-width: 700px)': {
           flexDirection: 'column',
           width: '90%', // Ajusta el ancho en pantallas pequeñas
           alignItems: 'center',
-          marginTop: '100px', // Ajusta el margen superior
-        },'@media (min-width: 1700px)': {
+        },
+        '@media (min-width: 1700px)': {
           marginTop: '60px',
-        }
+        },
       }}
     >
       <Box>
@@ -51,14 +51,18 @@ const SavingsTotal = ({ totalSavings }) => {
               color: '#00796B',
               marginRight: 2,
               '@media (max-width: 700px)': {
-               fontSize: 20,
+                fontSize: 20,
               },
             }}
           />
-          <Typography sx={{fontWeight:'bold',
-            '@media (max-width: 700px)': {
-              fontSize:'15px'
-            },}}>
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+              '@media (max-width: 700px)': {
+                fontSize: '15px',
+              },
+            }}
+          >
             Total de Ahorros
           </Typography>
         </Box>
@@ -70,10 +74,15 @@ const SavingsTotal = ({ totalSavings }) => {
           fixedDecimalScale={true}
           prefix='$'
           renderText={(value) => (
-            <Typography color='green' fontWeight={'bold'} sx={{
-              '@media (max-width: 700px)': {
-                fontSize:'15px'
-              }}}>
+            <Typography
+              color='green'
+              fontWeight={'bold'}
+              sx={{
+                '@media (max-width: 700px)': {
+                  fontSize: '15px',
+                },
+              }}
+            >
               {value}
             </Typography>
           )}
