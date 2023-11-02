@@ -98,18 +98,7 @@ function CardIncomes({
         color: 'red', // Cambia el color al hacer hover
       },
       justifyContent: 'center',
-      '@media (max-width: 899px)': {
-        marginLeft: '-1rem',
-      },
-      '@media (min-width: 750px)': {
-        marginLeft: '-4rem',
-      },
-      '@media (min-width: 899px)': {
-        marginLeft: '-2rem',
-      },
-      '@media (min-width: 1366px)': {
-        marginLeft: '-5rem',
-      },
+      
     },
     contBtnIcon: {
       display: 'flex',
@@ -220,22 +209,24 @@ function CardIncomes({
             alignItems: 'center',
             height: '80%',
             marginRight: '1rem',
+            flexDirection: 'column',
+            marginRight: '2rem'
           }}
         >
           <Box
             sx={{
-              flex: 'none !important',
+              marginBottom: '1rem',
               border: '6px solid green',
               borderRadius: '50%',
             }}
           >
             {icon}
           </Box>
-        </Box>
-        <Box sx={styles.contBtn}>
-          <IconButton onClick={handleOpenPopover} sx={styles.button}>
-            <DeleteIcon />
-          </IconButton>
+          <Box sx={styles.contBtn}>
+            <IconButton onClick={handleOpenPopover} sx={styles.button}>
+              <DeleteIcon />
+            </IconButton>
+          </Box>
         </Box>
       </Box>
 
