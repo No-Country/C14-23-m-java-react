@@ -1,6 +1,7 @@
 import { Button, CircularProgress, Grid, Paper } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-
+import CardInfoAditional from './CardInfoAditional';
+import 'animate.css';
 import InfoIcon from '@mui/icons-material/Info'; // Icono de información
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { useEffect, useState } from 'react';
@@ -21,6 +22,7 @@ const ExpenseByCategory = ({ handleOpen }) => {
   const [expenses, setExpenses] = useState([]);
   const [expenseCategories, setExpenseCategories] = useState([]);
   const [loading, setLoading] = useState(true); // Estado de carga
+  const [viewInfo, setViewInfo] = useState(true);
 
   useEffect(() => {
     const getExpenses = async () => {
@@ -207,7 +209,7 @@ const ExpenseByCategory = ({ handleOpen }) => {
         </Grid>
 
         <Grid item xs={1}>
-          <IconButton color='primary'>
+          <IconButton color='primary'  onClick={() => setViewInfo(false)}>
             <InfoIcon />
           </IconButton>
         </Grid>
@@ -219,16 +221,31 @@ const ExpenseByCategory = ({ handleOpen }) => {
           spacing={1}
           sx={{ display: 'flex', height: '60vh' }}
         >
-          <Grid item xs={12} maxHeight={'100%'}>
-            <Pie
-              data={data}
-              options={{
-                plugins: {
-                  legend: { display: true, position: 'bottom' },
-                },
-              }}
-            />
-          </Grid>
+          {viewInfo ? (
+            <Grid item xs={12} maxHeight={'100%'}>
+              <Pie
+                data={data}
+                options={{
+                  plugins: {
+                    legend: { display: true, position: 'bottom' },
+                  },
+                }}
+              />
+            </Grid>
+          ) : (
+            <Grid
+              className='animate__animated  animate__backInDown'
+              item
+              xs={12}
+            >
+              <CardInfoAditional
+                text={
+                  'Estás observando un gráfico de tartas que representa la distribución de gastos en el último mes. Cada gasto se clasifica en categorías, y las barras del gráfico muestran el monto total de gastos en cada una de estas categorías. Además, si decides seleccionar una categoría específica, esta se excluirá de los cálculos, lo que significa que el gráfico no la tomará en cuenta al calcular los totales.'
+                }
+                setView={setViewInfo}
+              />
+            </Grid>
+          )}
 
           <Grid item xs={12}>
             <TotalAmountHome

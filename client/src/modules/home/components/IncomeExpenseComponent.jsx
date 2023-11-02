@@ -231,7 +231,7 @@ const ExpenseByCategory = ({ handleOpen }) => {
             >
               <CardInfoAditional
                 text={
-                  'Estás viendo un  gráfico de tarta que representa el porcentaje de ingresos que has tenido en los últimos 6 meses. Cada ingreso se agrupa en categorías, y los segmentos del gráfico se basan en estas categorías y en la cantidad de ingresos acumulados en cada una. Además, si seleccionas una categoría específica, se eliminará de los cálculos, lo que significa que el gráfico no la tendrá en cuenta al realizar sus totales.'
+                  'Estás visualizando un gráfico de tarta que representa el porcentaje de ingresos que has tenido en el último mes. Cada ingreso se agrupa en categorías, y los segmentos del gráfico se basan en estas categorías y en la cantidad de ingresos acumulados en cada una. Además, si seleccionas una categoría específica, se eliminará de los cálculos, lo que significa que el gráfico no la tendrá en cuenta al realizar sus totales.'
                 }
                 setView={setViewInfo}
               />
