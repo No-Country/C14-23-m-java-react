@@ -111,7 +111,8 @@ const ExpenseByCategory = ({ handleOpen }) => {
     },
     {
       color: ' #858282',
-    }, {
+    },
+    {
       color: '#a13232',
     },
   ];
@@ -205,7 +206,7 @@ const ExpenseByCategory = ({ handleOpen }) => {
           </Button>
         </Grid>
 
-        <Grid xs={1}>
+        <Grid item xs={1}>
           <IconButton color='primary'>
             <InfoIcon />
           </IconButton>
@@ -216,16 +217,15 @@ const ExpenseByCategory = ({ handleOpen }) => {
           container
           xs={12}
           spacing={1}
-          sx={{ display: 'flex', height: '60vh',}}
+          sx={{ display: 'flex', height: '60vh' }}
         >
-          <Grid xs={12} maxHeight={'100%'} >
+          <Grid item xs={12} maxHeight={'100%'}>
             <Pie
               data={data}
               options={{
                 plugins: {
                   legend: { display: true, position: 'bottom' },
                 },
-               
               }}
             />
           </Grid>

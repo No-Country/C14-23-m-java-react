@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import EgressDetails from './components/EgressDetails';
 import IncomeDetails from './components/IncomeDetails';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import HeaderHistory from './components/HeaderHistory';
 import { useEffect } from 'react';
 import { useUser } from '../../context/UserContext';

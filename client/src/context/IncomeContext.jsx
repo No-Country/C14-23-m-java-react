@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react';
 import { createContext, useContext } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { getIncomes, addIncome, deleteIncome } from '../API/income';
+import {
+  getIncomes,
+  addIncome,
+  deleteIncome,
+  getFilteredIncomes,
+} from '../API/income';
 import { useUser } from './UserContext';
 
 const IncomeContext = createContext();
@@ -47,6 +52,15 @@ export function IncomeProvider({ children }) {
     }
   };
 
+  const allFilteredIncomes = async (id, filters) => {
+    try {
+      const res = await getFilteredIncomes(id, filters);
+      return res;
+    } catch (error) {
+      return error;
+    }
+  };
+
   const addNewIncome = async (income) => {
     try {
       const res = await addIncome(income);
@@ -80,8 +94,9 @@ export function IncomeProvider({ children }) {
           totalIncome: prev.totalIncome - amountOfIncomeToDelete,
         }));
       }
+      return res;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -89,6 +104,7 @@ export function IncomeProvider({ children }) {
     <IncomeContext.Provider
       value={{
         allIncomes,
+        allFilteredIncomes,
         addNewIncome,
         delIncome,
         newIncome,

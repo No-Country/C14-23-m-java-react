@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -31,6 +30,8 @@ const HomeContainer = () => {
 
   const navigate = useNavigate();
 
+  const { userData } = useUser();
+
   useEffect(() => {
     if (!userData) {
       Cookies.remove('token');
@@ -50,29 +51,26 @@ const HomeContainer = () => {
   };
   const handleClose = () => setModal(false);
 
-  const { userData } = useUser();
-
   return (
     <Box
-      component="main"
+      component='main'
       sx={{
         width: 'calc(100vw)',
         margin: 0,
-       
+
         display: 'flex',
         flexDirection: 'column',
         height: '93vh',
         justifyContent: 'center',
         alignItems: 'center',
       }}
-
     >
       {loading && (
         <Backdrop
           sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={true}
         >
-          <CircularProgress color="inherit" />
+          <CircularProgress color='inherit' />
         </Backdrop>
       )}
 
@@ -81,14 +79,11 @@ const HomeContainer = () => {
           display: 'flex',
           width: '100vw',
           justifyContent: 'space-around',
-         
-          
         }}
       >
         {userData ? (
           <Box
             sx={{
-             
               width: '47.5vw',
             }}
           >
@@ -100,7 +95,7 @@ const HomeContainer = () => {
             />
           </Box>
         ) : (
-          <CircularProgress color="inherit" />
+          <CircularProgress color='inherit' />
         )}
 
         {userData ? (
@@ -112,7 +107,7 @@ const HomeContainer = () => {
             <SavingsTotal totalSavings={userData.accumulatedSavings} />
           </Box>
         ) : (
-          <CircularProgress color="inherit" />
+          <CircularProgress color='inherit' />
         )}
       </Box>
 
@@ -134,15 +129,15 @@ const HomeContainer = () => {
           <Alert
             variant={error ? 'standard' : 'filled'}
             severity={error ? 'error' : 'success'}
-            color={error ? 'error' : type === 'GASTO' ?  'success'  : 'error'}
+            color={error ? 'error' : type === 'GASTO' ? 'success' : 'error'}
             action={
               <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
+                aria-label='close'
+                color='inherit'
+                size='small'
                 onClick={handleCloseAlert}
               >
-                <CloseIcon fontSize="inherit" />
+                <CloseIcon fontSize='inherit' />
               </IconButton>
             }
           >
@@ -154,13 +149,13 @@ const HomeContainer = () => {
           </Alert>
         </Snackbar>
 
-        <Grid item container xs={12} lg={8} alignItems="center">
+        <Grid item container xs={12} lg={8} alignItems='center'>
           <Grid
             item
             container
             xs={12}
             lg={6}
-            sx={{ display: 'flex', justifyContent:'center'}}
+            sx={{ display: 'flex', justifyContent: 'center' }}
           >
             <IncomeExpenseComponent handleOpen={handleOpen} />
           </Grid>
@@ -170,7 +165,7 @@ const HomeContainer = () => {
             container
             xs={12}
             lg={6}
-            sx={{ display: 'flex',  justifyContent:'center'}}
+            sx={{ display: 'flex', justifyContent: 'center' }}
           >
             <ExpenseByCategory handleOpen={handleOpen} />
           </Grid>

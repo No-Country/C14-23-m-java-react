@@ -1,7 +1,10 @@
 import axios from './axios';
 
 //Obtener todos los ingresos
-export const getIncomes = async (idUser) => axios.get(`/user/${idUser}/list/income `);
+export const getIncomes = async (userId) => axios.get(`user/${userId}/list/income`);
+
+//Obtener ingresos filtrados
+export const getFilteredIncomes = async (userId, filters) => axios.patch(`/user/income/month/${userId}`, filters);
 
 //Agregar un nuevo ingreso
 export const addIncome = async (income) => axios.post('/user/income', income);
