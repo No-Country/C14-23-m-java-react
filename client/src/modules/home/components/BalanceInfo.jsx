@@ -28,11 +28,11 @@ const BalanceInfo = ({ availableBalance, totalBalance }) => {
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        marginTop: '80px',
+        padding: '2rem 0',
         height: '60%',
 
         '@media (min-width: 1700px)': {
-          marginTop: '60px',
+          // marginTop: '60px',
         },
 
         '@media (min-width: 800px)': {
@@ -42,7 +42,7 @@ const BalanceInfo = ({ availableBalance, totalBalance }) => {
         },
 
         '@media (max-width: 800px)': {
-          marginTop: '100px',
+          // marginTop: '100px',
         },
       }}
     >
