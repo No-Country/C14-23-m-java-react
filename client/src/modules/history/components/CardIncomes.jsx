@@ -233,12 +233,9 @@ function CardIncomes({
           </Box>
         </Box>
         <Box sx={styles.contBtn}>
-          <Button onClick={handleOpenPopover}>
-            {' '}
-            <IconButton sx={styles.button}>
-              <DeleteIcon />
-            </IconButton>
-          </Button>
+          <IconButton onClick={handleOpenPopover} sx={styles.button}>
+            <DeleteIcon />
+          </IconButton>
         </Box>
       </Box>
 
