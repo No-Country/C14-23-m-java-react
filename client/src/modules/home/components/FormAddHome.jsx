@@ -64,7 +64,7 @@ const FormAddHome = ({
 
     const newData = {
       ...data,
-      idUser: 1,
+      idUser: userData.idUser,
       amount: amount,
       date: new Date().toISOString().split('T')[0],
     };
