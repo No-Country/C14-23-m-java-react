@@ -31,7 +31,10 @@ function NavBar() {
         { title: 'Historial', path: '/financialHistory' },
         { title: 'Cuenta', path: '/account' },
       ]
-    : [{ title: 'Inicio', path: '/' }];
+    : [
+        { title: 'Iniciar Sesión', path: '/login' },
+        { title: 'Registrarse', path: '/register' },
+      ];
 
   const handleModalOpen = () => {
     setModalOpen(true);

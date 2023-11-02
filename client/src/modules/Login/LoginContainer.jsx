@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
+import { useState } from 'react';
 
 const theme = createTheme({
   palette: {
@@ -24,6 +25,8 @@ const theme = createTheme({
 });
 
 const LoginContainer = () => {
+  const [isLoged, setIsloged] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -39,7 +42,7 @@ const LoginContainer = () => {
     if (exist) {
       navigate('/home');
     }
-  }, []);
+  }, [isLoged]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -52,7 +55,7 @@ const LoginContainer = () => {
         const in24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000);
 
         Cookies.set('token', res.data.email, { expires: in24Hours });
-
+        setIsloged(true);
         setUserData(res.data);
       }
     } catch (error) {
@@ -165,6 +168,12 @@ const LoginContainer = () => {
               </Typography>
             </Grid>
           </Grid>
+        </Box>
+
+        <Box sx={{ marginTop: '3rem', textAlign: 'center' }}>
+          <Button component={Link} to={'/'}>
+            Volver
+          </Button>
         </Box>
       </Container>
     </ThemeProvider>

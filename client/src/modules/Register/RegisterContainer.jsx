@@ -22,7 +22,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUser } from '../../context/UserContext';
 import CloseIcon from '@mui/icons-material/Close';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TbPointFilled } from 'react-icons/tb';
 import Cookies from 'js-cookie';
 
@@ -357,6 +357,11 @@ const RegisterContainer = () => {
               </Button>
             </Grid>
           </Grid>
+        </Box>
+        <Box sx={{ marginTop: '3rem', textAlign: 'center' }}>
+          <Button component={Link} to={'/'}>
+            Volver
+          </Button>
         </Box>
       </Container>
     </ThemeProvider>
