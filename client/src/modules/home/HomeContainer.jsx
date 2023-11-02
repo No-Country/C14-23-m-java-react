@@ -85,6 +85,7 @@ const HomeContainer = () => {
           <Box
             sx={{
               width: '47.5vw',
+              paddingTop: '1rem',
             }}
           >
             <BalanceInfo
@@ -102,6 +103,7 @@ const HomeContainer = () => {
           <Box
             sx={{
               width: '47.5vw',
+              paddingTop: '1rem',
             }}
           >
             <SavingsTotal totalSavings={userData.accumulatedSavings} />
