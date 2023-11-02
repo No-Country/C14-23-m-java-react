@@ -38,6 +38,7 @@ function NavbarListDrawer({ navLinks }) {
     Cookies.remove('token');
     navigate('/');
     setModalOpen(false);
+    localStorage.removeItem('userData');
   };
 
   const cookie = Cookies.get('token');

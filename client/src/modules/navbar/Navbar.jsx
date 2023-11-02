@@ -48,6 +48,7 @@ function NavBar() {
     Cookies.remove('token');
     navigate('/');
     setModalOpen(false);
+    localStorage.removeItem('userData');
   };
 
   return (

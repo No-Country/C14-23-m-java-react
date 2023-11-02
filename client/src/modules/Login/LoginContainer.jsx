@@ -57,6 +57,8 @@ const LoginContainer = () => {
         Cookies.set('token', res.data.email, { expires: in24Hours });
         setIsloged(true);
         setUserData(res.data);
+
+        localStorage.setItem('userData', JSON.stringify(res.data));
       }
     } catch (error) {
       console.log(error);
