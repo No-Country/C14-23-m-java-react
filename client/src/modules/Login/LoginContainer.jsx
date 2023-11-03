@@ -31,6 +31,7 @@ const LoginContainer = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm();
 
   const { getLoginUser, setUserData } = useUser();
@@ -47,6 +48,16 @@ const LoginContainer = () => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       const res = await getLoginUser(data);
+      console.log(res);
+
+      if (res?.response?.status === 404) {
+        setError('email', { message: 'Email no registrado' });
+      }
+
+      if (res?.response?.status === 400) {
+        setError('password', { message: 'Contraseña incorrecta' });
+      }
+
       if (res?.status === 200) {
         // Obtén la fecha actual
         const now = new Date();

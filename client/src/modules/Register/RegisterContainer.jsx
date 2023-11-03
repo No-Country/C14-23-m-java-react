@@ -178,7 +178,7 @@ const RegisterContainer = () => {
                 {...register('last_name', {
                   required: 'Apellido es requerido',
                   pattern: {
-                    value: /^[A-Za-z\s]+$/,
+                    value: /^[A-Za-zÁáÉéÍíÓóÚúÜüÑñ\s]+$/,
                     message: 'Solo se permiten letras y espacios',
                   },
                   minLength: {
@@ -363,7 +363,7 @@ const RegisterContainer = () => {
           </Grid>
         </Box>
         <Box sx={{ marginTop: '3rem', textAlign: 'center' }}>
-          <Button component={Link} to={'/'}>
+          <Button component={Link} to={'/'} variant='contained'>
             Volver
           </Button>
         </Box>
