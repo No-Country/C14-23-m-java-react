@@ -28,9 +28,6 @@ const SavingsTotal = ({ totalSavings }) => {
           width: '90%', // Ajusta el ancho en pantallas pequeñas
           alignItems: 'center',
         },
-        '@media (min-width: 1700px)': {
-          marginTop: '60px',
-        },
       }}
     >
       <Box>

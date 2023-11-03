@@ -266,12 +266,16 @@ const RegisterContainer = () => {
                     Tu contraseña debe contener:
                   </ListItem>
                   <ListItem sx={{ fontSize: '0.7rem' }}>
-                    <TbPointFilled style={{ color: 'green' }} />8 caracteres
+                    <TbPointFilled style={{ color: 'green' }} />8 Caracteres
                     mínimo
                   </ListItem>
                   <ListItem sx={{ fontSize: '0.7rem' }}>
                     <TbPointFilled style={{ color: 'green' }} /> 1 Letra
                     mayúscula
+                  </ListItem>
+                  <ListItem sx={{ fontSize: '0.7rem' }}>
+                    <TbPointFilled style={{ color: 'green' }} /> 1 Letra
+                    minúscula
                   </ListItem>
                   <ListItem sx={{ fontSize: '0.7rem' }}>
                     <TbPointFilled style={{ color: 'green' }} /> 1 Número

@@ -17,14 +17,14 @@ function SectionInfo() {
       </Box>
       <Box flex='1'>
         <Typography variant='h5' margin='1rem'>
-        Gestiona Tus Ahorros
+          Gestiona Tus Ahorros
         </Typography>
         <Typography textAlign='justify' margin='1rem'>
-          Aquí podrás establecer tus metas de ahorro mensuales. Además, tendrás
-          la opción de agregar fondos adicionales a tu meta en cualquier
-          momento. Asimismo, el botón de restablecimiento te permitirá reiniciar
-          tus metas de ahorro mensuales, dejándolas en cero para comenzar de
-          nuevo.
+          Aquí podrás establecer y modificar tus metas de ahorro mensuales.
+          También podrás Reiniciar tus Ahorros con un solo clic haciendo que
+          vuelvan a cero para poder configurar tus metas nuevamente. ¡Esto te
+          permitirá tomar el control de tus finanzas y lograr tus objetivos
+          financieros!
         </Typography>
       </Box>
     </Box>

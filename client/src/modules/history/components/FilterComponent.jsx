@@ -28,16 +28,16 @@ const FilterComponent = ({ categories, handleFilters, filters }) => {
           <MenuItem value={6}>Junio</MenuItem>
           <MenuItem value={7}>Julio</MenuItem>
           <MenuItem value={8}>Agosto</MenuItem>
-          <MenuItem value={9}>Setiembre</MenuItem>
+          <MenuItem value={9}>Septiembre</MenuItem>
           <MenuItem value={10}>Octubre</MenuItem>
           <MenuItem value={11}>Noviembre</MenuItem>
           <MenuItem value={12}>Diciembre</MenuItem>
         </Select>
       </FormControl>{' '}
       <FormControl variant='outlined' size='small' sx={{ width: '10rem' }}>
-        <InputLabel>Categorias</InputLabel>
+        <InputLabel>Categorías</InputLabel>
         <Select
-          label='Categorias'
+          label='Categorías'
           name='categoryId'
           onChange={handleFilters}
           value={filters.categoryId}

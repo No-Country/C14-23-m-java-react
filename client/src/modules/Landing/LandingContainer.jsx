@@ -28,13 +28,19 @@ const LandingContainer = () => {
   }, []);
 
   return (
-    <Box>
+    <Box
+      sx={{
+        height: 'calc(100vh - 64px)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <ThemeProvider theme={theme}>
         <Container
           sx={{
             display: 'flex',
             flexDirection: { xs: 'column-reverse', sm: 'row' },
-            pt: 10,
           }}
         >
           <Box sx={{ flex: 1 }}>

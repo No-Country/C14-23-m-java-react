@@ -98,7 +98,6 @@ function CardIncomes({
         color: 'red', // Cambia el color al hacer hover
       },
       justifyContent: 'center',
-      
     },
     contBtnIcon: {
       display: 'flex',
@@ -120,7 +119,8 @@ function CardIncomes({
     const listSeparate = word.split('_');
     if (listSeparate.length === 2) {
       newWord = listSeparate.join(' ');
-      return newWord;
+
+      return newWord == 'BONO EXTRA' ? 'BONO / EXTRA' : newWord;
     } else if (listSeparate.length === 1) {
       return word;
     } else {
@@ -210,7 +210,7 @@ function CardIncomes({
             height: '80%',
             marginRight: '1rem',
             flexDirection: 'column',
-            marginRight: '2rem'
+            marginRight: '2rem',
           }}
         >
           <Box

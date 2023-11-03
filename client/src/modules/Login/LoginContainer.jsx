@@ -151,17 +151,8 @@ const LoginContainer = () => {
             </Grid>
           </Grid>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <Typography>
-                ¿Olvidaste tu contraseña? Haz clic{' '}
-                <Typography to={'#'} component={Link} variant='body2'>
-                  acá
-                </Typography>{' '}
-                para recuperarla.
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Typography>
+            <Grid item xs={12} sm={12}>
+              <Typography sx={{ textAlign: 'center' }}>
                 ¿No tienes cuenta? Haz clic{' '}
                 <Typography to={'/register'} component={Link} variant='body2'>
                   acá
@@ -173,7 +164,7 @@ const LoginContainer = () => {
         </Box>
 
         <Box sx={{ marginTop: '3rem', textAlign: 'center' }}>
-          <Button component={Link} to={'/'}>
+          <Button component={Link} to={'/'} variant='contained'>
             Volver
           </Button>
         </Box>

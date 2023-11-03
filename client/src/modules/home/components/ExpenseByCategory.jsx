@@ -169,7 +169,6 @@ const ExpenseByCategory = ({ handleOpen }) => {
         my: 2,
         width: '80%',
         p: 2,
-        height: '70vh',
         transition: 'box-shadow 0.3s',
         '&:hover': {
           boxShadow: '0 0 10px rgba(255, 0, 0, 0.5)',
@@ -209,7 +208,7 @@ const ExpenseByCategory = ({ handleOpen }) => {
         </Grid>
 
         <Grid item xs={1}>
-          <IconButton color='primary'  onClick={() => setViewInfo(false)}>
+          <IconButton color='primary' onClick={() => setViewInfo(false)}>
             <InfoIcon />
           </IconButton>
         </Grid>
@@ -240,7 +239,7 @@ const ExpenseByCategory = ({ handleOpen }) => {
             >
               <CardInfoAditional
                 text={
-                  'Estás observando un gráfico de tartas que representa la distribución de gastos en el último mes. Cada gasto se clasifica en categorías, y las barras del gráfico muestran el monto total de gastos en cada una de estas categorías. Además, si decides seleccionar una categoría específica, esta se excluirá de los cálculos, lo que significa que el gráfico no la tomará en cuenta al calcular los totales.'
+                  'Este gráfico muestra cómo se compone tu Total de Gastos indicando el porcentaje que representa cada categoría dentro del mismo. Además, en la sección inferior puedes hacer clic en los rectángulos correspondientes a las categorías cuyo porcentaje no quieras visualizar en el gráfico.'
                 }
                 setView={setViewInfo}
               />
@@ -249,7 +248,7 @@ const ExpenseByCategory = ({ handleOpen }) => {
 
           <Grid item xs={12}>
             <TotalAmountHome
-              text={'Total Gastos'}
+              text={'Total de Gastos'}
               total={totalGastos}
               color={'red'}
             />
