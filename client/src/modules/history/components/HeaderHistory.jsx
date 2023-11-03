@@ -32,12 +32,12 @@ function HeaderHistory() {
         <Typography textAlign='justify' margin='1rem'>
           En esta sección encontrarás un registro detallado de todas las
           transacciones financieras que has cargado en tu cuenta de CashFlow,
-          indicando Categoría, Descripción, Monto y Fecha de cada transacción.
-          También podrás eliminar transacciones y esto se verá reflejado en tu
-          Saldo Disponible. De este modo, podrás llevar un seguimiento de tus
-          ingresos y gastos así como también modificarlos, lo que te permitirá
-          además, tomar decisiones financieras informadas y realizar un uso
-          consciente de tus recursos económicos.
+          indicando Categoría, Descripción, Monto y Fecha de cada una. También
+          podrás filtrar tus movimientos de dinero por mes o categoría. Además,
+          te brindamos la opción de eliminar cualquier transacción y esto se
+          verá reflejado en tu Saldo Disponible. De este modo, podrás llevar un
+          seguimiento de tus ingresos y gastos así como también modificarlos
+          cuando lo desees.
         </Typography>
       </Box>
     </Box>

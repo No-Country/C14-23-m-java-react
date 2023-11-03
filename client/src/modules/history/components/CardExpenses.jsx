@@ -97,7 +97,6 @@ function CardExpenses({
         color: 'red', // Cambia el color al hacer hover
       },
       justifyContent: 'center',
-      
     },
     contBtnIcon: {
       display: 'flex',
@@ -119,9 +118,13 @@ function CardExpenses({
     const listSeparate = word.split('_');
     if (listSeparate.length === 2) {
       newWord = listSeparate.join(' ');
-      return newWord;
+      return newWord == 'AHORRO INVERSION'
+        ? 'INVERSIÓN'
+        : newWord == 'VIAJE VACACIONES'
+        ? 'VIAJE / VACACIONES'
+        : newWord;
     } else if (listSeparate.length === 1) {
-      return word;
+      return word === 'ALIMENTACION' ? '  ALIMENTACIÓN' : word;
     } else {
       const firstPart = listSeparate[0];
       const remainingParts = listSeparate.slice(1);
@@ -208,16 +211,15 @@ function CardExpenses({
             height: '80%',
             marginRight: '1rem',
             flexDirection: 'column',
-            marginRight: '2rem'
+            marginRight: '2rem',
           }}
         >
           <Box
             sx={{
-          
               border: '6px solid red',
               borderRadius: '50%',
-              
-              marginBottom: '1rem'
+
+              marginBottom: '1rem',
             }}
           >
             {icon}

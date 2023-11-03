@@ -112,7 +112,7 @@ function SavingsManager() {
           margin: '2rem',
         }}
       >
-        <Typography variant='h4'>Gestiona tus ahorros</Typography>
+        <Typography variant='h4'>Añadir Ahorros</Typography>
         <Box
           sx={{
             display: 'flex',
@@ -121,9 +121,10 @@ function SavingsManager() {
             marginTop: '2%',
           }}
         >
-          <Typography sx={{ mb: '5%' }}>
-            Decide cuánto agregar a tus ahorros, y si deseas comenzar de nuevo,
-            un solo clic puede poner tus metas en blanco.
+          <Typography sx={{ mb: '5%', textAlign: 'justify' }}>
+            Establece el monto que deseas ahorrar durante el mes actual. Además
+            puedes agregar fondos adicionales a tu meta en cualquier momento y
+            estos se sumarán a tu Total de Ahorros.
           </Typography>
 
           <FormProvider {...methods}>

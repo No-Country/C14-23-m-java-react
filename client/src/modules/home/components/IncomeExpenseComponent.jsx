@@ -198,11 +198,7 @@ const ExpenseByCategory = ({ handleOpen }) => {
           </Button>
         </Grid>
         <Grid item xs={1}>
-          <IconButton
-            variant='contained'
-            color='primary'
-            onClick={() => setViewInfo(false)}
-          >
+          <IconButton color='primary' onClick={() => setViewInfo(false)}>
             <InfoIcon />
           </IconButton>
         </Grid>
@@ -231,7 +227,7 @@ const ExpenseByCategory = ({ handleOpen }) => {
             >
               <CardInfoAditional
                 text={
-                  'Estás visualizando un gráfico de tarta que representa el porcentaje de ingresos que has tenido en el último mes. Cada ingreso se agrupa en categorías, y los segmentos del gráfico se basan en estas categorías y en la cantidad de ingresos acumulados en cada una. Además, si seleccionas una categoría específica, se eliminará de los cálculos, lo que significa que el gráfico no la tendrá en cuenta al realizar sus totales.'
+                  'Este gráfico muestra cómo se compone tu Total de Ingresos indicando el porcentaje que representa cada categoría dentro del mismo. Además, en la sección inferior puedes hacer clic en los rectángulos correspondientes a las categorías cuyo porcentaje no quieras visualizar en el gráfico.'
                 }
                 setView={setViewInfo}
               />
@@ -240,7 +236,7 @@ const ExpenseByCategory = ({ handleOpen }) => {
 
           <Grid item xs={12}>
             <TotalAmountHome
-              text={'Total Ingresos'}
+              text={'Total de Ingresos'}
               total={totalGastos}
               color={'green'}
             />
