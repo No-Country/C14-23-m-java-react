@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -16,12 +16,21 @@
     "@mui/icons-material": "^5.14.12",
     "@mui/lab": "^5.0.0-alpha.147",
     "@mui/material": "^5.14.12",
+    "animate.css": "^4.1.1",
+    "axios": "^1.5.1",
+    "chart.js": "^4.4.0",
+    "js-cookie": "^3.0.5",
+    "lottie-react": "^2.4.0",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.47.0",
-    "react-router-dom": "^6.16.0"
+    "react-icons": "^4.11.0",
+    "react-number-format": "^5.3.1",
+    "react-router-dom": "^6.17.0"
   },
   "devDependencies": {
+    "@types/faker": "5.5.9",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react-swc": "^3.3.2",

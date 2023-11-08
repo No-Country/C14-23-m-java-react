@@ -44,19 +44,6 @@ public class EgressController {
         }
     }
 
-    /*
-    @GetMapping(path = "/egress")
-    public ResponseEntity<List<EgressDTO>> getAllEgress() {
-        try {
-            List<EgressDTO> responseDTO = egressService.getAllEgress();
-            return ResponseEntity.ok(responseDTO);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    NO DEBERIAMOS DE USAR ESE ENDPOINT, PORQ DA TOOODOS LOS EGRESOS, NO IMPORTA EL USUARIO
-     */
-
     @GetMapping(path = "/{idUser}/list/egress")
     public ResponseEntity<List<EgressDTO>> getEgressByUser(@PathVariable Long idUser) {
         try {

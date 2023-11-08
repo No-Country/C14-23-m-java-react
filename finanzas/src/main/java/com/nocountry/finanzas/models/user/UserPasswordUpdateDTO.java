@@ -14,7 +14,7 @@ public class UserPasswordUpdateDTO {
 
     @NotBlank(message = "Este campo es obligatorio")
     @Size(min = 8, max = 45, message = "La contraseña debe poseer un minimo de 8 caracteres y maximo de 45.")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*\\W).+$", message = "La contraseña debe contener al menos una letra en minúscula, una en mayúscula, un número y un símbolo.")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*\\W)[^\s]+$", message = "La contraseña debe contener al menos una letra en minúscula, una en mayúscula, un número y un símbolo.")
     private String newPassword;
 
 }

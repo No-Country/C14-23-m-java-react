@@ -9,7 +9,7 @@ public enum CategoryEnum {
     EDUCACION,
     VESTIMENTA,
     SERVICIOS,
-    AHORRO_INVERSION,
+    INVERSION,
     VIAJE_VACACIONES,
     OTROS
 }

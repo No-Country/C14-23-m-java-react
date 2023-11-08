@@ -15,7 +15,7 @@ public class CategoryEnumTest {
         assertEquals("SALUD_CUIDADO_PERSONAL", CategoryEnum.SALUD_CUIDADO_PERSONAL.name());
         assertEquals("EDUCACION", CategoryEnum.EDUCACION.name());
         assertEquals("VESTIMENTA", CategoryEnum.VESTIMENTA.name());
-        assertEquals("AHORRO_INVERSION", CategoryEnum.AHORRO_INVERSION.name());
+        assertEquals("AHORRO_INVERSION", CategoryEnum.INVERSION.name());
         assertEquals("VIAJE_VACACIONES", CategoryEnum.VIAJE_VACACIONES.name());
         assertEquals("OTROS", CategoryEnum.OTROS.name());
     }
@@ -34,7 +34,7 @@ public class CategoryEnumTest {
         assertEquals(CategoryEnum.SALUD_CUIDADO_PERSONAL, CategoryEnum.valueOf("SALUD_CUIDADO_PERSONAL"));
         assertEquals(CategoryEnum.EDUCACION, CategoryEnum.valueOf("EDUCACION"));
         assertEquals(CategoryEnum.VESTIMENTA, CategoryEnum.valueOf("VESTIMENTA"));
-        assertEquals(CategoryEnum.AHORRO_INVERSION, CategoryEnum.valueOf("AHORRO_INVERSION"));
+        assertEquals(CategoryEnum.INVERSION, CategoryEnum.valueOf("AHORRO_INVERSION"));
         assertEquals(CategoryEnum.VIAJE_VACACIONES, CategoryEnum.valueOf("VIAJE_VACACIONES"));
         assertEquals(CategoryEnum.OTROS, CategoryEnum.valueOf("OTROS"));
     }

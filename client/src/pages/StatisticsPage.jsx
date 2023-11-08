@@ -1,11 +1,7 @@
-import React from 'react';
+import StaticsContainer from '../modules/statics/StaticsContainer';
 
 function StatisticsPage() {
-    return (
-        <div>
-            <h1>Statistics page</h1>
-        </div>
-    );
+  return <StaticsContainer />;
 }
 
 export default StatisticsPage;
