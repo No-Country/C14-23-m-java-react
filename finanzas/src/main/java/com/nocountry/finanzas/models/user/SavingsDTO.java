@@ -13,7 +13,7 @@ public class SavingsDTO {
 
     @NotNull(message = "El monto ingresado del gasto no debe ser nulo")
     @DecimalMin(value = "0.01", inclusive = true, message = "El número debe ser mayor o igual a 0.01 y tener un máximo de 2 decimales.")
-    @Digits(integer = Integer.MAX_VALUE, fraction = 2, message = "El número debe tener 2 decimales después de la coma como maximo.")
+    @Digits(integer = 10, fraction = 2, message = "El número debe tener 2 decimales después de la coma como maximo.")
     private Double toSaving;
 
 }

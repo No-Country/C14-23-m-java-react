@@ -41,8 +41,8 @@ public class EgressCategoryTest {
     public void setterTest() {
         assertNull(egressCategory.getId());
 
-        egressCategory.setName(CategoryEnum.AHORRO_INVERSION);
-        assertEquals(CategoryEnum.AHORRO_INVERSION, egressCategory.getName());
+        egressCategory.setName(CategoryEnum.INVERSION);
+        assertEquals(CategoryEnum.INVERSION, egressCategory.getName());
 
         egressCategory.setName(CategoryEnum.EDUCACION);
         assertEquals(CategoryEnum.EDUCACION, egressCategory.getName());

@@ -33,23 +33,6 @@ public class IncomeController {
         this.incomeCategoryService = incomeCategoryService;
     }
 
-    //Listar
-    /*
-    NO DEBERIAMOS DE USAR ESE ENDPOINT, PORQ DA TOOODOS LOS INGRESOS, NO IMPORTA EL USUARIO
-
-    @GetMapping("/income")
-    public ResponseEntity<List<IncomeDTO>> getAllIncome(){
-        try{
-            List<IncomeDTO> getAllIncome = incomeService.listIncome();
-
-            return ResponseEntity.ok(getAllIncome);
-        }
-        catch (NoSuchElementException e){
-            return ResponseEntity.notFound().build();
-        }
-    }
-    */
-
     //Busqueda por Id
     @GetMapping(path = "/income/{id}")
     public ResponseEntity<IncomeDTO> getIncomeById(@PathVariable Long id) {
