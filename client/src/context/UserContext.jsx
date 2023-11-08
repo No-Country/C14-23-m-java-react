@@ -32,6 +32,11 @@ export function UserProvider({ children }) {
     setUserData(data);
   }
 
+  useEffect(() => {
+    if (userData !== null)
+      localStorage.setItem('userData', JSON.stringify(userData));
+  }, [userData]);
+
   const userRegister = async (user) => {
     try {
       const res = await registerRequest(user);
@@ -44,7 +49,6 @@ export function UserProvider({ children }) {
   const getLoginUser = async (user) => {
     try {
       const res = await loginUserRequest(user);
-      console.log(res);
       return res;
     } catch (error) {
       return error;
@@ -56,7 +60,6 @@ export function UserProvider({ children }) {
       const res = await updateUserSavings(idUser, toSaving);
       setUserData(res.data);
 
-      localStorage.setItem('userData', JSON.stringify(res.data));
       return res;
     } catch (error) {
       return error;
@@ -68,7 +71,6 @@ export function UserProvider({ children }) {
       const res = await savingsToZero(id);
       setUserData(res.data);
 
-      localStorage.setItem('userData', JSON.stringify(res.data));
       return res;
     } catch (error) {
       return error;
@@ -86,7 +88,6 @@ export function UserProvider({ children }) {
   const partialUpdateUser = async (id, data) => {
     try {
       const res = await partialUpdateUserRequest(id, data);
-      localStorage.setItem('userData', JSON.stringify(res.data));
       return res;
     } catch (error) {
       console.log(error);

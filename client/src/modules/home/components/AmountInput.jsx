@@ -25,6 +25,10 @@ const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(
       decimalScale={2}
       thousandSeparator
       prefix='$'
+      isAllowed={(values) => {
+        const { floatValue } = values;
+        return isNaN(floatValue) || floatValue < 1000000000000;
+      }}
     />
   );
 });

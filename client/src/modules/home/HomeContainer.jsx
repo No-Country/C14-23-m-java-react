@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Alert,
@@ -27,6 +26,7 @@ const HomeContainer = () => {
   const [alert, setAlert] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [loadingData, setLoadingData] = useState(true);
 
   const navigate = useNavigate();
 
@@ -36,8 +36,14 @@ const HomeContainer = () => {
     if (!userData) {
       Cookies.remove('token');
       navigate('/login');
+    } else {
+      setLoadingData(false);
     }
-  }, [userData]);
+  }, [userData, navigate]);
+
+  if (loadingData) {
+    return null;
+  }
 
   const handleCloseAlert = () => setAlert(false);
   const handleOpenAlert = (error = false) => {

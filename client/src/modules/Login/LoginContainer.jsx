@@ -48,7 +48,6 @@ const LoginContainer = () => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       const res = await getLoginUser(data);
-      console.log(res);
 
       if (res?.response?.status === 404) {
         setError('email', { message: 'Email no registrado' });

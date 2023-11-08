@@ -33,6 +33,8 @@ const FormAddHome = ({
     setLoading: PropTypes.func.isRequired,
   };
 
+  const MAX_LIMIT = 999999999999.99;
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -53,7 +55,12 @@ const FormAddHome = ({
   } = methods;
 
   const { addNewGasto } = useEgress();
-  const { addNewIncome } = useIncome();
+  const { addNewIncome, incomes } = useIncome();
+
+  const totalAllIncomes = incomes.reduce(
+    (acc, income) => acc + income.amount,
+    0,
+  );
 
   const { userData } = useUser();
   const { accumulatedSavings, totalIncome } = userData;
@@ -105,11 +112,17 @@ const FormAddHome = ({
               validations={
                 formType === 'GASTO'
                   ? {
-                      maxAmount: (value) =>
+                      maxAvailable: (value) =>
                         parseFloat(value) <= totalIncome - accumulatedSavings ||
                         'El monto no puede ser mayor al Saldo Disponible',
                     }
-                  : {}
+                  : {
+                      maxLimit: (value) =>
+                        parseFloat(value) + totalAllIncomes <= MAX_LIMIT ||
+                        `El ingreso acumulado(${
+                          parseFloat(value) + totalAllIncomes
+                        }) supera el limite permitido(999,999,999,999.99)`,
+                    }
               }
             />
             <FormControl

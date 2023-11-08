@@ -209,7 +209,6 @@ function CardExpenses({
             justifyContent: 'center',
             alignItems: 'center',
             height: '80%',
-            marginRight: '1rem',
             flexDirection: 'column',
             marginRight: '2rem',
           }}
@@ -268,7 +267,7 @@ function CardExpenses({
             sx={{ marginTop: '1rem', fontWeight: 'bold' }}
           >{`Fecha: ${formatDate}`}</Typography>
           <Box>
-            <Typography>Descripcion: </Typography>
+            <Typography>Descripción: </Typography>
             <Typography
               variant='body2'
               sx={{

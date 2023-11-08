@@ -158,11 +158,15 @@ function CardInfoExpenses({
           <Typography
             sx={{ marginTop: '1rem', fontWeight: 'bold' }}
           >{`Fecha: ${formatDate}`}</Typography>
-          <Box sx={{width:'100%'}} >
-            <Typography>Descripcion: </Typography>
+          <Box sx={{ width: '100%' }}>
+            <Typography>Descripción: </Typography>
             <Typography
               variant='body2'
-              sx={{ whiteSpace: 'normal', wordWrap: 'break-word' , textAlign: 'justify'}}
+              sx={{
+                whiteSpace: 'normal',
+                wordWrap: 'break-word',
+                textAlign: 'justify',
+              }}
             >
               {description}
             </Typography>

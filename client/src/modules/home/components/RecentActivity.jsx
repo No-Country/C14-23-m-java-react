@@ -69,7 +69,7 @@ function RecentActivity() {
           },
         }}
       >
-        Ultimos Movimientos
+        Últimos Movimientos
       </Typography>
 
       <Paper

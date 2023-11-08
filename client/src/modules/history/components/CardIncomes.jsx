@@ -26,6 +26,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import HelpOutLineIcon from '@mui/icons-material/HelpOutline';
 
 import { NumericFormat } from 'react-number-format';
+import { useUser } from '../../../context/UserContext';
 
 function CardIncomes({
   delIncome,
@@ -35,6 +36,11 @@ function CardIncomes({
   date,
   id,
 }) {
+  const { userData } = useUser();
+
+  const isRemovable =
+    userData.totalIncome - userData.accumulatedSavings >= Number(amount);
+
   const formatDate = date.join('/');
   //funcion para separa palabras
 
@@ -184,21 +190,46 @@ function CardIncomes({
           },
         }}
       >
-        <Box p={2} textAlign={'center'}>
-          <Typography textAlign={'left'}>
-            Este Ingreso se eliminará y el monto se restará de tu Saldo
-            Disponible.{' '}
-          </Typography>
-          <Typography>¿Deseas continuar con la operación?</Typography>
-          <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-            <Button color='error' onClick={handleClosePopover}>
-              Cancelar
-            </Button>
-            <Button color='success' onClick={handleConfirmPopover}>
-              Aceptar
-            </Button>
+        {isRemovable ? (
+          <Box p={2} textAlign={'center'}>
+            <Typography textAlign={'left'}>
+              Este Ingreso se eliminará y el monto se restará de tu Saldo
+              Disponible.{' '}
+            </Typography>
+            <Typography>¿Deseas continuar con la operación?</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+              <Button color='error' onClick={handleClosePopover}>
+                Cancelar
+              </Button>
+              <Button color='success' onClick={handleConfirmPopover}>
+                Aceptar
+              </Button>
+            </Box>
           </Box>
-        </Box>
+        ) : (
+          <Box p={2}>
+            <Typography>
+              Este Ingreso no puede eliminarse por que su monto es mayor al
+              Saldo Disponible(
+              {
+                <NumericFormat
+                  prefix='$'
+                  thousandSeparator=','
+                  fixedDecimalScale={true}
+                  decimalScale={2}
+                  displayType='text'
+                  value={userData.totalIncome - userData.accumulatedSavings}
+                />
+              }
+              ).
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Button color='error' onClick={handleClosePopover}>
+                Cerrar
+              </Button>
+            </Box>
+          </Box>
+        )}
       </Popover>
 
       <Box sx={styles.contBtnIcon}>
@@ -208,7 +239,6 @@ function CardIncomes({
             justifyContent: 'center',
             alignItems: 'center',
             height: '80%',
-            marginRight: '1rem',
             flexDirection: 'column',
             marginRight: '2rem',
           }}
@@ -256,7 +286,7 @@ function CardIncomes({
             fixedDecimalScale={true}
             prefix='$'
             renderText={(value) => (
-              <Typography sx={{ fontWeight: 'bold' }}>{`-${value}`}</Typography>
+              <Typography sx={{ fontWeight: 'bold' }}>{`${value}`}</Typography>
             )}
           />
         </Box>
@@ -266,7 +296,7 @@ function CardIncomes({
             sx={{ marginTop: '1rem', fontWeight: 'bold' }}
           >{`Fecha: ${formatDate}`}</Typography>
           <Box>
-            <Typography>Descripcion: </Typography>
+            <Typography>Descripción: </Typography>
             <Typography
               variant='body2'
               sx={{

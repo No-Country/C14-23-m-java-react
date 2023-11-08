@@ -1,6 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import {
+  Alert,
+  Backdrop,
   Box,
+  CircularProgress,
+  IconButton,
+  Snackbar,
   Tab,
   Tabs,
   ThemeProvider,
@@ -8,6 +13,7 @@ import {
   createTheme,
   useMediaQuery,
 } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import NameSetting from './components/NameSetting';
@@ -18,6 +24,20 @@ import { useUser } from '../../context/UserContext';
 import Cookies from 'js-cookie';
 
 const AccountContainer = () => {
+  const { userData, setUserData, partialUpdateUser } = useUser();
+
+  const [loadingData, setLoadingData] = useState(true);
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!userData) {
+      Cookies.remove('token');
+      navigate('/login');
+    } else {
+      setLoadingData(false);
+    }
+  }, [userData, navigate]);
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -26,15 +46,26 @@ const AccountContainer = () => {
     },
   });
 
-  const { userData } = useUser();
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(false);
+  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    if (!userData) {
-      Cookies.remove('token');
-      navigate('/login');
+  const handleCloseAlert = () => setAlert(false);
+  const handleOpenAlert = () => setAlert(true);
+
+  const handleUpdate = async (data) => {
+    setError(false);
+    setLoading(true);
+    try {
+      const res = await partialUpdateUser(userData.idUser, data);
+      setUserData(res.data);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+      handleOpenAlert();
     }
-  }, [userData]);
+  };
 
   const isMobile = useMediaQuery('(max-width:600px)');
 
@@ -76,9 +107,50 @@ const AccountContainer = () => {
     setValue(newValue);
   };
 
+  if (loadingData) {
+    return null;
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <HeaderAccount />
+
+      {loading && (
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={true}
+        >
+          <CircularProgress color='inherit' />
+        </Backdrop>
+      )}
+
+      <Snackbar
+        open={alert}
+        onClose={handleCloseAlert}
+        autoHideDuration={error ? 8000 : 3000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          variant='standard'
+          severity={error ? 'error' : 'success'}
+          color={error ? 'error' : 'success'}
+          action={
+            <IconButton
+              aria-label='close'
+              color='inherit'
+              size='small'
+              onClick={handleCloseAlert}
+            >
+              <CloseIcon fontSize='inherit' />
+            </IconButton>
+          }
+        >
+          {error
+            ? 'Ocurrió un error, intente mas tarde'
+            : 'Datos guardados exitosamente!'}
+        </Alert>
+      </Snackbar>
+
       <Box
         sx={{
           maxWidth: 'md',
@@ -120,15 +192,19 @@ const AccountContainer = () => {
         </Tabs>
         <Box sx={{ width: '100%' }}>
           <TabPanel value={value} index={0}>
-            <NameSetting />
+            <NameSetting
+              data={{ name: userData.name, last_name: userData.last_name }}
+              handleUpdate={handleUpdate}
+            />
           </TabPanel>
           <TabPanel value={value} index={1}>
             <PasswordSetting />
-            {/* <PersonalSetting /> */}
           </TabPanel>
           <TabPanel value={value} index={2}>
-            {/* <PersonalSetting /> */}
-            <EmailSetting />
+            <EmailSetting
+              data={{ email: userData.email }}
+              handleUpdate={handleUpdate}
+            />
           </TabPanel>
         </Box>
       </Box>

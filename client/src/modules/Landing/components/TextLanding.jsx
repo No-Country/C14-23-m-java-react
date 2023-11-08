@@ -3,9 +3,9 @@ import { PropTypes } from 'prop-types';
 
 const TextLanding = ({ variant, component, text }) => {
   TextLanding.propTypes = {
-    variant: PropTypes.string.isRequerid,
-    component: PropTypes.string.isRequerid,
-    text: PropTypes.string.isRequerid,
+    variant: PropTypes.string.isRequired,
+    component: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
   };
 
   return (
