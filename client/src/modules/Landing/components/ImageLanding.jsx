@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import landingImg from '../../../assets/landing-img.jpg';
+import landingImg from '../../../assets/landing-img.png';
 
 const ImageLanding = () => {
   const Img = styled('img')({

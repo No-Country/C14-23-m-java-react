@@ -28,19 +28,26 @@ const LandingContainer = () => {
   }, []);
 
   return (
-    <Box>
+    <Box
+      sx={{
+        height: 'calc(100vh - 64px)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <ThemeProvider theme={theme}>
         <Container
           sx={{
             display: 'flex',
             flexDirection: { xs: 'column-reverse', sm: 'row' },
-            pt: 10,
           }}
         >
           <Box sx={{ flex: 1 }}>
+            <TextLanding variant='h1' component='h1' text='CASHFLOW' />
             <TextLanding
-              variant='h2'
-              component='h1'
+              variant='h4'
+              component='h2'
               text='Sistema de gestión de finanzas personales'
             />
             <TextLanding

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import {
   registerRequest,
@@ -27,6 +27,11 @@ export function UserProvider({ children }) {
 
   const [userData, setUserData] = useState(null);
 
+  if (localStorage.getItem('userData') && userData === null) {
+    const data = JSON.parse(localStorage.getItem('userData'));
+    setUserData(data);
+  }
+
   const userRegister = async (user) => {
     try {
       const res = await registerRequest(user);
@@ -50,6 +55,8 @@ export function UserProvider({ children }) {
     try {
       const res = await updateUserSavings(idUser, toSaving);
       setUserData(res.data);
+
+      localStorage.setItem('userData', JSON.stringify(res.data));
       return res;
     } catch (error) {
       return error;
@@ -60,6 +67,8 @@ export function UserProvider({ children }) {
     try {
       const res = await savingsToZero(id);
       setUserData(res.data);
+
+      localStorage.setItem('userData', JSON.stringify(res.data));
       return res;
     } catch (error) {
       return error;
@@ -77,6 +86,7 @@ export function UserProvider({ children }) {
   const partialUpdateUser = async (id, data) => {
     try {
       const res = await partialUpdateUserRequest(id, data);
+      localStorage.setItem('userData', JSON.stringify(res.data));
       return res;
     } catch (error) {
       console.log(error);

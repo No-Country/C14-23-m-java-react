@@ -22,7 +22,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUser } from '../../context/UserContext';
 import CloseIcon from '@mui/icons-material/Close';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TbPointFilled } from 'react-icons/tb';
 import Cookies from 'js-cookie';
 
@@ -178,7 +178,7 @@ const RegisterContainer = () => {
                 {...register('last_name', {
                   required: 'Apellido es requerido',
                   pattern: {
-                    value: /^[A-Za-z\s]+$/,
+                    value: /^[A-Za-zÁáÉéÍíÓóÚúÜüÑñ\s]+$/,
                     message: 'Solo se permiten letras y espacios',
                   },
                   minLength: {
@@ -266,12 +266,16 @@ const RegisterContainer = () => {
                     Tu contraseña debe contener:
                   </ListItem>
                   <ListItem sx={{ fontSize: '0.7rem' }}>
-                    <TbPointFilled style={{ color: 'green' }} />8 caracteres
+                    <TbPointFilled style={{ color: 'green' }} />8 Caracteres
                     mínimo
                   </ListItem>
                   <ListItem sx={{ fontSize: '0.7rem' }}>
                     <TbPointFilled style={{ color: 'green' }} /> 1 Letra
                     mayúscula
+                  </ListItem>
+                  <ListItem sx={{ fontSize: '0.7rem' }}>
+                    <TbPointFilled style={{ color: 'green' }} /> 1 Letra
+                    minúscula
                   </ListItem>
                   <ListItem sx={{ fontSize: '0.7rem' }}>
                     <TbPointFilled style={{ color: 'green' }} /> 1 Número
@@ -357,6 +361,11 @@ const RegisterContainer = () => {
               </Button>
             </Grid>
           </Grid>
+        </Box>
+        <Box sx={{ marginTop: '3rem', textAlign: 'center' }}>
+          <Button component={Link} to={'/'} variant='contained'>
+            Volver
+          </Button>
         </Box>
       </Container>
     </ThemeProvider>

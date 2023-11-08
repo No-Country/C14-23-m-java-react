@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
+import { useState } from 'react';
 
 const theme = createTheme({
   palette: {
@@ -24,10 +25,13 @@ const theme = createTheme({
 });
 
 const LoginContainer = () => {
+  const [isLoged, setIsloged] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm();
 
   const { getLoginUser, setUserData } = useUser();
@@ -39,11 +43,21 @@ const LoginContainer = () => {
     if (exist) {
       navigate('/home');
     }
-  }, []);
+  }, [isLoged]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       const res = await getLoginUser(data);
+      console.log(res);
+
+      if (res?.response?.status === 404) {
+        setError('email', { message: 'Email no registrado' });
+      }
+
+      if (res?.response?.status === 400) {
+        setError('password', { message: 'Contraseña incorrecta' });
+      }
+
       if (res?.status === 200) {
         // Obtén la fecha actual
         const now = new Date();
@@ -52,8 +66,10 @@ const LoginContainer = () => {
         const in24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000);
 
         Cookies.set('token', res.data.email, { expires: in24Hours });
-
+        setIsloged(true);
         setUserData(res.data);
+
+        localStorage.setItem('userData', JSON.stringify(res.data));
       }
     } catch (error) {
       console.log(error);
@@ -146,17 +162,8 @@ const LoginContainer = () => {
             </Grid>
           </Grid>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <Typography>
-                ¿Olvidaste tu contraseña? Haz clic{' '}
-                <Typography to={'#'} component={Link} variant='body2'>
-                  acá
-                </Typography>{' '}
-                para recuperarla.
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Typography>
+            <Grid item xs={12} sm={12}>
+              <Typography sx={{ textAlign: 'center' }}>
                 ¿No tienes cuenta? Haz clic{' '}
                 <Typography to={'/register'} component={Link} variant='body2'>
                   acá
@@ -165,6 +172,12 @@ const LoginContainer = () => {
               </Typography>
             </Grid>
           </Grid>
+        </Box>
+
+        <Box sx={{ marginTop: '3rem', textAlign: 'center' }}>
+          <Button component={Link} to={'/'} variant='contained'>
+            Volver
+          </Button>
         </Box>
       </Container>
     </ThemeProvider>

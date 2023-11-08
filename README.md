@@ -1,11 +1,32 @@
 
-# Cashflow - Sistema de Gestión de Finanzas Personales
+# Bienvenid@s a CashFlow
 
-Cashflow es una aplicación diseñada para ayudarte a tomar el control de tus finanzas personales de una manera sencilla y eficaz. Con Cashflow, podrás realizar un seguimiento detallado de tus ingresos mensuales y tus gastos diarios, brindándote una visión clara y completa de tu situación financiera.
+Cashflow es una aplicación diseñada para ayudarte a tomar el control de tus finanzas personales de una manera sencilla y eficaz.
+# Acerca del proyecto
+Con Cashflow, podrás realizar un seguimiento detallado de tus ingresos mensuales y tus gastos diarios, brindándote una visión clara y completa de tu situación financiera.
+
+## Autores
+| Project Manager  |  Front-End |  Back-End | QA  |
+| :------------: | :------------: | :------------: | :------------: |
+| Victoria Chaile  | Fabian Flores  | Agustin Gomez  |  Kimberly Pinto |
+|  [![Linkedin](https://camo.githubusercontent.com/c84e7f0c3e81ef0d91e678a2edeaad1667506bada33d7dd9c1078271bbc09fd3/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c696e6b6564696e2532302d2532333030373742352e7376673f7374796c653d666f722d7468652d6261646765266c6f676f3d6c696e6b6564696e266c6f676f436f6c6f723d7768697465 "Linkedin")](https://www.linkedin.com/in/victoria-agustina-chaile/ "Linkedin") | [![Linkedin](https://camo.githubusercontent.com/c84e7f0c3e81ef0d91e678a2edeaad1667506bada33d7dd9c1078271bbc09fd3/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c696e6b6564696e2532302d2532333030373742352e7376673f7374796c653d666f722d7468652d6261646765266c6f676f3d6c696e6b6564696e266c6f676f436f6c6f723d7768697465 "Linkedin")](https://www.linkedin.com/in/lFavian "Linkedin")  | [![Linkedin](https://camo.githubusercontent.com/c84e7f0c3e81ef0d91e678a2edeaad1667506bada33d7dd9c1078271bbc09fd3/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c696e6b6564696e2532302d2532333030373742352e7376673f7374796c653d666f722d7468652d6261646765266c6f676f3d6c696e6b6564696e266c6f676f436f6c6f723d7768697465 "Linkedin")](https://www.linkedin.com/in/agustin-gomez-develop/ "Linkedin")  | [![Linkedin](https://camo.githubusercontent.com/c84e7f0c3e81ef0d91e678a2edeaad1667506bada33d7dd9c1078271bbc09fd3/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c696e6b6564696e2532302d2532333030373742352e7376673f7374796c653d666f722d7468652d6261646765266c6f676f3d6c696e6b6564696e266c6f676f436f6c6f723d7768697465 "Linkedin")](https://www.linkedin.com/in/kimberly-pinto-perales/ "Linkedin")  |
+| -  | Hernan Varela  |  Melisa Yunis | -  |
+|   | [![Linkedin](https://camo.githubusercontent.com/c84e7f0c3e81ef0d91e678a2edeaad1667506bada33d7dd9c1078271bbc09fd3/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c696e6b6564696e2532302d2532333030373742352e7376673f7374796c653d666f722d7468652d6261646765266c6f676f3d6c696e6b6564696e266c6f676f436f6c6f723d7768697465 "Linkedin")]("Linkedin")  |  [![Linkedin](https://camo.githubusercontent.com/c84e7f0c3e81ef0d91e678a2edeaad1667506bada33d7dd9c1078271bbc09fd3/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c696e6b6564696e2532302d2532333030373742352e7376673f7374796c653d666f722d7468652d6261646765266c6f676f3d6c696e6b6564696e266c6f676f436f6c6f723d7768697465 "Linkedin")](https://www.linkedin.com/in/melisa-yunis-a536a8254/ "Linkedin") | -  |
+| -  | Ricardo Gonzalez  | -  | -  |
+| -  | [![Linkedin](https://camo.githubusercontent.com/c84e7f0c3e81ef0d91e678a2edeaad1667506bada33d7dd9c1078271bbc09fd3/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c696e6b6564696e2532302d2532333030373742352e7376673f7374796c653d666f722d7468652d6261646765266c6f676f3d6c696e6b6564696e266c6f676f436f6c6f723d7768697465 "Linkedin")](https://www.linkedin.com/in/ricardoagustingonzalez/"Linkedin")  |  - |  - |
+
+------------
 
 
-## Correr localmente
+## Tecnologias utilizadas  :tw-1f528:
+###### Frontend
+[![React](https://camo.githubusercontent.com/67a01fa7cf337616274f39c070a11638f2e65720e414ef55b8dd3f9c2a803b2a/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f7374796c653d666f722d7468652d6261646765266d6573736167653d526561637426636f6c6f723d323232323232266c6f676f3d5265616374266c6f676f436f6c6f723d363144414642266c6162656c3d "React")](http://https://camo.githubusercontent.com/67a01fa7cf337616274f39c070a11638f2e65720e414ef55b8dd3f9c2a803b2a/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f7374796c653d666f722d7468652d6261646765266d6573736167653d526561637426636f6c6f723d323232323232266c6f676f3d5265616374266c6f676f436f6c6f723d363144414642266c6162656c3d "React")[![Axios](https://camo.githubusercontent.com/712a78d57db5916cf4a80d76867fbab1bb06201568ba09018ca417640b213958/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4178696f732d3541323945342e7376673f7374796c653d666f722d7468652d6261646765266c6f676f3d4178696f73266c6f676f436f6c6f723d7768697465 "Axios")](http://https://camo.githubusercontent.com/712a78d57db5916cf4a80d76867fbab1bb06201568ba09018ca417640b213958/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4178696f732d3541323945342e7376673f7374796c653d666f722d7468652d6261646765266c6f676f3d4178696f73266c6f676f436f6c6f723d7768697465 "Axios")[![HTML](https://camo.githubusercontent.com/9ac77b8c6d4f478ec288b4b0aa1d73f2634ed63b89123e554502006ba6cf1105/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f48544d4c2d4533344632363f7374796c653d666f722d7468652d6261646765266c6f676f3d48544d4c35266c6f676f436f6c6f723d7768697465 "HTML")](http://https://camo.githubusercontent.com/9ac77b8c6d4f478ec288b4b0aa1d73f2634ed63b89123e554502006ba6cf1105/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f48544d4c2d4533344632363f7374796c653d666f722d7468652d6261646765266c6f676f3d48544d4c35266c6f676f436f6c6f723d7768697465 "HTML")[![CSS](https://camo.githubusercontent.com/395bcd1fa353e86f422e5f01abf3260b8c76720be050e5f4688ab7fc7634f50f/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4353532d3135373242363f7374796c653d666f722d7468652d6261646765266c6f676f3d63737333266c6f676f436f6c6f723d7768697465 "CSS")](http://https://camo.githubusercontent.com/395bcd1fa353e86f422e5f01abf3260b8c76720be050e5f4688ab7fc7634f50f/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4353532d3135373242363f7374796c653d666f722d7468652d6261646765266c6f676f3d63737333266c6f676f436f6c6f723d7768697465 "CSS")[![Javascript](https://camo.githubusercontent.com/9d07c04bdd98c662d5df9d4e1cc1de8446ffeaebca330feb161f1fb8e1188204/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4a6176615363726970742d4637444631453f7374796c653d666f722d7468652d6261646765266c6f676f3d6a617661736372697074266c6f676f436f6c6f723d626c61636b "Javascript")](http://https://camo.githubusercontent.com/9d07c04bdd98c662d5df9d4e1cc1de8446ffeaebca330feb161f1fb8e1188204/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4a6176615363726970742d4637444631453f7374796c653d666f722d7468652d6261646765266c6f676f3d6a617661736372697074266c6f676f436f6c6f723d626c61636b "Javascript")
 
+###### Backend
+[![Spring](https://camo.githubusercontent.com/4bde567a4772f994f22418e4505a1ac8dc6e6219100251aa79b7279e02c8bb07/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f537072696e672d3644423333463f7374796c653d666f722d7468652d6261646765266c6f676f3d737072696e67266c6f676f436f6c6f723d7768697465 "Spring")](http://https://camo.githubusercontent.com/4bde567a4772f994f22418e4505a1ac8dc6e6219100251aa79b7279e02c8bb07/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f537072696e672d3644423333463f7374796c653d666f722d7468652d6261646765266c6f676f3d737072696e67266c6f676f436f6c6f723d7768697465 "Spring")[![Java](https://camo.githubusercontent.com/771cc18a712bf9edb0925a86164c34b0d803c4d9177dd4467eff7b777109c723/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4a6176612d4544384230303f7374796c653d666f722d7468652d6261646765266c6f676f3d6a617661266c6f676f436f6c6f723d7768697465 "Java")](http://https://camo.githubusercontent.com/771cc18a712bf9edb0925a86164c34b0d803c4d9177dd4467eff7b777109c723/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4a6176612d4544384230303f7374796c653d666f722d7468652d6261646765266c6f676f3d6a617661266c6f676f436f6c6f723d7768697465 "Java")[![MySQL](https://camo.githubusercontent.com/a4a4a017a5d519d7c4ce2a3cd3d2194fb7af4b1ca424850784565007c2acc7d8/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4d7953514c2d3030354338343f7374796c653d666f722d7468652d6261646765266c6f676f3d6d7973716c266c6f676f436f6c6f723d7768697465 "MySQL")](http://https://camo.githubusercontent.com/a4a4a017a5d519d7c4ce2a3cd3d2194fb7af4b1ca424850784565007c2acc7d8/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4d7953514c2d3030354338343f7374796c653d666f722d7468652d6261646765266c6f676f3d6d7973716c266c6f676f436f6c6f723d7768697465 "MySQL")[![Hibernate](https://camo.githubusercontent.com/770dc0d5bff8e3849434d5559707f1f515ba5c33b4f42f654aaa67889cb00d90/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f48696265726e6174652d3539363636433f7374796c653d666f722d7468652d6261646765266c6f676f3d48696265726e617465266c6f676f436f6c6f723d7768697465 "Hibernate")](http://https://camo.githubusercontent.com/770dc0d5bff8e3849434d5559707f1f515ba5c33b4f42f654aaa67889cb00d90/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f48696265726e6174652d3539363636433f7374796c653d666f722d7468652d6261646765266c6f676f3d48696265726e617465266c6f676f436f6c6f723d7768697465 "Hibernate")[![Railway](https://camo.githubusercontent.com/27fd2defd0e1fb56d6d5b7e997101928e55a42feb3dff2a128ada7e5dcbec10d/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f5261696c7761792d3030303f7374796c653d666f722d7468652d6261646765266c6f676f3d7261696c776179266c6f676f436f6c6f723d7768697465266c6162656c436f6c6f723d626c61636b26636f6c6f723d626c61636b "Railway")](http://https://camo.githubusercontent.com/27fd2defd0e1fb56d6d5b7e997101928e55a42feb3dff2a128ada7e5dcbec10d/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f5261696c7761792d3030303f7374796c653d666f722d7468652d6261646765266c6f676f3d7261696c776179266c6f676f436f6c6f723d7768697465266c6162656c436f6c6f723d626c61636b26636f6c6f723d626c61636b "Railway")
+###### Comunicacion
+[![Discord](https://camo.githubusercontent.com/3e6fcad456b4e9a4e5c0df16197bced1e1f3c4c3cd7ab604278437ba60a4c433/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f446973636f72642d3538363546323f7374796c653d666f722d7468652d6261646765266c6f676f3d446973636f7264266c6f676f436f6c6f723d666666 "Discord")](http://https://camo.githubusercontent.com/3e6fcad456b4e9a4e5c0df16197bced1e1f3c4c3cd7ab604278437ba60a4c433/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f446973636f72642d3538363546323f7374796c653d666f722d7468652d6261646765266c6f676f3d446973636f7264266c6f676f436f6c6f723d666666 "Discord")[![Trello](https://camo.githubusercontent.com/c1beb87b0a599523faf963ed1e2ba60c615dd5e899bd33bdaeead9e2fd94010c/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f5472656c6c6f2d3039354544383f7374796c653d666f722d7468652d6261646765266c6f676f3d5472656c6c6f266c6f676f436f6c6f723d666666 "Trello")](http://https://camo.githubusercontent.com/c1beb87b0a599523faf963ed1e2ba60c615dd5e899bd33bdaeead9e2fd94010c/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f5472656c6c6f2d3039354544383f7374796c653d666f722d7468652d6261646765266c6f676f3d5472656c6c6f266c6f676f436f6c6f723d666666 "Trello")[![Salck](https://camo.githubusercontent.com/870d2945e15dde83583f64ea1f3f4471702e45bf30fa884412da74cb7731ae42/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f536c61636b2d3441313534423f7374796c653d666f722d7468652d6261646765266c6f676f3d736c61636b266c6f676f436f6c6f723d7768697465 "Salck")](http://https://camo.githubusercontent.com/870d2945e15dde83583f64ea1f3f4471702e45bf30fa884412da74cb7731ae42/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f536c61636b2d3441313534423f7374796c653d666f722d7468652d6261646765266c6f676f3d736c61636b266c6f676f436f6c6f723d7768697465 "Salck")
+## Despliegue aplicación
 Clonar el proyecto
 
 ```bash
@@ -29,17 +50,36 @@ Iniciar el proyecto
 ```bash
   npm run dev
 ```
+## Project Manager (PM)
+### Procesos de Trabajo Utilizados
 
-## Autores
-|Product Manager|Front-End|Back-End|QA|
-| :-------- | :------- | :------------------ | :-------------------------------- |
-|[Victoria Chaile](https://www.linkedin.com/in/victoria-agustina-chaile/)|[Favian Flores](#)|[Agustin Gomez](#)|[Kimberly Pinto](https://www.linkedin.com/in/kimberly-pinto-perales/)|
-|-|[Hernan Varela](#)|[Melisa Yunis](https://www.linkedin.com/in/melisa-yunis-a536a8254/)|-|
-|-|[Ricardo Gonzalez](https://www.linkedin.com/in/ricardoagustingonzalez/)|-|-|
+Durante el desarrollo del proyecto "Sistema de gestión de finanzas personales", se implementaron una serie de procesos clave bajo el rol de Project Manager (PM). El objetivo era garantizar un flujo de trabajo eficiente y la entrega exitosa del proyecto, empleando una variedad de métodos estratégicos de planificación, desarrollo y liderazgo de equipo. A continuación, se detallan los procesos fundamentales utilizados:
 
+#### Planificación
 
+- **Análisis de Requisitos y Alcance del Proyecto**: Proceso detallado para analizar los requisitos del proyecto y definir claramente su alcance y objetivos iniciales, utilizando información proporcionada por No Country como base fundamental.
 
-## Dependencias
-|Front-End|Back-End|
-| :-------- | :-------- |
-|a|a|
+- **Implementación de Metodología Scrum Adaptada**: Proceso de adaptación de los principios de Scrum para satisfacer las necesidades específicas del proyecto, priorizando la flexibilidad y la entrega incremental de valor a lo largo de los sprints.
+
+- **Gestión de Backlog de Trabajo con Trello**: Proceso de gestión eficiente del backlog de trabajo utilizando la herramienta Trello, lo que facilitó la planificación y el seguimiento de las tareas a lo largo de los distintos sprints.
+
+- **Planificación y Ejecución de Sprints**: Proceso detallado de planificación y ejecución de cada sprint, que incluyó la refinación de User Stories y la asignación de tareas específicas a cada miembro del equipo.
+
+#### Desarrollo
+
+- **Comunicación y Registro Diario**: Proceso de realización de reuniones diarias y generación de meeting notes detalladas para garantizar una comunicación clara y efectiva, así como un registro exhaustivo de las discusiones y decisiones clave.
+
+- **Retrospectivas y Mejora Continua**: Proceso de realización de retrospectivas semanales para evaluar el rendimiento del equipo, discutir posibles mejoras y ajustar estrategias para alcanzar los objetivos establecidos.
+
+- **Gestión de Obstáculos y Solución de Problemas**: Proceso proactivo de identificación y resolución de obstáculos y retrocesos a través de enfoques colaborativos y soluciones creativas para mantener el impulso del proyecto.
+
+#### Liderazgo de Equipo
+
+- **Gestión del Equipo y Reclutamiento**: Proceso integral para identificar, reclutar y formar un equipo equilibrado y competente para el proyecto, asegurando la diversidad de habilidades y experiencias necesarias.
+
+- **Cultura de Colaboración y Comunicación Abierta**: Proceso de promoción de una cultura de colaboración abierta y comunicación fluida entre todos los miembros del equipo, fomentando la participación activa y el intercambio efectivo de ideas en todas las etapas del proyecto.
+
+- **Compromiso con la Calidad y la Excelencia**: Proceso continuo de compromiso en cada aspecto del proyecto, garantizando que cada entrega cumpla con las expectativas y requisitos establecidos.
+
+# Agradecimientos
+[![NoCountry](https://camo.githubusercontent.com/de23137451a85a0d6a7bb65035d170bccd59f46b1ce444e803a5ff739fd32545/68747470733a2f2f656e637279707465642d74626e302e677374617469632e636f6d2f696d616765733f713d74626e3a414e643947635173756b594233484c39304c537759765f524952324f324f6c43563853626b7832654e4876386e52764f75384c313646784c51306e507a59303277515f424a4f66515a7726757371703d434155 "NoCountry")](http://https://camo.githubusercontent.com/de23137451a85a0d6a7bb65035d170bccd59f46b1ce444e803a5ff739fd32545/68747470733a2f2f656e637279707465642d74626e302e677374617469632e636f6d2f696d616765733f713d74626e3a414e643947635173756b594233484c39304c537759765f524952324f324f6c43563853626b7832654e4876386e52764f75384c313646784c51306e507a59303277515f424a4f66515a7726757371703d434155 "NoCountry")

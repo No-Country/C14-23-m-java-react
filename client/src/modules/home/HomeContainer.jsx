@@ -60,7 +60,7 @@ const HomeContainer = () => {
 
         display: 'flex',
         flexDirection: 'column',
-        height: '93vh',
+        minHeight: '100vh',
         justifyContent: 'center',
         alignItems: 'center',
       }}
@@ -76,15 +76,18 @@ const HomeContainer = () => {
 
       <Box
         sx={{
+          paddingTop: '1rem',
           display: 'flex',
           width: '100vw',
           justifyContent: 'space-around',
+          // paddingTop: '1rem'
         }}
       >
         {userData ? (
           <Box
             sx={{
               width: '47.5vw',
+              // paddingTop: '1rem',
             }}
           >
             <BalanceInfo
@@ -102,6 +105,7 @@ const HomeContainer = () => {
           <Box
             sx={{
               width: '47.5vw',
+              // paddingTop: '1rem',
             }}
           >
             <SavingsTotal totalSavings={userData.accumulatedSavings} />
@@ -111,7 +115,7 @@ const HomeContainer = () => {
         )}
       </Box>
 
-      <Grid container spacing={2} sx={{ height: '100%' }}>
+      <Grid container spacing={2} sx={{ minHeight: '100%' }}>
         <ModalHome
           open={modal}
           handleClose={handleClose}
@@ -149,7 +153,19 @@ const HomeContainer = () => {
           </Alert>
         </Snackbar>
 
-        <Grid item container xs={12} lg={8} alignItems='center'>
+        <Grid
+          item
+          container
+          xs={12}
+          lg={8}
+          alignItems='center'
+          sx={{
+            mt: '-2rem',
+            '@media (max-width: 700px)': {
+              mt: '-3rem',
+            },
+          }}
+        >
           <Grid
             item
             container
@@ -170,7 +186,19 @@ const HomeContainer = () => {
             <ExpenseByCategory handleOpen={handleOpen} />
           </Grid>
         </Grid>
-        <Grid item container xs={12} lg={4}>
+        <Grid
+          sx={{
+            minHeight: '100vh',
+            mt: '-2rem',
+            '@media (max-width: 700px)': {
+              mt: '0',
+            },
+          }}
+          item
+          container
+          xs={12}
+          lg={4}
+        >
           <RecentActivity />
         </Grid>
       </Grid>
